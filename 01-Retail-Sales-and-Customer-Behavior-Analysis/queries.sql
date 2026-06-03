@@ -193,3 +193,70 @@ JOIN customer_data c
 ON s.customer_id = c.customer_id
 GROUP BY c.payment_method
 ORDER BY total_transactions DESC;
+
+
+-- ===================================
+-- Deep Dive Customer Insights
+-- ===================================
+
+-- Revenue by Gender and Category
+
+SELECT
+    c.gender,
+    s.category,
+    ROUND(SUM(s.quantity * s.price),2) AS revenue
+FROM sales_data s
+JOIN customer_data c
+ON s.customer_id = c.customer_id
+GROUP BY c.gender, s.category
+ORDER BY revenue DESC;
+
+-- Revenue by Age Group and Category
+
+SELECT
+    CASE
+        WHEN c.age BETWEEN 18 AND 25 THEN '18-25'
+        WHEN c.age BETWEEN 26 AND 35 THEN '26-35'
+        WHEN c.age BETWEEN 36 AND 45 THEN '36-45'
+        WHEN c.age BETWEEN 46 AND 55 THEN '46-55'
+        ELSE '56+'
+    END AS age_group,
+    s.category,
+    ROUND(SUM(s.quantity * s.price),2) AS revenue
+FROM sales_data s
+JOIN customer_data c
+ON s.customer_id = c.customer_id
+GROUP BY age_group, s.category
+ORDER BY revenue DESC;
+
+-- Revenue by Shopping Mall and Category
+
+SELECT
+    shopping_mall,
+    category,
+    ROUND(SUM(quantity * price),2) AS revenue
+FROM sales_data
+GROUP BY shopping_mall, category
+ORDER BY revenue DESC
+LIMIT 20;
+
+-- Customer Segmentation
+
+WITH customer_spending AS (
+    SELECT
+        customer_id,
+        SUM(quantity * price) AS total_spent
+    FROM sales_data
+    GROUP BY customer_id
+)
+
+SELECT
+    CASE
+        WHEN total_spent < 1000 THEN 'Low Value'
+        WHEN total_spent BETWEEN 1000 AND 3000 THEN 'Medium Value'
+        ELSE 'High Value'
+    END AS customer_segment,
+    COUNT(*) AS customer_count
+FROM customer_spending
+GROUP BY customer_segment
+ORDER BY customer_count DESC;

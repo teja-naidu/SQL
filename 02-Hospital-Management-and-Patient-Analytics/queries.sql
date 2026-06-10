@@ -35,3 +35,172 @@ SELECT specialization,
 FROM doctors
 GROUP BY specialization
 ORDER BY avg_experience DESC;
+
+-- Query 6: Total Doctors
+SELECT COUNT(*) AS total_doctors
+FROM doctors;
+
+-- Query 7: Total Appointments
+SELECT COUNT(*) AS total_appointments
+FROM appointments;
+
+-- Query 8: Total Treatments
+SELECT COUNT(*) AS total_treatments
+FROM treatments;
+
+-- Query 9: Total Billing Records
+SELECT COUNT(*) AS total_billing_records
+FROM billing;
+
+-- Query 10: Doctors by Hospital Branch
+SELECT
+    hospital_branch,
+    COUNT(*) AS doctor_count
+FROM doctors
+GROUP BY hospital_branch
+ORDER BY doctor_count DESC;
+
+-- Query 11: Appointment Status Distribution
+SELECT
+    status,
+    COUNT(*) AS appointment_count
+FROM appointments
+GROUP BY status
+ORDER BY appointment_count DESC;
+
+-- Query 12: Most Common Visit Reasons
+SELECT
+    reason_for_visit,
+    COUNT(*) AS visit_count
+FROM appointments
+GROUP BY reason_for_visit
+ORDER BY visit_count DESC;
+
+-- Query 13: Top Doctors by Appointment Count
+SELECT
+    d.first_name || ' ' || d.last_name AS doctor_name,
+    d.specialization,
+    COUNT(a.appointment_id) AS total_appointments
+FROM doctors d
+JOIN appointments a
+    ON d.doctor_id = a.doctor_id
+GROUP BY
+    d.first_name,
+    d.last_name,
+    d.specialization
+ORDER BY total_appointments DESC;
+
+-- Query 14: Appointment Volume by Hospital Branch
+SELECT
+    d.hospital_branch,
+    COUNT(a.appointment_id) AS appointment_count
+FROM appointments a
+JOIN doctors d
+    ON a.doctor_id = d.doctor_id
+GROUP BY d.hospital_branch
+ORDER BY appointment_count DESC;
+
+-- Query 15: Patient Appointment Frequency
+SELECT
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    COUNT(a.appointment_id) AS total_appointments
+FROM patients p
+JOIN appointments a
+    ON p.patient_id = a.patient_id
+GROUP BY
+    p.patient_id,
+    p.first_name,
+    p.last_name
+ORDER BY total_appointments DESC;
+
+-- Query 16: Monthly Appointment Trend
+SELECT
+    strftime(appointment_date, '%Y-%m') AS month,
+    COUNT(*) AS appointment_count
+FROM appointments
+GROUP BY month
+ORDER BY month;
+
+-- Query 17: Treatment Type Distribution
+SELECT
+    treatment_type,
+    COUNT(*) AS treatment_count
+FROM treatments
+GROUP BY treatment_type
+ORDER BY treatment_count DESC;
+
+-- Query 18: Revenue by Treatment Type
+SELECT
+    treatment_type,
+    ROUND(SUM(cost),2) AS total_revenue
+FROM treatments
+GROUP BY treatment_type
+ORDER BY total_revenue DESC;
+
+-- Query 19: Most Expensive Treatments
+SELECT
+    treatment_id,
+    treatment_type,
+    cost
+FROM treatments
+ORDER BY cost DESC
+LIMIT 10;
+
+-- Query 20: Revenue by Payment Method
+SELECT
+    payment_method,
+    ROUND(SUM(amount),2) AS total_revenue
+FROM billing
+GROUP BY payment_method
+ORDER BY total_revenue DESC;
+
+-- Query 21: Payment Status Analysis
+SELECT
+    payment_status,
+    COUNT(*) AS bill_count,
+    ROUND(SUM(amount),2) AS total_amount
+FROM billing
+GROUP BY payment_status
+ORDER BY total_amount DESC;
+
+-- Query 22: Top Revenue Generating Patients
+SELECT
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    ROUND(SUM(b.amount),2) AS total_spent
+FROM patients p
+JOIN billing b
+    ON p.patient_id = b.patient_id
+GROUP BY
+    p.patient_id,
+    p.first_name,
+    p.last_name
+ORDER BY total_spent DESC
+LIMIT 10;
+
+-- Query 23: Monthly Revenue Trend
+SELECT
+    strftime(bill_date, '%Y-%m') AS month,
+    ROUND(SUM(amount),2) AS monthly_revenue
+FROM billing
+GROUP BY month
+ORDER BY month;
+
+-- Query 24: Doctor Revenue Analysis
+SELECT
+    d.first_name || ' ' || d.last_name AS doctor_name,
+    d.specialization,
+    ROUND(SUM(t.cost),2) AS total_revenue
+FROM doctors d
+JOIN appointments a
+    ON d.doctor_id = a.doctor_id
+JOIN treatments t
+    ON a.appointment_id = t.appointment_id
+GROUP BY
+    d.first_name,
+    d.last_name,
+    d.specialization
+ORDER BY total_revenue DESC;

@@ -147,3 +147,56 @@ Treatment and revenue analytics help healthcare organizations:
 * Optimize billing and payment collection processes.
 * Monitor treatment profitability.
 * Support data-driven operational and strategic decisions.
+
+Day 4 Insights - Advanced SQL Analytics
+Key Findings
+Patient Spending Analysis
+A Common Table Expression (CTE) was used to identify the highest-spending patients.
+Patient spending patterns help hospitals understand revenue concentration and patient value.
+High-spending patients often require recurring treatments, specialized procedures, or long-term care.
+Doctor Revenue Ranking
+Doctors were ranked based on total revenue generated from treatments.
+Revenue ranking helps identify top-performing healthcare providers.
+These insights support workforce planning and operational decision-making.
+Patient Revenue Ranking
+Patients were ranked using advanced SQL window functions.
+Ranking analysis highlights the most valuable patient segments based on spending behavior.
+Understanding patient value can improve retention and personalized care strategies.
+Treatment Cost Optimization
+The most expensive treatment within each treatment category was identified using ROW_NUMBER().
+This analysis helps hospitals understand cost drivers and treatment complexity.
+High-cost treatments may require specialized resources and equipment.
+Running Revenue Analysis
+Running revenue calculations were performed using window functions.
+Cumulative revenue tracking provides visibility into financial growth over time.
+Running totals help management monitor revenue performance and business trends.
+Revenue Contribution Analysis
+Revenue contribution percentages were calculated for each treatment type.
+This helps identify which services contribute the largest share of total hospital revenue.
+Understanding revenue contribution supports strategic investment decisions.
+Top Revenue Generators
+Top-performing doctors and top-spending patients were identified through ranking and aggregation techniques.
+These analyses provide actionable insights into revenue generation and operational performance.
+Identifying key contributors helps hospitals focus on service quality and resource allocation.
+Advanced SQL Concepts Demonstrated
+
+This phase of the project demonstrates:
+
+Common Table Expressions (CTEs)
+Window Functions
+RANK()
+DENSE_RANK()
+ROW_NUMBER()
+Running Totals
+Revenue Contribution Analysis
+Top-N Analysis
+Business Value
+
+Advanced SQL analytics enables healthcare organizations to:
+
+Identify high-value patients and services.
+Monitor financial performance more effectively.
+Support data-driven decision making.
+Improve operational efficiency.
+Strengthen revenue optimization strategies.
+Enhance strategic healthcare planning.

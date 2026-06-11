@@ -204,3 +204,131 @@ GROUP BY
     d.last_name,
     d.specialization
 ORDER BY total_revenue DESC;
+
+-- Query 25: Top Spending Patients Using CTE
+
+WITH patient_spending AS (
+    SELECT
+        patient_id,
+        SUM(amount) AS total_spent
+    FROM billing
+    GROUP BY patient_id
+)
+SELECT *
+FROM patient_spending
+ORDER BY total_spent DESC;
+
+-- Query 26: Doctor Revenue Ranking
+
+SELECT
+    d.first_name || ' ' || d.last_name AS doctor_name,
+    ROUND(SUM(t.cost),2) AS total_revenue,
+    RANK() OVER(
+        ORDER BY SUM(t.cost) DESC
+    ) AS revenue_rank
+FROM doctors d
+JOIN appointments a
+    ON d.doctor_id = a.doctor_id
+JOIN treatments t
+    ON a.appointment_id = t.appointment_id
+GROUP BY
+    d.first_name,
+    d.last_name
+ORDER BY revenue_rank;
+
+-- Query 27: Patient Revenue Ranking
+
+SELECT
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    ROUND(SUM(b.amount),2) AS total_spent,
+    DENSE_RANK() OVER(
+        ORDER BY SUM(b.amount) DESC
+    ) AS spending_rank
+FROM patients p
+JOIN billing b
+    ON p.patient_id = b.patient_id
+GROUP BY
+    p.patient_id,
+    p.first_name,
+    p.last_name
+ORDER BY spending_rank;
+
+-- Query 28: Most Expensive Treatment Per Type
+
+WITH treatment_rank AS (
+    SELECT
+        treatment_type,
+        treatment_id,
+        cost,
+        ROW_NUMBER() OVER(
+            PARTITION BY treatment_type
+            ORDER BY cost DESC
+        ) AS rn
+    FROM treatments
+)
+SELECT *
+FROM treatment_rank
+WHERE rn = 1;
+
+-- Query 29: Running Revenue Trend
+
+SELECT
+    bill_date,
+    amount,
+    SUM(amount) OVER(
+        ORDER BY bill_date
+    ) AS running_revenue
+FROM billing
+ORDER BY bill_date
+LIMIT 10;
+
+-- Query 30: Revenue Contribution by Treatment Type
+
+SELECT
+    treatment_type,
+    ROUND(SUM(cost),2) AS revenue,
+    ROUND(
+        SUM(cost) * 100.0 /
+        (SELECT SUM(cost) FROM treatments),
+        2
+    ) AS revenue_percentage
+FROM treatments
+GROUP BY treatment_type
+ORDER BY revenue DESC;
+
+-- Query 31: Top 5 Doctors by Revenue
+
+SELECT
+    d.first_name || ' ' || d.last_name AS doctor_name,
+    d.specialization,
+    ROUND(SUM(t.cost),2) AS total_revenue
+FROM doctors d
+JOIN appointments a
+    ON d.doctor_id = a.doctor_id
+JOIN treatments t
+    ON a.appointment_id = t.appointment_id
+GROUP BY
+    d.first_name,
+    d.last_name,
+    d.specialization
+ORDER BY total_revenue DESC
+LIMIT 5;
+
+-- Query 32: Top 5 Patients by Spending
+
+SELECT
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    ROUND(SUM(b.amount),2) AS total_spent
+FROM patients p
+JOIN billing b
+    ON p.patient_id = b.patient_id
+GROUP BY
+    p.patient_id,
+    p.first_name,
+    p.last_name
+ORDER BY total_spent DESC
+LIMIT 5;

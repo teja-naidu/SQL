@@ -1,0 +1,22 @@
+CREATE TABLE financial_loan (
+    id INT PRIMARY KEY,
+    address_state VARCHAR(10),
+    application_type VARCHAR(50),
+    emp_length VARCHAR(50),
+    emp_title VARCHAR(255),
+    grade VARCHAR(5),
+    home_ownership VARCHAR(50),
+    issue_date DATE,
+    loan_status VARCHAR(50),
+    purpose VARCHAR(100),
+    sub_grade VARCHAR(10),
+    term VARCHAR(50),
+    verification_status VARCHAR(50),
+    annual_income DECIMAL(15,2),
+    dti DECIMAL(10,2),
+    installment DECIMAL(10,2),
+    int_rate DECIMAL(10,2),
+    loan_amount DECIMAL(15,2),
+    total_acc INT,
+    total_payment DECIMAL(15,2)
+);

@@ -48,3 +48,54 @@
 ## Business Value
 
 This analysis provides a high-level understanding of portfolio size, repayment behavior, borrower financial health, and overall loan performance. These insights help lending institutions monitor profitability, manage risk, and support strategic lending decisions.
+
+
+# Day 2 Insights - Good Loans vs Bad Loans Analysis
+
+## Good Loan Analysis
+
+### Good Loan Applications
+
+* Total Good Loan Applications: 33,243
+* Good Loan Percentage: 86.18%
+
+### Good Loan Funding
+
+* Total Good Loan Funded Amount: $370.22 Million
+* Total Amount Received from Good Loans: $435.79 Million
+
+### Key Findings
+
+* More than 86% of the loan portfolio falls under the Good Loan category.
+* Good Loans contribute the majority of loan repayments and revenue generation.
+* Repayments received from Good Loans exceed the funded amount, indicating strong portfolio performance and interest income generation.
+
+## Bad Loan Analysis
+
+### Bad Loan Applications
+
+* Total Bad Loan Applications: 5,333
+* Bad Loan Percentage: 13.82%
+
+### Bad Loan Funding
+
+* Total Bad Loan Funded Amount: $65.53 Million
+* Total Amount Received from Bad Loans: $37.28 Million
+
+### Key Findings
+
+* Approximately 14% of loans were classified as Charged Off.
+* Repayments received from Bad Loans are significantly lower than the funded amount, resulting in portfolio losses.
+* Charged Off loans represent the primary source of credit risk within the lending portfolio.
+
+## Loan Status Performance Summary
+
+| Loan Status | Applications |   Funded Amount | Amount Received |
+| ----------- | -----------: | --------------: | --------------: |
+| Fully Paid  |       32,145 | $351.36 Million | $411.59 Million |
+| Charged Off |        5,333 |  $65.53 Million |  $37.28 Million |
+| Current     |        1,098 |  $18.87 Million |  $24.20 Million |
+
+## Business Value
+
+This analysis helps financial institutions evaluate portfolio quality by distinguishing performing loans from non-performing loans. Monitoring Good Loan and Bad Loan metrics enables better credit risk management, lending strategy optimization, and profitability assessment.

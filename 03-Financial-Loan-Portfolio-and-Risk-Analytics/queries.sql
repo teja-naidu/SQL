@@ -104,3 +104,73 @@ SELECT
 FROM financial_loan
 GROUP BY loan_status
 ORDER BY total_applications DESC;
+
+-- ==========================================
+-- DAY 3 - MONTHLY LOAN TRENDS ANALYSIS
+-- ==========================================
+
+-- Monthly Loan Applications
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    COUNT(*) AS total_applications
+FROM financial_loan
+GROUP BY loan_year, loan_month
+ORDER BY loan_year, loan_month;
+
+
+-- Monthly Funded Amount
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    SUM(loan_amount) AS total_funded_amount
+FROM financial_loan
+GROUP BY loan_year, loan_month
+ORDER BY loan_year, loan_month;
+
+
+-- Monthly Amount Received
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    SUM(total_payment) AS total_amount_received
+FROM financial_loan
+GROUP BY loan_year, loan_month
+ORDER BY loan_year, loan_month;
+
+
+-- Monthly Average Interest Rate
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    ROUND(AVG(int_rate) * 100, 2) AS avg_interest_rate_pct
+FROM financial_loan
+GROUP BY loan_year, loan_month
+ORDER BY loan_year, loan_month;
+
+
+-- Monthly Average DTI
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    ROUND(AVG(dti) * 100, 2) AS avg_dti_pct
+FROM financial_loan
+GROUP BY loan_year, loan_month
+ORDER BY loan_year, loan_month;
+
+
+-- Monthly Loan Status Trend
+
+SELECT
+    YEAR(issue_date) AS loan_year,
+    MONTH(issue_date) AS loan_month,
+    loan_status,
+    COUNT(*) AS total_loans
+FROM financial_loan
+GROUP BY loan_year, loan_month, loan_status
+ORDER BY loan_year, loan_month, total_loans DESC;

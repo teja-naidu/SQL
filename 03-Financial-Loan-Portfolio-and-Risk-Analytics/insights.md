@@ -99,3 +99,51 @@ This analysis provides a high-level understanding of portfolio size, repayment b
 ## Business Value
 
 This analysis helps financial institutions evaluate portfolio quality by distinguishing performing loans from non-performing loans. Monitoring Good Loan and Bad Loan metrics enables better credit risk management, lending strategy optimization, and profitability assessment.
+
+# Day 3 Insights - Monthly Loan Trends Analysis
+
+## Monthly Application Trends
+
+### Top Performing Months
+
+| Year | Month | Applications |
+|------|--------|-------------:|
+| 2021 | December | 4,314 |
+| 2021 | November | 4,035 |
+| 2021 | October | 3,796 |
+
+### Key Findings
+
+* Loan applications showed consistent growth throughout 2021.
+* December 2021 recorded the highest number of loan applications with 4,314 applications.
+* The fourth quarter (Q4 2021) experienced the strongest lending demand across the portfolio.
+
+---
+
+## Monthly Funding Trends
+
+### Top Funded Months
+
+| Year | Month | Funded Amount |
+|------|--------|--------------:|
+| 2021 | December | $53.98 Million |
+| 2021 | November | $47.75 Million |
+| 2021 | October | $44.89 Million |
+
+### Key Findings
+
+* Lending activity increased significantly during the final months of 2021.
+* December 2021 achieved the highest funded amount of approximately $53.98 million.
+* Increased application volume directly contributed to higher loan disbursements.
+
+---
+
+## Portfolio Growth Analysis
+
+* Both loan applications and funded amounts displayed an upward trend during 2021.
+* The strongest portfolio growth occurred during Q4 2021.
+* The data suggests increased borrower demand and stronger lending activity toward year-end.
+
+## Business Value
+
+Monthly trend analysis helps financial institutions identify seasonal lending patterns, forecast future demand, optimize funding allocation, and support strategic business planning.

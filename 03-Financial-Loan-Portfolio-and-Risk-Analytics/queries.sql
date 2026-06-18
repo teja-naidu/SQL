@@ -174,3 +174,80 @@ SELECT
 FROM financial_loan
 GROUP BY loan_year, loan_month, loan_status
 ORDER BY loan_year, loan_month, total_loans DESC;
+
+-- ==========================================
+-- DAY 4 - PORTFOLIO SEGMENTATION ANALYSIS
+-- ==========================================
+
+-- State-wise Loan Applications
+
+SELECT
+    address_state,
+    COUNT(*) AS total_applications
+FROM financial_loan
+GROUP BY address_state
+ORDER BY total_applications DESC;
+
+
+-- State-wise Funded Amount
+
+SELECT
+    address_state,
+    SUM(loan_amount) AS total_funded_amount
+FROM financial_loan
+GROUP BY address_state
+ORDER BY total_funded_amount DESC;
+
+
+-- Purpose-wise Loan Applications
+
+SELECT
+    purpose,
+    COUNT(*) AS total_applications
+FROM financial_loan
+GROUP BY purpose
+ORDER BY total_applications DESC;
+
+
+-- Purpose-wise Funded Amount
+
+SELECT
+    purpose,
+    SUM(loan_amount) AS total_funded_amount
+FROM financial_loan
+GROUP BY purpose
+ORDER BY total_funded_amount DESC;
+
+
+-- Home Ownership Analysis
+
+SELECT
+    home_ownership,
+    COUNT(*) AS total_applications,
+    SUM(loan_amount) AS total_funded_amount
+FROM financial_loan
+GROUP BY home_ownership
+ORDER BY total_applications DESC;
+
+
+-- Grade-wise Loan Analysis
+
+SELECT
+    grade,
+    COUNT(*) AS total_loans,
+    SUM(loan_amount) AS funded_amount,
+    SUM(total_payment) AS amount_received
+FROM financial_loan
+GROUP BY grade
+ORDER BY grade;
+
+
+-- Grade-wise Charged Off Loans
+
+SELECT
+    grade,
+    COUNT(*) AS charged_off_loans
+FROM financial_loan
+WHERE loan_status = 'Charged Off'
+GROUP BY grade
+ORDER BY charged_off_loans DESC;

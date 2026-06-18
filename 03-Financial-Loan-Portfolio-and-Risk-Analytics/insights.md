@@ -147,3 +147,95 @@ This analysis helps financial institutions evaluate portfolio quality by disting
 ## Business Value
 
 Monthly trend analysis helps financial institutions identify seasonal lending patterns, forecast future demand, optimize funding allocation, and support strategic business planning.
+
+# Day 4 Insights - Portfolio Segmentation Analysis
+
+## State-wise Loan Analysis
+
+### Top States by Loan Applications
+
+| State | Applications |
+|---------|------------:|
+| CA | 6,894 |
+| NY | 3,701 |
+| FL | 2,773 |
+| TX | 2,664 |
+| NJ | 1,822 |
+
+### Key Findings
+
+* California recorded the highest number of loan applications with 6,894 applications.
+* New York and Florida ranked second and third, respectively.
+* The majority of lending activity is concentrated in large population states.
+* These states represent significant market opportunities for loan portfolio growth.
+
+---
+
+## Purpose-wise Loan Analysis
+
+### Top Loan Purposes
+
+| Purpose | Applications |
+|-------------------|------------:|
+| Debt Consolidation | 18,214 |
+| Credit Card | 4,998 |
+| Other | 3,824 |
+| Home Improvement | 2,876 |
+| Major Purchase | 2,110 |
+
+### Key Findings
+
+* Debt Consolidation is the dominant loan purpose, accounting for nearly half of all applications.
+* Credit Card refinancing is the second most common borrowing reason.
+* Borrowers primarily use loans to manage existing debt obligations rather than finance new purchases.
+* This trend highlights the importance of debt management products within the lending portfolio.
+
+---
+
+## Home Ownership Analysis
+
+### Loan Applications by Home Ownership
+
+| Home Ownership | Applications |
+|---------------|------------:|
+| RENT | 18,439 |
+| MORTGAGE | 17,198 |
+| OWN | 2,838 |
+| OTHER | 98 |
+| NONE | 3 |
+
+### Key Findings
+
+* Renters represent the largest borrower segment within the portfolio.
+* Mortgage holders closely follow renters in total loan applications.
+* Property owners account for a significantly smaller share of borrowing activity.
+* Lending demand appears strongest among borrowers with ongoing housing-related financial obligations.
+
+---
+
+## Grade-wise Risk Analysis
+
+### Charged-Off Loans by Grade
+
+| Grade | Charged-Off Loans |
+|--------|----------------:|
+| B | 1,343 |
+| C | 1,266 |
+| D | 1,072 |
+| E | 691 |
+| A | 552 |
+| F | 311 |
+| G | 98 |
+
+### Key Findings
+
+* Grade B loans recorded the highest number of charged-off loans.
+* Grades B, C, and D collectively account for the majority of credit losses.
+* Higher-risk loan grades require closer monitoring and stronger risk controls.
+* Credit grade remains a critical factor in evaluating loan portfolio performance.
+
+---
+
+## Business Value
+
+Portfolio segmentation analysis helps identify key borrower groups, regional lending opportunities, borrowing behavior patterns, and credit risk concentrations. These insights support data-driven lending strategies, risk management practices, and portfolio optimization initiatives.

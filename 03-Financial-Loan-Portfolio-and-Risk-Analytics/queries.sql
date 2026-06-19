@@ -251,3 +251,68 @@ FROM financial_loan
 WHERE loan_status = 'Charged Off'
 GROUP BY grade
 ORDER BY charged_off_loans DESC;
+
+-- ==========================================
+-- DAY 5 - RISK & PERFORMANCE DASHBOARD
+-- ==========================================
+
+-- Good Loans by State
+
+SELECT
+    address_state,
+    COUNT(*) AS good_loans
+FROM financial_loan
+WHERE loan_status IN ('Fully Paid', 'Current')
+GROUP BY address_state
+ORDER BY good_loans DESC;
+
+
+-- Bad Loans by State
+
+SELECT
+    address_state,
+    COUNT(*) AS bad_loans
+FROM financial_loan
+WHERE loan_status = 'Charged Off'
+GROUP BY address_state
+ORDER BY bad_loans DESC;
+
+
+-- Bad Loans by Purpose
+
+SELECT
+    purpose,
+    COUNT(*) AS bad_loans
+FROM financial_loan
+WHERE loan_status = 'Charged Off'
+GROUP BY purpose
+ORDER BY bad_loans DESC;
+
+
+-- Good Loan Percentage by Grade
+
+SELECT
+    grade,
+    ROUND(
+        COUNT(*) * 100.0 /
+        (SELECT COUNT(*) FROM financial_loan WHERE grade = f.grade),
+        2
+    ) AS good_loan_percentage
+FROM financial_loan f
+WHERE loan_status IN ('Fully Paid', 'Current')
+GROUP BY grade
+ORDER BY grade;
+
+
+-- Loan Status Dashboard
+
+SELECT
+    loan_status,
+    COUNT(*) AS total_loans,
+    ROUND(COUNT(*) * 100.0 /
+          (SELECT COUNT(*) FROM financial_loan),2) AS portfolio_percentage,
+    SUM(loan_amount) AS funded_amount,
+    SUM(total_payment) AS amount_received
+FROM financial_loan
+GROUP BY loan_status
+ORDER BY total_loans DESC;

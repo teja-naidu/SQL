@@ -239,3 +239,99 @@ Monthly trend analysis helps financial institutions identify seasonal lending pa
 ## Business Value
 
 Portfolio segmentation analysis helps identify key borrower groups, regional lending opportunities, borrowing behavior patterns, and credit risk concentrations. These insights support data-driven lending strategies, risk management practices, and portfolio optimization initiatives.
+
+# Day 5 Insights - Risk & Performance Dashboard
+
+## State-wise Credit Risk Analysis
+
+### Top States with Charged-Off Loans
+
+| State | Bad Loans |
+|--------|---------:|
+| CA | 1,057 |
+| FL | 479 |
+| NY | 468 |
+| TX | 301 |
+| NJ | 273 |
+
+### Key Findings
+
+* California recorded the highest number of charged-off loans with 1,057 loans.
+* Florida and New York also showed elevated levels of credit risk.
+* States with the largest loan portfolios also experienced the highest number of loan defaults.
+* Geographic concentration risk should be monitored in high-volume lending markets.
+
+---
+
+## Purpose-wise Credit Risk Analysis
+
+### Top Loan Purposes with Charged-Off Loans
+
+| Purpose | Bad Loans |
+|-------------------|---------:|
+| Debt Consolidation | 2,651 |
+| Other | 587 |
+| Credit Card | 508 |
+| Small Business | 455 |
+| Home Improvement | 327 |
+
+### Key Findings
+
+* Debt Consolidation loans accounted for the highest number of charged-off loans.
+* Credit Card and Small Business loans exhibited relatively higher default volumes.
+* Borrowers using loans for debt restructuring may require additional risk assessment.
+* Loan purpose remains an important predictor of credit performance.
+
+---
+
+## Grade-wise Performance Analysis
+
+### Good Loan Percentage by Grade
+
+| Grade | Good Loan % |
+|--------|-----------:|
+| A | 94.30% |
+| B | 88.50% |
+| C | 83.98% |
+| D | 79.31% |
+| E | 75.20% |
+| F | 69.75% |
+| G | 68.69% |
+
+### Key Findings
+
+* Grade A loans demonstrated the strongest performance with a 94.30% good loan rate.
+* Loan quality consistently declined as credit grade moved from A to G.
+* Lower-grade loans experienced higher default risk.
+* Credit grading effectively differentiates borrower risk profiles.
+
+---
+
+## Portfolio Performance Dashboard
+
+| Loan Status | Loans | Portfolio % |
+|------------|------:|------------:|
+| Fully Paid | 32,145 | 83.33% |
+| Charged Off | 5,333 | 13.82% |
+| Current | 1,098 | 2.85% |
+
+### Key Findings
+
+* More than 83% of loans have been successfully repaid.
+* Charged-Off loans represent 13.82% of the overall portfolio.
+* Current loans account for a relatively small portion of active loans.
+* Overall portfolio performance indicates a healthy lending operation with manageable risk exposure.
+
+---
+
+## Final Business Recommendations
+
+* Increase monitoring of Debt Consolidation and Small Business loans due to higher default volumes.
+* Implement enhanced credit review processes for lower-grade borrowers.
+* Continue focusing on high-performing Grade A and Grade B lending segments.
+* Monitor geographic risk concentration in California, Florida, and New York.
+* Use portfolio segmentation insights to improve lending decisions and optimize risk-adjusted returns.
+
+## Business Value
+
+This dashboard provides a comprehensive view of portfolio performance, credit risk exposure, borrower behavior, and lending effectiveness. The analysis supports strategic decision-making, risk mitigation, and portfolio optimization for financial institutions.

@@ -44,3 +44,48 @@ Sales overview analytics help businesses:
 * Understand customer purchasing patterns.
 * Measure customer acquisition effectiveness.
 * Support strategic planning and forecasting decisions.
+
+# Day 2 Insights - Customer Analytics
+
+## Key Findings
+
+### Top Customer Analysis
+
+* Customer C38840 generated the highest revenue, spending $5,723.23 across two orders.
+* Several customers contributed more than $3,000 in total revenue, indicating the presence of high-value customers.
+* The top 10 customers each generated more than $3,300 in revenue.
+
+### Repeat Customer Analysis
+
+* Only 11 customers placed more than one order during the analysis period.
+* Most repeat customers placed exactly two orders.
+* The low number of repeat customers suggests customer retention opportunities for the business.
+
+### Customer Spending Behavior
+
+* High-spending customers contributed significantly to overall revenue.
+* Customer C38840 recorded an average order value of $2,861.62, the highest among repeat customers.
+* Many top customers generated substantial revenue from a single purchase, indicating strong one-time transaction values.
+
+### Customer Segmentation
+
+* Medium Value customers represent the largest segment with 495 orders.
+* Low Value customers account for 383 orders.
+* High Value customers account for 322 orders.
+* The balanced distribution across segments indicates a diverse customer purchasing pattern.
+
+### High-Value Customers
+
+* A total of 34 customers spent more than $3,000.
+* These customers represent a valuable segment for loyalty programs and targeted marketing campaigns.
+* Retaining high-value customers could significantly increase long-term business revenue.
+
+## Business Value
+
+Customer analytics helps businesses:
+
+* Identify high-value customers.
+* Improve customer retention strategies.
+* Understand spending patterns across customer segments.
+* Design personalized marketing campaigns.
+* Increase customer lifetime value and revenue growth.

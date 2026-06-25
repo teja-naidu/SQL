@@ -89,3 +89,48 @@ Customer analytics helps businesses:
 * Understand spending patterns across customer segments.
 * Design personalized marketing campaigns.
 * Increase customer lifetime value and revenue growth.
+
+# Day 3 Insights - Product Analytics
+
+## Key Findings
+
+### Product Sales Performance
+
+* Chair was the best-selling product with 562 units sold.
+* Printer and Laptop followed closely with 542 and 535 units sold, respectively.
+* Phone recorded the lowest sales volume with 411 units sold.
+
+### Revenue Analysis by Product
+
+* Chair generated the highest revenue at $195,620.11.
+* Printer ranked second with $195,612.61 in total revenue.
+* Laptop contributed $192,126.56, making it one of the top-performing products.
+* Phone generated the lowest revenue at $151,722.39.
+
+### Average Order Value
+
+* Laptop recorded the highest average order value of $1,110.56.
+* Chair, Printer, and Monitor also maintained average order values above $1,000.
+* Phone had the lowest average order value at $972.58.
+
+### Product Revenue Contribution
+
+* Chair and Printer each contributed approximately 15.47% of total revenue.
+* Laptop accounted for 15.19% of total revenue.
+* The seven products contributed relatively evenly, indicating a well-balanced product portfolio with no single product dominating overall sales.
+
+### Product Ranking
+
+* Chair ranked as the highest revenue-generating product.
+* Printer secured the second position, followed by Laptop in third place.
+* The revenue difference among the top products is relatively small, demonstrating consistent performance across the product catalog.
+
+## Business Value
+
+Product analytics helps businesses:
+
+* Identify top-performing products.
+* Measure revenue contribution by product.
+* Understand customer purchasing preferences.
+* Optimize inventory planning and stock management.
+* Support pricing, promotion, and product portfolio decisions.

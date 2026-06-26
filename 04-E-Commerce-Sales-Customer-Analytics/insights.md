@@ -135,7 +135,6 @@ Product analytics helps businesses:
 * Optimize inventory planning and stock management.
 * Support pricing, promotion, and product portfolio decisions.
 
-
 # Day 4 Insights - Marketing Analytics
 
 ## Key Findings
@@ -162,9 +161,10 @@ Product analytics helps businesses:
 
 ### Order Status Analysis
 
-* Cancelled orders represented the highest count with 250 orders and generated the highest associated revenue.
+* Cancelled orders accounted for the highest number of records with 250 orders.
 * Returned, Pending, Shipped, and Delivered orders were distributed fairly evenly across the dataset.
-* The balanced distribution suggests the dataset was created for analytical purposes rather than representing real operational performance.
+* Revenue values are present across all order statuses because the dataset is intended for analytical practice rather than representing real operational transactions.
+* Order status analysis helps identify the distribution of orders across different stages of the fulfillment process.
 
 ## Business Value
 
@@ -175,7 +175,6 @@ Marketing analytics enables businesses to:
 * Understand customer payment preferences.
 * Monitor order processing status.
 * Optimize marketing strategies and promotional campaigns based on customer behavior.
-
 
 # Day 5 Insights - Advanced SQL Analytics
 

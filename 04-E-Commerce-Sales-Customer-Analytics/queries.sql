@@ -184,3 +184,90 @@ SELECT
 FROM ecommerce_orders
 GROUP BY OrderStatus
 ORDER BY total_orders DESC;
+
+-- 21. Running Monthly Revenue
+
+WITH monthly_revenue AS (
+    SELECT
+        YEAR(Date) AS year,
+        MONTH(Date) AS month,
+        ROUND(SUM(TotalPrice), 2) AS revenue
+    FROM ecommerce_orders
+    GROUP BY 1,2
+)
+
+SELECT
+    year,
+    month,
+    revenue,
+    ROUND(
+        SUM(revenue) OVER (
+            ORDER BY year, month
+        ),
+        2
+    ) AS running_revenue
+FROM monthly_revenue;
+
+-- 22. Monthly Revenue Growth
+
+WITH monthly_revenue AS (
+    SELECT
+        YEAR(Date) AS year,
+        MONTH(Date) AS month,
+        ROUND(SUM(TotalPrice), 2) AS revenue
+    FROM ecommerce_orders
+    GROUP BY 1,2
+)
+
+SELECT
+    year,
+    month,
+    revenue,
+    ROUND(
+        revenue -
+        LAG(revenue) OVER (
+            ORDER BY year, month
+        ),
+        2
+    ) AS revenue_growth
+FROM monthly_revenue;
+
+-- 23. Top Product by Revenue
+
+SELECT
+    Product,
+    ROUND(SUM(TotalPrice),2) AS total_revenue,
+    DENSE_RANK() OVER(
+        ORDER BY SUM(TotalPrice) DESC
+    ) AS revenue_rank
+FROM ecommerce_orders
+GROUP BY Product
+ORDER BY revenue_rank;
+
+-- 24. Customer Revenue Ranking
+
+SELECT
+    CustomerID,
+    ROUND(SUM(TotalPrice),2) AS total_spent,
+    DENSE_RANK() OVER(
+        ORDER BY SUM(TotalPrice) DESC
+    ) AS customer_rank
+FROM ecommerce_orders
+GROUP BY CustomerID
+LIMIT 20;
+
+-- 25. Business Dashboard
+
+WITH dashboard AS (
+
+SELECT
+    COUNT(*) AS total_orders,
+    COUNT(DISTINCT CustomerID) AS total_customers,
+    ROUND(SUM(TotalPrice),2) AS total_revenue,
+    ROUND(AVG(TotalPrice),2) AS average_order_value
+FROM ecommerce_orders
+
+)
+
+SELECT *
+FROM dashboard;

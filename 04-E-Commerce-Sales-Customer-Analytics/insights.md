@@ -175,3 +175,51 @@ Marketing analytics enables businesses to:
 * Understand customer payment preferences.
 * Monitor order processing status.
 * Optimize marketing strategies and promotional campaigns based on customer behavior.
+
+
+# Day 5 Insights - Advanced SQL Analytics
+
+## Key Findings
+
+### Running Revenue Analysis
+
+* Running revenue steadily increased throughout the analysis period, reaching a cumulative revenue of $1,264,761.96 by June 2025.
+* The cumulative trend provides a clear view of long-term business growth over time.
+* Window functions simplify cumulative calculations without requiring complex subqueries.
+
+### Monthly Revenue Growth
+
+* Monthly revenue experienced both positive and negative fluctuations throughout the analysis period.
+* June 2024 recorded one of the largest month-over-month revenue increases, growing by approximately $40.2K.
+* Revenue growth continued to fluctuate during 2025, reflecting changing customer purchasing behavior.
+
+### Product Revenue Ranking
+
+* Chair ranked as the highest revenue-generating product.
+* Printer secured the second position, followed closely by Laptop.
+* Revenue rankings remained consistent with previous product performance analysis, validating the overall sales trends.
+
+### Customer Revenue Ranking
+
+* Customer C38840 ranked first with total spending of $5,723.23.
+* The top 20 customers generated significantly higher revenue than the average customer.
+* Customer ranking enables businesses to identify VIP customers for loyalty programs and targeted marketing initiatives.
+
+### Business Dashboard
+
+* The dashboard summarizes key business KPIs in a single query.
+* Total Orders: 1,200
+* Total Customers: 1,189
+* Total Revenue: $1,264,761.96
+* Average Order Value: $1,053.97
+* Using a Common Table Expression (CTE) creates reusable and maintainable SQL for business reporting.
+
+## Business Value
+
+Advanced SQL analytics enables businesses to:
+
+* Track cumulative revenue growth over time.
+* Measure month-over-month business performance.
+* Rank products and customers based on revenue contribution.
+* Build reusable business dashboards using CTEs.
+* Support data-driven decision making through advanced SQL techniques.

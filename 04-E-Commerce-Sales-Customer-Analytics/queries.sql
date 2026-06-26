@@ -136,3 +136,51 @@ SELECT
 FROM ecommerce_orders
 GROUP BY Product
 ORDER BY product_rank;
+
+-- 16. Revenue by Referral Source
+
+SELECT
+    ReferralSource,
+    ROUND(SUM(TotalPrice), 2) AS total_revenue
+FROM ecommerce_orders
+GROUP BY ReferralSource
+ORDER BY total_revenue DESC;
+
+-- 17. Orders by Referral Source
+
+SELECT
+    ReferralSource,
+    COUNT(OrderID) AS total_orders
+FROM ecommerce_orders
+GROUP BY ReferralSource
+ORDER BY total_orders DESC;
+
+-- 18. Coupon Code Performance
+
+SELECT
+    CouponCode,
+    COUNT(OrderID) AS total_orders,
+    ROUND(SUM(TotalPrice), 2) AS total_revenue
+FROM ecommerce_orders
+GROUP BY CouponCode
+ORDER BY total_revenue DESC;
+
+-- 19. Payment Method Analysis
+
+SELECT
+    PaymentMethod,
+    COUNT(OrderID) AS total_orders,
+    ROUND(SUM(TotalPrice), 2) AS total_revenue
+FROM ecommerce_orders
+GROUP BY PaymentMethod
+ORDER BY total_revenue DESC;
+
+-- 20. Order Status Analysis
+
+SELECT
+    OrderStatus,
+    COUNT(OrderID) AS total_orders,
+    ROUND(SUM(TotalPrice), 2) AS total_revenue
+FROM ecommerce_orders
+GROUP BY OrderStatus
+ORDER BY total_orders DESC;

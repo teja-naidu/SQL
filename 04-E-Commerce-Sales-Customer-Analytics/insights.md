@@ -134,3 +134,44 @@ Product analytics helps businesses:
 * Understand customer purchasing preferences.
 * Optimize inventory planning and stock management.
 * Support pricing, promotion, and product portfolio decisions.
+
+
+# Day 4 Insights - Marketing Analytics
+
+## Key Findings
+
+### Referral Source Performance
+
+* Instagram generated the highest revenue at $275,285.45.
+* Email ranked second with $261,808.55 in total revenue.
+* Google and Facebook delivered comparable revenue, while Referral contributed the lowest among all acquisition channels.
+* Instagram also generated the highest number of orders with 259 transactions.
+
+### Coupon Code Performance
+
+* FREESHIP was the best-performing coupon, generating $335,036.99 in revenue across 313 orders.
+* Orders without a coupon code generated $322,401.41 in revenue, indicating that many customers purchase without promotional offers.
+* SAVE10 and WINTER15 also contributed significantly to overall sales performance.
+
+### Payment Method Analysis
+
+* Credit Card generated the highest revenue at $263,847.63.
+* Online payments recorded the highest number of orders with 258 transactions.
+* Cash and Gift Card remained popular payment options with strong revenue contributions.
+* Revenue distribution across payment methods is relatively balanced, indicating customers prefer multiple payment options.
+
+### Order Status Analysis
+
+* Cancelled orders represented the highest count with 250 orders and generated the highest associated revenue.
+* Returned, Pending, Shipped, and Delivered orders were distributed fairly evenly across the dataset.
+* The balanced distribution suggests the dataset was created for analytical purposes rather than representing real operational performance.
+
+## Business Value
+
+Marketing analytics enables businesses to:
+
+* Measure the effectiveness of customer acquisition channels.
+* Evaluate coupon campaign performance.
+* Understand customer payment preferences.
+* Monitor order processing status.
+* Optimize marketing strategies and promotional campaigns based on customer behavior.

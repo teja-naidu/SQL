@@ -321,3 +321,162 @@ JOIN teams t
     ON mts.team_id = t.team_id
 GROUP BY t.team_name
 ORDER BY average_possession DESC;
+
+-- ==========================================================
+-- Day 3 - Player & Match Event Analytics
+-- ==========================================================
+
+-- ----------------------------------------------------------
+-- Query 21: Players by Playing Position
+-- Business Question:
+-- How many players belong to each playing position?
+-- ----------------------------------------------------------
+
+SELECT
+    position,
+    COUNT(*) AS total_players
+FROM squads_and_players
+GROUP BY position
+ORDER BY total_players DESC;
+
+
+-- ----------------------------------------------------------
+-- Query 22: Top 10 Most Valuable Players
+-- Business Question:
+-- Which players have the highest market value?
+-- ----------------------------------------------------------
+
+SELECT
+    player_name,
+    club_team,
+    position,
+    market_value_eur
+FROM squads_and_players
+ORDER BY market_value_eur DESC
+LIMIT 10;
+
+
+-- ----------------------------------------------------------
+-- Query 23: Clubs Contributing the Most Players
+-- Business Question:
+-- Which clubs contributed the highest number of players?
+-- ----------------------------------------------------------
+
+SELECT
+    club_team,
+    COUNT(*) AS total_players
+FROM squads_and_players
+GROUP BY club_team
+ORDER BY total_players DESC
+LIMIT 10;
+
+
+-- ----------------------------------------------------------
+-- Query 24: Average Market Value by Position
+-- Business Question:
+-- What is the average player market value by position?
+-- ----------------------------------------------------------
+
+SELECT
+    position,
+    ROUND(AVG(market_value_eur),0) AS average_market_value
+FROM squads_and_players
+GROUP BY position
+ORDER BY average_market_value DESC;
+
+
+-- ----------------------------------------------------------
+-- Query 25: Teams with the Highest Total Market Value
+-- Business Question:
+-- Which national teams have the highest combined squad value?
+-- ----------------------------------------------------------
+
+SELECT
+    t.team_name,
+    ROUND(SUM(s.market_value_eur),0) AS squad_market_value
+FROM squads_and_players s
+JOIN teams t
+ON s.team_id = t.team_id
+GROUP BY t.team_name
+ORDER BY squad_market_value DESC
+LIMIT 10;
+
+
+-- ----------------------------------------------------------
+-- Query 26: Match Events by Event Type
+-- Business Question:
+-- How many events of each type occurred during the tournament?
+-- ----------------------------------------------------------
+
+SELECT
+    event_type,
+    COUNT(*) AS total_events
+FROM match_events
+GROUP BY event_type
+ORDER BY total_events DESC;
+
+
+-- ----------------------------------------------------------
+-- Query 27: Players with the Most Match Events
+-- Business Question:
+-- Which players were involved in the highest number of recorded events?
+-- ----------------------------------------------------------
+
+SELECT
+    s.player_name,
+    COUNT(*) AS total_events
+FROM match_events me
+JOIN squads_and_players s
+ON me.player_id = s.player_id
+GROUP BY s.player_name
+ORDER BY total_events DESC
+LIMIT 10;
+
+
+-- ----------------------------------------------------------
+-- Query 28: Teams with the Most Match Events
+-- Business Question:
+-- Which teams were involved in the highest number of match events?
+-- ----------------------------------------------------------
+
+SELECT
+    t.team_name,
+    COUNT(*) AS total_events
+FROM match_events me
+JOIN teams t
+ON me.team_id = t.team_id
+GROUP BY t.team_name
+ORDER BY total_events DESC;
+
+
+-- ----------------------------------------------------------
+-- Query 29: Average Minutes Played by Position
+-- Business Question:
+-- What is the average playing time by position?
+-- ----------------------------------------------------------
+
+SELECT
+    s.position,
+    ROUND(AVG(ml.minutes_played),2) AS average_minutes
+FROM match_lineups ml
+JOIN squads_and_players s
+ON ml.player_id = s.player_id
+GROUP BY s.position
+ORDER BY average_minutes DESC;
+
+
+-- ----------------------------------------------------------
+-- Query 30: Starting XI Players by Team
+-- Business Question:
+-- Which teams used the most starting XI appearances?
+-- ----------------------------------------------------------
+
+SELECT
+    t.team_name,
+    COUNT(*) AS starting_xi_appearances
+FROM match_lineups ml
+JOIN teams t
+ON ml.team_id = t.team_id
+WHERE ml.is_starting_xi = TRUE
+GROUP BY t.team_name
+ORDER BY starting_xi_appearances DESC;

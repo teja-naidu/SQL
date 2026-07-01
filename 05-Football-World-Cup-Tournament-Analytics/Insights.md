@@ -82,3 +82,48 @@ Analyzing tournament overview data helps stakeholders:
 
 - Spain recorded the highest average ball possession (**70.5%**), reflecting a possession-oriented playing style.
 - Several top-performing teams consistently maintained possession above 55%, indicating strong midfield control and tactical discipline.
+
+## Player and Match Event Analysis
+
+### Player Distribution
+
+- The tournament features 1,248 registered players across four primary playing positions.
+- Defenders make up the largest group with **421 players**, followed by **369 midfielders**, **313 forwards**, and **145 goalkeepers**.
+- The squad composition highlights the importance of defensive depth across participating teams.
+
+### Market Value Analysis
+
+- **Lamine Yamal** and **Erling Haaland** are the highest-valued players in the tournament, each with a market value of **€200 million**.
+- **France** possesses the highest overall squad market value, followed by **England**, **Spain**, and **Portugal**.
+- Among all positions, **forwards** have the highest average market value, reflecting the premium placed on attacking talent in modern football.
+
+### Club Representation
+
+- **Manchester City FC** contributed the highest number of players to the tournament, followed by **FC Bayern München** and **Paris Saint-Germain**.
+- Several elite European clubs supplied a significant portion of the tournament's player pool, demonstrating their influence on international football.
+
+### Match Event Analysis
+
+- A total of **216 goals** and **146 assists** were recorded during the tournament.
+- **Yellow cards (55)** were significantly more common than **red cards (9)**, indicating relatively disciplined gameplay throughout the competition.
+- A small number of **VAR reviews** were recorded, highlighting the use of technology in important match decisions.
+
+### Player Performance
+
+- **Kylian Mbappé** and **Lionel Messi** were involved in the highest number of recorded match events, emphasizing their impact on their respective teams.
+- Several attacking players consistently contributed through goals and assists during the tournament.
+
+### Team Event Analysis
+
+- **France** recorded the highest number of match events, followed by **Germany** and **Senegal**.
+- Higher event involvement generally reflects increased attacking opportunities and overall match activity.
+
+### Playing Time Analysis
+
+- Midfielders recorded the highest average playing time among all positions, followed by defenders.
+- This reflects the crucial role of midfield players in controlling possession and maintaining match tempo throughout the tournament.
+
+### Starting XI Analysis
+
+- Most teams maintained a consistent starting lineup across the tournament.
+- Teams advancing further in the competition naturally accumulated a higher number of starting XI appearances due to playing more matches.

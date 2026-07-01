@@ -48,3 +48,37 @@ Analyzing tournament overview data helps stakeholders:
 - Assess team strength using FIFA and Elo rankings.
 - Analyze venue utilization and hosting capacity.
 - Build a foundation for deeper match, player, and performance analytics in subsequent analysis.
+
+## Match and Team Performance Analysis
+
+### Goal Statistics
+
+- A total of **216 goals** were scored across 89 matches, averaging **2.96 goals per match**.
+- The highest-scoring match was **Germany vs Curaçao**, ending with an **8-goal thriller (7–1)**.
+- Several matches featured six or more total goals, highlighting the tournament's attacking style of play.
+
+### Team Performance
+
+- Germany, France, and the Netherlands finished among the tournament's highest-scoring teams with **10 goals each**.
+- France recorded the best overall goal difference (**+8**), demonstrating both strong attacking and defensive performances.
+- Most participating teams played between **3 and 5 matches**, depending on how far they progressed in the tournament.
+
+### Expected Goals (xG)
+
+- Germany vs Curaçao also recorded the highest combined expected goals (xG), indicating a match with numerous high-quality scoring opportunities.
+- Comparing xG with actual goals provides deeper insight into finishing efficiency and attacking effectiveness.
+
+### Venue Analysis
+
+- **MetLife Stadium (New York/New Jersey)** hosted the highest number of matches during the tournament.
+- Match distribution across venues reflects effective utilization of stadium infrastructure throughout the competition.
+
+### Referee Analysis
+
+- Match officiating responsibilities were distributed evenly among referees, with several officials overseeing six matches each.
+- This balanced allocation helps maintain fairness and consistency throughout the tournament.
+
+### Possession Analysis
+
+- Spain recorded the highest average ball possession (**70.5%**), reflecting a possession-oriented playing style.
+- Several top-performing teams consistently maintained possession above 55%, indicating strong midfield control and tactical discipline.

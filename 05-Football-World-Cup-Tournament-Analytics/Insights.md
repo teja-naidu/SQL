@@ -127,3 +127,61 @@ Analyzing tournament overview data helps stakeholders:
 
 - Most teams maintained a consistent starting lineup across the tournament.
 - Teams advancing further in the competition naturally accumulated a higher number of starting XI appearances due to playing more matches.
+
+---
+
+## Advanced SQL Analytics
+
+### Team Ranking Analysis
+
+- Common Table Expressions (CTEs) were used to calculate total goals scored and goal differences for each participating team.
+- Window functions enabled dynamic team rankings based on overall tournament goal difference.
+- Advanced ranking techniques provided a clear comparison of attacking efficiency and defensive performance across all participating teams.
+
+### Player Market Value Rankings
+
+- Window functions such as **DENSE_RANK()** and **ROW_NUMBER()** were used to rank players based on their market values.
+- Position-wise rankings identified the most valuable player in each playing position.
+- Top-three player rankings for every position provide additional insight into positional talent distribution across the tournament.
+
+### Tournament Goal Progression
+
+- Running total calculations were used to monitor cumulative goals scored throughout the tournament.
+- Goal progression analysis illustrates how scoring trends evolved over different match days.
+
+### Squad Value Analysis
+
+- Squad market values were aggregated using Common Table Expressions and combined with team information to evaluate financial strength by confederation.
+- UEFA teams recorded the highest average squad values, highlighting the concentration of elite football talent within European nations.
+
+### Stage-wise Match Analysis
+
+- Advanced ranking functions identified the highest-scoring match within each tournament stage.
+- This analysis highlights the most entertaining fixtures across both group and knockout stages.
+
+### Possession Performance
+
+- Teams were ranked according to their average possession percentages using window functions.
+- Possession-based rankings provide additional insight into tactical playing styles and ball control throughout the tournament.
+
+### Player Workload Analysis
+
+- Total playing minutes were aggregated across all matches to identify players with the highest tournament workload.
+- This analysis highlights players who consistently featured throughout the competition and played key roles for their national teams.
+
+---
+
+## Advanced SQL Concepts Demonstrated
+
+The project incorporates several advanced SQL techniques commonly used in real-world analytics and reporting:
+
+- Common Table Expressions (CTEs)
+- Window Functions
+- ROW_NUMBER()
+- RANK()
+- DENSE_RANK()
+- PARTITION BY
+- Running Totals
+- Multi-level Aggregations
+- Complex JOIN Operations
+- Advanced Business Reporting

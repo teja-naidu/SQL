@@ -185,3 +185,85 @@ The project incorporates several advanced SQL techniques commonly used in real-w
 - Multi-level Aggregations
 - Complex JOIN Operations
 - Advanced Business Reporting
+
+---
+
+## Executive Dashboard and Business Reporting
+
+### Tournament Summary
+
+- Executive dashboard queries provide a consolidated view of key tournament metrics, including participating teams, registered players, matches played, venues, and total goals scored.
+- These summary metrics offer a high-level overview of the tournament and support quick decision-making.
+
+### Team Performance Dashboard
+
+- Teams were evaluated based on their average goals scored per match, providing a more balanced measure of attacking efficiency than total goals alone.
+- Average goal metrics help compare team performance regardless of the number of matches played.
+
+### Stadium Performance Analysis
+
+- Stadiums were ranked by the total number of goals scored in matches they hosted.
+- This analysis highlights venues associated with the most entertaining and high-scoring matches during the tournament.
+
+### Confederation Performance
+
+- Average possession statistics were analyzed at the confederation level to compare regional playing styles.
+- The analysis demonstrates how different football confederations emphasize possession-based or direct attacking strategies.
+
+### Player Workload
+
+- Total playing minutes were aggregated to identify players with the highest workload throughout the tournament.
+- These players consistently featured for their national teams and played key roles across multiple matches.
+
+### Shooting Efficiency
+
+- Shot accuracy was calculated using the ratio of shots on target to total shots.
+- Teams with higher shooting efficiency demonstrated better finishing ability and created higher-quality scoring opportunities.
+
+### Stage-wise Goal Analysis
+
+- Goal-scoring trends were analyzed across each tournament stage.
+- Comparing average goals by stage provides insight into how match intensity and scoring patterns changed throughout the competition.
+
+### Discipline Analysis
+
+- Yellow and red card events were aggregated to evaluate team discipline.
+- Teams with higher card counts may indicate a more aggressive playing style or greater defensive pressure during matches.
+
+### Club Market Value
+
+- Club-level market value analysis identified the clubs contributing the highest overall player market value to the tournament.
+- Elite European clubs dominate the rankings, reflecting their concentration of world-class football talent.
+
+### Executive Reporting
+
+- Executive summary reports combine tournament KPIs, team performance, player statistics, venue analysis, and financial metrics into a single analytical view.
+- These reports support coaches, analysts, tournament organizers, and football executives in evaluating overall tournament performance and identifying strategic insights.
+
+---
+
+## Project Summary
+
+This project demonstrates the use of SQL to analyze a large, normalized football tournament database containing team, player, match, event, venue, and referee information.
+
+Throughout the project, SQL was used to transform raw tournament data into meaningful business insights by applying both foundational and advanced analytical techniques.
+
+### SQL Concepts Demonstrated
+
+- Aggregate Functions
+- GROUP BY and HAVING
+- CASE WHEN
+- INNER JOIN
+- UNION ALL
+- Common Table Expressions (CTEs)
+- Window Functions
+- ROW_NUMBER()
+- RANK()
+- DENSE_RANK()
+- PARTITION BY
+- Running Totals
+- Multi-level Aggregations
+- Complex JOIN Operations
+- Executive Dashboard Reporting
+
+The project showcases how SQL can be used not only for querying data but also for generating business intelligence, performance reports, and executive dashboards that support data-driven decision-making in sports analytics.

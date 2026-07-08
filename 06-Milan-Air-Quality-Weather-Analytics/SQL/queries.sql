@@ -248,3 +248,127 @@ SELECT
     MAX(max_ozone) AS highest_ozone,
     MAX(max_sulphur_dioxide) AS highest_so2
 FROM daily_air_quality_weather;
+
+-- ==========================================
+-- Day 3 - Weather Analytics
+-- ==========================================
+
+--------------------------------------------------
+-- Query 1 : Monthly Average Temperature
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_temperature_2m),2) AS avg_temperature
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 2 : Monthly Average Humidity
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_relative_humidity_2m),2) AS avg_humidity
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 3 : Monthly Average Rainfall
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(sum_precipitation),2) AS avg_rainfall
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 4 : Monthly Average Wind Speed
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(max_wind_speed_10m),2) AS avg_wind_speed
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 5 : Monthly Average Atmospheric Pressure
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_pressure_msl),2) AS avg_pressure
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 6 : Hottest 10 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    max_temperature_2m
+FROM daily_air_quality_weather
+ORDER BY max_temperature_2m DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 7 : Coldest 10 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    min_temperature_2m
+FROM daily_air_quality_weather
+ORDER BY min_temperature_2m ASC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 8 : Rainiest 10 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    sum_precipitation
+FROM daily_air_quality_weather
+ORDER BY sum_precipitation DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 9 : Windiest 10 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    max_wind_speed_10m
+FROM daily_air_quality_weather
+ORDER BY max_wind_speed_10m DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 10 : Weather Summary
+--------------------------------------------------
+
+SELECT
+    ROUND(AVG(avg_temperature_2m),2) AS avg_temperature,
+    ROUND(AVG(avg_relative_humidity_2m),2) AS avg_humidity,
+    ROUND(AVG(sum_precipitation),2) AS avg_rainfall,
+    ROUND(AVG(max_wind_speed_10m),2) AS avg_wind_speed,
+    ROUND(AVG(avg_pressure_msl),2) AS avg_pressure
+FROM daily_air_quality_weather;

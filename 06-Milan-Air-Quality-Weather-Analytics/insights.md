@@ -88,3 +88,50 @@ Analyzing historical air quality patterns helps environmental agencies and city 
 - Support public health awareness initiatives.
 - Evaluate the effectiveness of environmental regulations.
 - Improve urban sustainability and pollution management strategies.
+
+---
+
+# Day 3 Insights - Weather Analytics
+
+## Key Findings
+
+### Temperature Analysis
+
+- Monthly average temperatures were analyzed to identify seasonal weather patterns throughout the observation period.
+- The dataset highlights significant temperature variations between colder winter months and warmer summer months.
+- The hottest and coldest days were identified, providing insights into extreme weather events.
+
+### Humidity Analysis
+
+- Average humidity levels vary across different months, reflecting seasonal atmospheric changes.
+- Higher humidity levels are generally observed during colder months, while relatively lower humidity occurs during warmer periods.
+- Understanding humidity trends helps evaluate overall weather conditions and their potential influence on air quality.
+
+### Rainfall Analysis
+
+- Monthly rainfall patterns were examined using cumulative daily precipitation values.
+- The analysis identified the rainiest days within the dataset, highlighting periods of significant precipitation.
+- Rainfall trends provide valuable context for understanding seasonal weather variations and their relationship with environmental conditions.
+
+### Wind Speed Analysis
+
+- Monthly average wind speeds were analyzed to understand changes in atmospheric movement throughout the year.
+- The windiest days were identified, representing periods with stronger wind activity.
+- Wind speed plays an important role in the dispersion of air pollutants and overall air quality.
+
+### Atmospheric Pressure Analysis
+
+- Average atmospheric pressure remained relatively stable across the observation period with normal seasonal fluctuations.
+- Pressure measurements provide additional insight into changing weather systems and environmental conditions.
+
+---
+
+## Business Value
+
+Weather analytics provides valuable insights that support environmental monitoring and urban planning by:
+
+- Understanding seasonal weather variations.
+- Identifying extreme temperature and precipitation events.
+- Monitoring long-term climate patterns.
+- Supporting future air quality correlation analysis.
+- Assisting environmental agencies in data-driven decision-making for sustainable city management.

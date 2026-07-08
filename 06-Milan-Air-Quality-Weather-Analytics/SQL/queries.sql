@@ -114,3 +114,137 @@ SELECT
     ROUND(AVG(pressure_msl),2) AS avg_pressure,
     ROUND(AVG(wind_speed_10m),2) AS avg_wind_speed
 FROM hourly_air_quality_weather;
+
+-- ==========================================
+-- Day 2 - Air Quality Analytics
+-- ==========================================
+
+--------------------------------------------------
+-- Query 1 : Average Pollution Levels
+--------------------------------------------------
+
+SELECT
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(avg_nitrogen_dioxide),2) AS avg_no2,
+    ROUND(AVG(avg_ozone),2) AS avg_ozone,
+    ROUND(AVG(avg_sulphur_dioxide),2) AS avg_so2
+FROM daily_air_quality_weather;
+
+
+--------------------------------------------------
+-- Query 2 : Monthly Average PM2.5
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 3 : Monthly Average PM10
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 4 : Monthly Average European AQI
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 5 : Top 10 Most Polluted Days (EAQI)
+--------------------------------------------------
+
+SELECT
+    date,
+    eaqi
+FROM daily_air_quality_weather
+ORDER BY eaqi DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 6 : Top 10 Highest PM2.5 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    avg_pm2_5
+FROM daily_air_quality_weather
+ORDER BY avg_pm2_5 DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 7 : Top 10 Highest PM10 Days
+--------------------------------------------------
+
+SELECT
+    date,
+    avg_pm10
+FROM daily_air_quality_weather
+ORDER BY avg_pm10 DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 8 : Air Quality Category Distribution
+--------------------------------------------------
+
+SELECT
+    CASE
+        WHEN eaqi <= 20 THEN 'Good'
+        WHEN eaqi <= 40 THEN 'Fair'
+        WHEN eaqi <= 60 THEN 'Moderate'
+        WHEN eaqi <= 80 THEN 'Poor'
+        WHEN eaqi <= 100 THEN 'Very Poor'
+        ELSE 'Extremely Poor'
+    END AS air_quality_category,
+    COUNT(*) AS total_days
+FROM daily_air_quality_weather
+GROUP BY air_quality_category
+ORDER BY total_days DESC;
+
+
+--------------------------------------------------
+-- Query 9 : Average Pollutants by Year
+--------------------------------------------------
+
+SELECT
+    YEAR(date) AS year,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY year
+ORDER BY year;
+
+
+--------------------------------------------------
+-- Query 10 : Highest Daily Pollutant Levels
+--------------------------------------------------
+
+SELECT
+    MAX(max_pm2_5) AS highest_pm25,
+    MAX(max_pm10) AS highest_pm10,
+    MAX(max_nitrogen_dioxide) AS highest_no2,
+    MAX(max_ozone) AS highest_ozone,
+    MAX(max_sulphur_dioxide) AS highest_so2
+FROM daily_air_quality_weather;

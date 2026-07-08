@@ -39,3 +39,52 @@ Analyzing historical weather and air quality data can help:
 - Evaluate the relationship between weather and air pollution.
 - Support environmental monitoring and public health decision-making.
 - Provide insights for sustainable urban planning and pollution management.
+
+
+---
+
+# Day 2 Insights - Air Quality Analytics
+
+## Key Findings
+
+### Air Pollution Overview
+
+- The analysis evaluated key air pollutants, including PM2.5, PM10, Nitrogen Dioxide (NO₂), Ozone (O₃), and Sulphur Dioxide (SO₂).
+- Monthly and yearly trends were analyzed to identify variations in pollution levels throughout the observation period.
+- The European Air Quality Index (EAQI) was used to assess the overall air quality status.
+
+### Monthly Pollution Trends
+
+- Monthly average PM2.5 and PM10 concentrations show noticeable seasonal variations.
+- Average EAQI values fluctuate across different months, indicating changes in overall air quality throughout the year.
+- Certain months consistently experience higher pollution levels, while others maintain relatively cleaner air conditions.
+
+### Most Polluted Days
+
+- The analysis identified the top 10 days with the highest European Air Quality Index (EAQI) values.
+- Days with the highest PM2.5 and PM10 concentrations represent periods of elevated air pollution.
+- These high-pollution events can be further analyzed alongside weather conditions to understand possible contributing factors.
+
+### Air Quality Categories
+
+- Air quality observations were categorized into Good, Fair, Moderate, Poor, Very Poor, and Extremely Poor classifications.
+- The distribution of these categories provides an overview of Milan's environmental conditions over the study period.
+- Most observations fall within acceptable air quality ranges, while a smaller proportion represent periods of degraded air quality.
+
+### Yearly Air Quality Trends
+
+- Average pollutant concentrations were compared across multiple years.
+- Year-over-year comparisons help identify long-term improvements or deterioration in air quality.
+- These trends provide valuable insights for environmental monitoring and policy evaluation.
+
+---
+
+## Business Value
+
+Analyzing historical air quality patterns helps environmental agencies and city planners:
+
+- Monitor long-term pollution trends.
+- Identify high-risk pollution periods.
+- Support public health awareness initiatives.
+- Evaluate the effectiveness of environmental regulations.
+- Improve urban sustainability and pollution management strategies.

@@ -135,3 +135,56 @@ Weather analytics provides valuable insights that support environmental monitori
 - Monitoring long-term climate patterns.
 - Supporting future air quality correlation analysis.
 - Assisting environmental agencies in data-driven decision-making for sustainable city management.
+
+---
+
+# Day 4 Insights - Weather & Air Quality Correlation Analysis
+
+## Key Findings
+
+### Temperature and Air Quality
+
+- Air quality metrics were analyzed across different temperature ranges to identify potential relationships between temperature and pollution levels.
+- Average PM2.5, PM10, and EAQI values vary across temperature categories, indicating that weather conditions may influence pollutant concentrations.
+
+### Humidity and Pollution
+
+- Air quality was compared across multiple humidity ranges.
+- Variations in PM2.5, PM10, and EAQI suggest that humidity plays a role in the dispersion and accumulation of air pollutants.
+- This analysis provides a better understanding of atmospheric conditions associated with poor air quality.
+
+### Rainfall Impact
+
+- Rainy and non-rainy days were compared to evaluate the impact of precipitation on pollution levels.
+- Rainfall generally contributes to the removal of airborne particulate matter through natural atmospheric cleansing.
+- Comparing these conditions helps assess the effectiveness of precipitation in improving air quality.
+
+### Wind Speed Analysis
+
+- Air quality indicators were analyzed under different wind speed categories.
+- Wind plays an important role in dispersing pollutants and reducing localized pollution concentrations.
+- Stronger wind conditions generally promote better air circulation and improved environmental conditions.
+
+### Monthly Weather and Air Quality Trends
+
+- Monthly weather conditions were evaluated alongside key air pollution indicators.
+- The combined analysis highlights seasonal variations in both weather and air quality throughout the observation period.
+- Understanding these trends supports long-term environmental monitoring and urban planning initiatives.
+
+### High Pollution Periods
+
+- The analysis identified periods with pollution levels above the overall average.
+- These observations provide valuable insights into environmental conditions associated with elevated pollution events.
+- High pollution periods can be further investigated to understand contributing meteorological and seasonal factors.
+
+---
+
+## Business Value
+
+Understanding the relationship between weather conditions and air quality helps organizations and public agencies:
+
+- Monitor environmental risks more effectively.
+- Improve pollution forecasting and early warning systems.
+- Support evidence-based environmental policy decisions.
+- Develop sustainable urban planning strategies.
+- Enhance public health awareness through environmental analytics.

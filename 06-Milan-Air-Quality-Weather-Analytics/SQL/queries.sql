@@ -372,3 +372,189 @@ SELECT
     ROUND(AVG(max_wind_speed_10m),2) AS avg_wind_speed,
     ROUND(AVG(avg_pressure_msl),2) AS avg_pressure
 FROM daily_air_quality_weather;
+
+-- ==========================================
+-- Day 4 - Weather & Air Quality Correlation Analysis
+-- ==========================================
+
+--------------------------------------------------
+-- Query 1 : Average Air Quality by Temperature Range
+--------------------------------------------------
+
+SELECT
+    CASE
+        WHEN avg_temperature_2m < 10 THEN 'Below 10°C'
+        WHEN avg_temperature_2m BETWEEN 10 AND 20 THEN '10°C - 20°C'
+        WHEN avg_temperature_2m BETWEEN 20 AND 30 THEN '20°C - 30°C'
+        ELSE 'Above 30°C'
+    END AS temperature_range,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY temperature_range
+ORDER BY temperature_range;
+
+
+--------------------------------------------------
+-- Query 2 : Average Air Quality by Humidity Range
+--------------------------------------------------
+
+SELECT
+    CASE
+        WHEN avg_relative_humidity_2m < 50 THEN 'Below 50%'
+        WHEN avg_relative_humidity_2m BETWEEN 50 AND 70 THEN '50% - 70%'
+        WHEN avg_relative_humidity_2m BETWEEN 70 AND 90 THEN '70% - 90%'
+        ELSE 'Above 90%'
+    END AS humidity_range,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY humidity_range
+ORDER BY humidity_range;
+
+
+--------------------------------------------------
+-- Query 3 : Air Quality on Rainy vs Non-Rainy Days
+--------------------------------------------------
+
+SELECT
+    CASE
+        WHEN sum_precipitation > 0 THEN 'Rainy Day'
+        ELSE 'Non-Rainy Day'
+    END AS weather_condition,
+    COUNT(*) AS total_days,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY weather_condition;
+
+
+--------------------------------------------------
+-- Query 4 : Average Air Quality by Wind Speed Range
+--------------------------------------------------
+
+SELECT
+    CASE
+        WHEN max_wind_speed_10m < 10 THEN 'Low Wind'
+        WHEN max_wind_speed_10m BETWEEN 10 AND 20 THEN 'Moderate Wind'
+        ELSE 'High Wind'
+    END AS wind_category,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY wind_category
+ORDER BY wind_category;
+
+
+--------------------------------------------------
+-- Query 5 : Monthly Weather & Air Quality Summary Using CTE
+--------------------------------------------------
+
+WITH monthly_summary AS (
+    SELECT
+        YEAR(date) AS year,
+        MONTH(date) AS month,
+        ROUND(AVG(avg_temperature_2m),2) AS avg_temperature,
+        ROUND(AVG(avg_relative_humidity_2m),2) AS avg_humidity,
+        ROUND(AVG(sum_precipitation),2) AS avg_rainfall,
+        ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+        ROUND(AVG(avg_pm10),2) AS avg_pm10,
+        ROUND(AVG(eaqi),2) AS avg_eaqi
+    FROM daily_air_quality_weather
+    GROUP BY YEAR(date), MONTH(date)
+)
+
+SELECT *
+FROM monthly_summary
+ORDER BY year, month;
+
+
+--------------------------------------------------
+-- Query 6 : Top 10 Hottest Days with Air Quality
+--------------------------------------------------
+
+SELECT
+    date,
+    max_temperature_2m,
+    avg_pm2_5,
+    avg_pm10,
+    eaqi
+FROM daily_air_quality_weather
+ORDER BY max_temperature_2m DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 7 : Top 10 Rainiest Days with Air Quality
+--------------------------------------------------
+
+SELECT
+    date,
+    sum_precipitation,
+    avg_pm2_5,
+    avg_pm10,
+    eaqi
+FROM daily_air_quality_weather
+ORDER BY sum_precipitation DESC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 8 : Monthly Average Pollutants
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(avg_nitrogen_dioxide),2) AS avg_no2,
+    ROUND(AVG(avg_ozone),2) AS avg_ozone
+FROM daily_air_quality_weather
+GROUP BY month
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 9 : Cleanest 10 Days Based on EAQI
+--------------------------------------------------
+
+SELECT
+    date,
+    eaqi,
+    avg_pm2_5,
+    avg_pm10
+FROM daily_air_quality_weather
+ORDER BY eaqi ASC
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 10 : High Pollution Days Using CTE
+--------------------------------------------------
+
+WITH pollution_days AS (
+    SELECT
+        date,
+        avg_pm2_5,
+        avg_pm10,
+        eaqi,
+        avg_temperature_2m,
+        sum_precipitation
+    FROM daily_air_quality_weather
+    WHERE eaqi > (
+        SELECT AVG(eaqi)
+        FROM daily_air_quality_weather
+    )
+)
+
+SELECT
+    COUNT(*) AS high_pollution_days,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(avg_temperature_2m),2) AS avg_temperature,
+    ROUND(AVG(sum_precipitation),2) AS avg_rainfall
+FROM pollution_days;

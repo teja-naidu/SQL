@@ -188,3 +188,83 @@ Understanding the relationship between weather conditions and air quality helps 
 - Support evidence-based environmental policy decisions.
 - Develop sustainable urban planning strategies.
 - Enhance public health awareness through environmental analytics.
+
+---
+
+# Day 5 Insights - Advanced SQL Analytics
+
+## Key Findings
+
+### Monthly Pollution Ranking
+
+- Ranking functions were used to identify the months with the highest average PM2.5 concentrations and European Air Quality Index (EAQI) values.
+- The analysis highlights periods with consistently higher pollution levels, enabling easier comparison across months.
+- Ranking techniques simplify the identification of high-risk environmental periods.
+
+### Yearly Pollution Analysis
+
+- Year-over-year comparisons were performed to evaluate long-term changes in air quality.
+- Average PM2.5, PM10, and EAQI values were compared across multiple years to identify environmental trends.
+- These comparisons provide valuable insights into improvements or deteriorations in overall air quality.
+
+### Time-Series Analysis
+
+- Running averages were calculated to observe long-term pollution trends while minimizing the impact of short-term fluctuations.
+- Sequential analysis using previous-day and next-day comparisons provides better visibility into daily pollution changes.
+- Time-series techniques help monitor environmental patterns over extended periods.
+
+### Window Function Analysis
+
+- ROW_NUMBER() was used to identify the most polluted day within each year.
+- RANK() and DENSE_RANK() were applied to compare pollution levels across different months.
+- LAG() and LEAD() functions enabled comparisons between consecutive observations, supporting trend identification and change analysis.
+
+### Common Table Expressions (CTEs)
+
+- Common Table Expressions (CTEs) simplified complex analytical queries by breaking them into logical steps.
+- CTEs improved query readability, maintainability, and overall analytical workflow.
+- Multi-step summaries generated using CTEs provide meaningful environmental insights for reporting and decision-making.
+
+---
+
+## SQL Concepts Demonstrated
+
+Throughout this project, the following SQL concepts were applied:
+
+- Aggregate Functions
+- GROUP BY
+- HAVING
+- CASE Statements
+- Date Functions
+- Conditional Analysis
+- Common Table Expressions (CTEs)
+- Window Functions
+- ROW_NUMBER()
+- RANK()
+- DENSE_RANK()
+- LAG()
+- LEAD()
+- Running Averages
+- Time-Series Analysis
+- Environmental Data Analytics
+
+---
+
+## Business Value
+
+Advanced SQL analytics enables organizations to:
+
+- Detect long-term environmental trends.
+- Identify seasonal pollution patterns.
+- Monitor changes in air quality over time.
+- Improve environmental reporting and forecasting.
+- Support evidence-based policy and sustainability initiatives.
+- Enhance public health monitoring through data-driven insights.
+
+---
+
+# Project Summary
+
+This project demonstrates how SQL can be used to analyze historical weather and air quality datasets to uncover meaningful environmental insights. By combining descriptive analytics, trend analysis, weather correlation, and advanced SQL techniques such as Common Table Expressions (CTEs) and Window Functions, the project provides a comprehensive understanding of Milan's environmental conditions.
+
+The project showcases practical SQL skills that are widely used in real-world data analytics, including data exploration, aggregation, ranking, time-series analysis, and business insight generation. It also illustrates how environmental data can support sustainable urban planning, pollution monitoring, and public health decision-making.

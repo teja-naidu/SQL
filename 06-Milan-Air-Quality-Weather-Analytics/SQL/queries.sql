@@ -558,3 +558,164 @@ SELECT
     ROUND(AVG(avg_temperature_2m),2) AS avg_temperature,
     ROUND(AVG(sum_precipitation),2) AS avg_rainfall
 FROM pollution_days;
+
+-- ==========================================
+-- Day 5 - Advanced SQL Analytics
+-- ==========================================
+
+--------------------------------------------------
+-- Query 1 : Rank Months by Average PM2.5
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    RANK() OVER (
+        ORDER BY AVG(avg_pm2_5) DESC
+    ) AS pollution_rank
+FROM daily_air_quality_weather
+GROUP BY MONTH(date)
+ORDER BY pollution_rank;
+
+
+--------------------------------------------------
+-- Query 2 : Dense Rank Months by European AQI
+--------------------------------------------------
+
+SELECT
+    MONTH(date) AS month,
+    ROUND(AVG(eaqi),2) AS avg_eaqi,
+    DENSE_RANK() OVER (
+        ORDER BY AVG(eaqi) DESC
+    ) AS eaqi_rank
+FROM daily_air_quality_weather
+GROUP BY MONTH(date)
+ORDER BY eaqi_rank;
+
+
+--------------------------------------------------
+-- Query 3 : Top Polluted Day Each Year
+--------------------------------------------------
+
+WITH yearly_pollution AS
+(
+    SELECT
+        YEAR(date) AS year,
+        date,
+        eaqi,
+        ROW_NUMBER() OVER
+        (
+            PARTITION BY YEAR(date)
+            ORDER BY eaqi DESC
+        ) AS rn
+    FROM daily_air_quality_weather
+)
+
+SELECT
+    year,
+    date,
+    eaqi
+FROM yearly_pollution
+WHERE rn = 1
+ORDER BY year;
+
+
+--------------------------------------------------
+-- Query 4 : Running Average PM2.5
+--------------------------------------------------
+
+SELECT
+    date,
+    avg_pm2_5,
+    ROUND(
+        AVG(avg_pm2_5) OVER
+        (
+            ORDER BY date
+            ROWS BETWEEN UNBOUNDED PRECEDING
+            AND CURRENT ROW
+        ),
+        2
+    ) AS running_avg_pm25
+FROM daily_air_quality_weather;
+
+
+--------------------------------------------------
+-- Query 5 : Previous Day vs Current Day EAQI
+--------------------------------------------------
+
+SELECT
+    date,
+    eaqi,
+    LAG(eaqi) OVER(ORDER BY date) AS previous_day_eaqi
+FROM daily_air_quality_weather;
+
+
+--------------------------------------------------
+-- Query 6 : Next Day EAQI
+--------------------------------------------------
+
+SELECT
+    date,
+    eaqi,
+    LEAD(eaqi) OVER(ORDER BY date) AS next_day_eaqi
+FROM daily_air_quality_weather;
+
+
+--------------------------------------------------
+-- Query 7 : Yearly Air Quality Comparison
+--------------------------------------------------
+
+SELECT
+    YEAR(date) AS year,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather
+GROUP BY YEAR(date)
+ORDER BY year;
+
+
+--------------------------------------------------
+-- Query 8 : Top 10 Cleanest Days
+--------------------------------------------------
+
+SELECT
+    date,
+    avg_pm2_5,
+    avg_pm10,
+    eaqi
+FROM daily_air_quality_weather
+ORDER BY eaqi
+LIMIT 10;
+
+
+--------------------------------------------------
+-- Query 9 : Monthly Air Quality Trend using CTE
+--------------------------------------------------
+
+WITH monthly_trend AS
+(
+    SELECT
+        MONTH(date) AS month,
+        ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+        ROUND(AVG(eaqi),2) AS avg_eaqi
+    FROM daily_air_quality_weather
+    GROUP BY MONTH(date)
+)
+
+SELECT *
+FROM monthly_trend
+ORDER BY month;
+
+
+--------------------------------------------------
+-- Query 10 : Overall Dataset Summary
+--------------------------------------------------
+
+SELECT
+    COUNT(*) AS total_days,
+    ROUND(AVG(avg_pm2_5),2) AS avg_pm25,
+    ROUND(AVG(avg_pm10),2) AS avg_pm10,
+    ROUND(AVG(avg_temperature_2m),2) AS avg_temperature,
+    ROUND(AVG(eaqi),2) AS avg_eaqi
+FROM daily_air_quality_weather;

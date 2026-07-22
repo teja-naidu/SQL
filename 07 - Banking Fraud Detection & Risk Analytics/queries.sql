@@ -196,3 +196,101 @@ SELECT
     MAX(login_attempts) AS max_login_attempts
 FROM banking_transactions
 GROUP BY fraud_flag;
+
+-- ==========================================
+-- Day 3 - Transaction Channel & Authentication Analysis
+-- ==========================================
+
+
+-- 16. Fraud Analysis by Payment Channel
+
+SELECT
+    payment_channel,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+GROUP BY payment_channel
+ORDER BY fraud_rate_percentage DESC;
+
+
+-- 17. Fraud Analysis by Authentication Type
+
+SELECT
+    authentication_type,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+GROUP BY authentication_type
+ORDER BY fraud_rate_percentage DESC;
+
+
+-- 18. Fraud Analysis by Card Presence
+
+SELECT
+    card_present_flag,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+GROUP BY card_present_flag
+ORDER BY fraud_rate_percentage DESC;
+
+
+-- 19. Transaction Amount Analysis by Payment Channel
+
+SELECT
+    payment_channel,
+    COUNT(*) AS total_transactions,
+    ROUND(SUM(transaction_amount), 2) AS total_transaction_amount,
+    ROUND(AVG(transaction_amount), 2) AS average_transaction_amount,
+    ROUND(MAX(transaction_amount), 2) AS maximum_transaction_amount
+FROM banking_transactions
+GROUP BY payment_channel
+ORDER BY total_transaction_amount DESC;
+
+
+-- 20. Payment Channel and Authentication Risk
+
+SELECT
+    payment_channel,
+    authentication_type,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+GROUP BY payment_channel, authentication_type
+ORDER BY fraud_rate_percentage DESC;
+
+
+-- 21. Fraud Analysis by Transaction Time
+
+SELECT
+    CASE
+        WHEN transaction_time_hour BETWEEN 0 AND 5 THEN 'Late Night'
+        WHEN transaction_time_hour BETWEEN 6 AND 11 THEN 'Morning'
+        WHEN transaction_time_hour BETWEEN 12 AND 17 THEN 'Afternoon'
+        ELSE 'Evening'
+    END AS transaction_period,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+GROUP BY transaction_period
+ORDER BY fraud_rate_percentage DESC;

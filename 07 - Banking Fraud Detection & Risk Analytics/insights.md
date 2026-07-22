@@ -121,3 +121,69 @@ The fraud risk factor analysis helps financial institutions:
 - Combine multiple transaction and behavioral risk indicators to improve fraud detection accuracy.
 - Develop risk-based transaction monitoring strategies that focus investigation resources on transactions with stronger fraud signals.
 - Reduce false positives by distinguishing strong fraud indicators from factors that provide limited predictive value.
+
+---
+
+## Day 3 Insights - Transaction Channel & Authentication Analysis
+
+## Key Findings
+
+### Payment Channel Analysis
+
+- ATM transactions recorded the highest fraud rate at 13.00%, with 101 fraudulent transactions out of 777 total transactions.
+- Mobile App transactions had a fraud rate of 12.82%, with 616 fraudulent transactions out of 4,804 transactions.
+- Web Banking recorded a fraud rate of 12.32%.
+- POS Terminal transactions had the lowest fraud rate at 11.43%.
+- Although ATM transactions had the highest fraud rate, Mobile App transactions accounted for the largest number of fraudulent transactions because of their significantly higher transaction volume.
+
+### Authentication Type Analysis
+
+- OTP-authenticated transactions recorded the highest fraud rate at 13.08%.
+- Password Only transactions followed with a fraud rate of 12.77%.
+- Biometric authentication recorded a fraud rate of 12.05%.
+- Two-Factor Authentication had the lowest fraud rate at 11.62%.
+- Stronger authentication methods such as Two-Factor Authentication and Biometric authentication showed relatively lower fraud rates than OTP and Password Only transactions.
+
+### Card Presence Analysis
+
+- Card-present transactions recorded a fraud rate of 12.54%.
+- Card-not-present transactions recorded a nearly identical fraud rate of 12.48%.
+- The difference between the two categories is only 0.06 percentage points.
+- Card presence therefore does not appear to be a significant standalone fraud indicator in this dataset.
+
+### Transaction Amount by Payment Channel
+
+- Mobile App was the largest payment channel, processing 4,804 transactions worth approximately $59.58 million.
+- Web Banking processed approximately $40.26 million across 3,247 transactions.
+- POS Terminal transactions had the highest average transaction amount at approximately $12,623.69.
+- ATM transactions had the lowest average transaction amount at approximately $12,211.11.
+- Average transaction values remained relatively similar across all payment channels.
+
+### Payment Channel and Authentication Risk
+
+- ATM transactions authenticated using OTP recorded the highest fraud rate among all channel-authentication combinations at 14.33%.
+- Web Banking with Password Only authentication had the second-highest fraud rate at 13.60%.
+- Mobile App transactions using OTP recorded a fraud rate of 13.31%.
+- Mobile App with Password Only authentication recorded a fraud rate of 13.04%.
+- POS Terminal transactions using Password Only authentication recorded the lowest fraud rate at 9.87%.
+- The results demonstrate that fraud risk varies when payment channels and authentication methods are analyzed together rather than independently.
+
+### Transaction Time Analysis
+
+- Late-night transactions recorded the highest fraud rate at 12.85%.
+- Evening transactions followed with a fraud rate of 12.68%.
+- Afternoon transactions recorded a fraud rate of 12.48%.
+- Morning transactions had the lowest fraud rate at 12.03%.
+- Fraud rates increase slightly during later periods of the day, although the differences between time periods remain relatively small.
+
+## Business Value
+
+The transaction channel and authentication analysis helps financial institutions:
+
+- Identify payment channels associated with higher fraud exposure.
+- Evaluate the effectiveness of different authentication methods.
+- Detect higher-risk combinations of payment channels and authentication methods.
+- Prioritize monitoring of transactions involving higher-risk combinations such as ATM transactions authenticated using OTP.
+- Understand transaction volume and financial exposure across digital and physical banking channels.
+- Incorporate transaction timing into fraud monitoring strategies.
+- Design multi-factor fraud detection rules instead of relying on individual transaction characteristics.

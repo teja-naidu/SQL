@@ -187,3 +187,95 @@ The transaction channel and authentication analysis helps financial institutions
 - Understand transaction volume and financial exposure across digital and physical banking channels.
 - Incorporate transaction timing into fraud monitoring strategies.
 - Design multi-factor fraud detection rules instead of relying on individual transaction characteristics.
+
+---
+
+## Day 4 Insights - Advanced Fraud Analytics
+
+## Key Findings
+
+### Payment Channel Fraud Risk Ranking
+
+- ATM transactions ranked as the highest-risk payment channel with a fraud rate of 13.00%.
+- Mobile App transactions ranked second with a fraud rate of 12.82%.
+- Web Banking ranked third with a fraud rate of 12.32%.
+- POS Terminal transactions ranked lowest with a fraud rate of 11.43%.
+- Window functions were used to rank payment channels based on their observed fraud rates.
+
+### Authentication Fraud Risk Ranking
+
+- OTP ranked as the highest-risk authentication type with a fraud rate of 13.08%.
+- Password Only authentication ranked second at 12.77%.
+- Biometric authentication ranked third at 12.05%.
+- Two-Factor Authentication had the lowest fraud rate at 11.62%.
+- Stronger authentication mechanisms showed relatively lower fraud rates in this dataset.
+
+### Highest-Value Fraudulent Transactions
+
+- The highest-value fraudulent transaction was approximately $24,987.53.
+- Several of the top fraudulent transactions were close to $25,000, demonstrating significant potential financial exposure from individual fraud events.
+- ROW_NUMBER() was used to rank fraudulent transactions by transaction amount.
+- High transaction value alone does not necessarily represent fraud risk, but ranking fraudulent transactions helps investigators prioritize cases with greater financial impact.
+
+### High-Risk Transaction Analysis
+
+- A total of 7,811 transactions met at least one of the defined high-risk conditions.
+- Among these transactions, 1,166 were fraudulent.
+- The resulting fraud rate for this broad high-risk group was 14.93%.
+- This is higher than the overall dataset fraud rate of 12.51%.
+- However, the large number of transactions classified as high risk indicates that using a single risk indicator can generate a broad alert population.
+
+### Multi-Factor Risk Analysis
+
+- Transactions with zero identified risk factors had a fraud rate of only 3.95%.
+- Transactions with one risk factor recorded a fraud rate of 7.34%.
+- Transactions with two risk factors had a fraud rate of 12.12%.
+- Transactions with three risk factors recorded a significantly higher fraud rate of 20.26%.
+- Transactions with four risk factors had a fraud rate of 43.60%.
+- Transactions containing all five analyzed risk factors recorded an extremely high fraud rate of 95.65%.
+- Of the 23 transactions containing all five risk factors, 22 were fraudulent.
+- Fraud probability increased substantially as multiple risk indicators occurred together.
+
+### Transaction Risk Segmentation
+
+- The High Risk segment contained 429 transactions, of which 199 were fraudulent.
+- High Risk transactions recorded a fraud rate of 46.39% and represented approximately $5.45 million in transaction value.
+- The Medium Risk segment contained 5,200 transactions and recorded a fraud rate of 14.77%.
+- Medium Risk transactions represented approximately $64.55 million in transaction value.
+- The Low Risk segment contained 4,371 transactions and recorded a significantly lower fraud rate of 6.50%.
+- Low Risk transactions represented approximately $54.13 million in transaction value.
+- Risk segmentation provides a clearer method of prioritizing transactions for investigation than treating all alerts equally.
+
+### Payment Channel Fraud Ranking
+
+- Window functions were used to identify the three highest-value fraudulent transactions within each payment channel.
+- The highest fraudulent ATM transaction was approximately $24,638.94.
+- The highest fraudulent Mobile App transaction was approximately $24,980.99.
+- The highest fraudulent POS Terminal transaction was approximately $24,974.25.
+- The highest fraudulent Web Banking transaction was approximately $24,987.53.
+- Partitioning fraud transactions by payment channel allows investigators to identify high-value cases within individual banking channels.
+
+## Business Value
+
+The advanced fraud analysis helps financial institutions:
+
+- Develop multi-factor fraud detection strategies rather than relying on individual risk indicators.
+- Prioritize transactions based on the number of simultaneous risk signals.
+- Identify high-value fraudulent transactions that may require immediate investigation.
+- Segment transactions into low, medium, and high-risk populations.
+- Reduce unnecessary investigations by focusing resources on transactions with stronger combinations of risk indicators.
+- Rank fraud exposure across payment channels and authentication methods.
+- Support risk-based alert prioritization and fraud investigation workflows.
+
+## SQL Techniques Demonstrated
+
+- Common Table Expressions (CTEs)
+- Window Functions
+- RANK()
+- DENSE_RANK()
+- ROW_NUMBER()
+- PARTITION BY
+- CASE Expressions
+- Conditional Aggregation
+- Multi-Factor Risk Scoring
+- Risk Segmentation

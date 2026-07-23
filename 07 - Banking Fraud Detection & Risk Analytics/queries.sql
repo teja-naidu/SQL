@@ -294,3 +294,216 @@ SELECT
 FROM banking_transactions
 GROUP BY transaction_period
 ORDER BY fraud_rate_percentage DESC;
+
+-- ==========================================
+-- Day 4 - Advanced Fraud Analytics
+-- CTEs, Window Functions & Risk Segmentation
+-- ==========================================
+
+
+-- 22. Rank Payment Channels by Fraud Rate
+-- Uses a CTE and RANK() window function
+
+WITH channel_fraud AS (
+    SELECT
+        payment_channel,
+        COUNT(*) AS total_transactions,
+        SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+        ROUND(
+            100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+            2
+        ) AS fraud_rate_percentage
+    FROM banking_transactions
+    GROUP BY payment_channel
+)
+
+SELECT
+    payment_channel,
+    total_transactions,
+    fraudulent_transactions,
+    fraud_rate_percentage,
+    RANK() OVER (ORDER BY fraud_rate_percentage DESC) AS fraud_risk_rank
+FROM channel_fraud
+ORDER BY fraud_risk_rank;
+
+
+-- 23. Rank Authentication Types by Fraud Rate
+-- Uses CTE + DENSE_RANK()
+
+WITH authentication_fraud AS (
+    SELECT
+        authentication_type,
+        COUNT(*) AS total_transactions,
+        SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+        ROUND(
+            100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+            2
+        ) AS fraud_rate_percentage
+    FROM banking_transactions
+    GROUP BY authentication_type
+)
+
+SELECT
+    authentication_type,
+    total_transactions,
+    fraudulent_transactions,
+    fraud_rate_percentage,
+    DENSE_RANK() OVER (
+        ORDER BY fraud_rate_percentage DESC
+    ) AS fraud_risk_rank
+FROM authentication_fraud
+ORDER BY fraud_risk_rank;
+
+
+-- 24. Rank Highest-Value Fraudulent Transactions
+-- Uses ROW_NUMBER() to identify the largest fraud transactions
+
+SELECT
+    transaction_id,
+    transaction_amount,
+    payment_channel,
+    authentication_type,
+    anomaly_score,
+    device_risk_score,
+    ROW_NUMBER() OVER (
+        ORDER BY transaction_amount DESC
+    ) AS transaction_value_rank
+FROM banking_transactions
+WHERE fraud_flag = TRUE
+ORDER BY transaction_value_rank
+LIMIT 10;
+
+
+-- 25. High-Risk Transactions Using Multiple Risk Indicators
+-- Combines anomaly, device risk, velocity and suspicious IP indicators
+
+WITH high_risk_transactions AS (
+    SELECT
+        transaction_id,
+        transaction_amount,
+        anomaly_score,
+        device_risk_score,
+        transaction_velocity_score,
+        suspicious_ip_flag,
+        fraud_flag
+    FROM banking_transactions
+    WHERE anomaly_score >= 0.70
+       OR device_risk_score >= 70
+       OR transaction_velocity_score >= 70
+       OR suspicious_ip_flag = 1
+)
+
+SELECT
+    COUNT(*) AS high_risk_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS high_risk_fraud_rate
+FROM high_risk_transactions;
+
+
+-- 26. Multi-Factor Risk Score
+
+WITH risk_scoring AS (
+    SELECT
+        transaction_id,
+        transaction_amount,
+        fraud_flag,
+
+        (
+            CASE WHEN anomaly_score >= 0.70 THEN 1 ELSE 0 END +
+            CASE WHEN device_risk_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN transaction_velocity_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN suspicious_ip_flag = 1 THEN 1 ELSE 0 END +
+            CASE WHEN international_transaction_flag = 1 THEN 1 ELSE 0 END
+        ) AS risk_factor_count
+
+    FROM banking_transactions
+)
+
+SELECT
+    risk_factor_count,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM risk_scoring
+GROUP BY risk_factor_count
+ORDER BY risk_factor_count;
+
+
+-- 27. Transaction Risk Segmentation
+
+WITH transaction_risk AS (
+    SELECT
+        transaction_id,
+        transaction_amount,
+        fraud_flag,
+
+        (
+            CASE WHEN anomaly_score >= 0.70 THEN 1 ELSE 0 END +
+            CASE WHEN device_risk_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN transaction_velocity_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN suspicious_ip_flag = 1 THEN 1 ELSE 0 END +
+            CASE WHEN international_transaction_flag = 1 THEN 1 ELSE 0 END
+        ) AS risk_factor_count
+
+    FROM banking_transactions
+),
+
+risk_segments AS (
+    SELECT
+        *,
+        CASE
+            WHEN risk_factor_count <= 1 THEN 'Low Risk'
+            WHEN risk_factor_count <= 3 THEN 'Medium Risk'
+            ELSE 'High Risk'
+        END AS risk_segment
+    FROM transaction_risk
+)
+
+SELECT
+    risk_segment,
+    COUNT(*) AS total_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(SUM(transaction_amount), 2) AS transaction_amount,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM risk_segments
+GROUP BY risk_segment
+ORDER BY fraud_rate_percentage DESC;
+
+
+-- 28. Top Fraudulent Transactions Within Each Payment Channel
+-- Uses PARTITION BY to rank fraud transactions within each channel
+
+WITH ranked_fraud AS (
+    SELECT
+        transaction_id,
+        payment_channel,
+        transaction_amount,
+        anomaly_score,
+
+        ROW_NUMBER() OVER (
+            PARTITION BY payment_channel
+            ORDER BY transaction_amount DESC
+        ) AS channel_rank
+
+    FROM banking_transactions
+    WHERE fraud_flag = TRUE
+)
+
+SELECT
+    transaction_id,
+    payment_channel,
+    transaction_amount,
+    anomaly_score,
+    channel_rank
+FROM ranked_fraud
+WHERE channel_rank <= 3
+ORDER BY payment_channel, channel_rank;

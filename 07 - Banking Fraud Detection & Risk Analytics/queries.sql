@@ -507,3 +507,190 @@ SELECT
 FROM ranked_fraud
 WHERE channel_rank <= 3
 ORDER BY payment_channel, channel_rank;
+
+-- ==========================================
+-- Day 5 - Fraud Monitoring & Final Risk Analysis
+-- ==========================================
+
+
+-- 29. Financial Exposure by Risk Segment
+
+WITH risk_scoring AS (
+    SELECT
+        transaction_amount,
+        fraud_flag,
+        (
+            CASE WHEN anomaly_score >= 0.70 THEN 1 ELSE 0 END +
+            CASE WHEN device_risk_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN transaction_velocity_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN suspicious_ip_flag = 1 THEN 1 ELSE 0 END +
+            CASE WHEN international_transaction_flag = 1 THEN 1 ELSE 0 END
+        ) AS risk_factor_count
+    FROM banking_transactions
+),
+
+risk_segments AS (
+    SELECT
+        *,
+        CASE
+            WHEN risk_factor_count <= 1 THEN 'Low Risk'
+            WHEN risk_factor_count <= 3 THEN 'Medium Risk'
+            ELSE 'High Risk'
+        END AS risk_segment
+    FROM risk_scoring
+)
+
+SELECT
+    risk_segment,
+    COUNT(*) AS total_transactions,
+    ROUND(SUM(transaction_amount), 2) AS total_transaction_amount,
+    ROUND(
+        SUM(CASE WHEN fraud_flag = TRUE THEN transaction_amount ELSE 0 END),
+        2
+    ) AS fraudulent_transaction_amount
+FROM risk_segments
+GROUP BY risk_segment
+ORDER BY fraudulent_transaction_amount DESC;
+
+
+-- 30. Fraudulent Amount by Payment Channel
+
+SELECT
+    payment_channel,
+    COUNT(*) AS fraudulent_transactions,
+    ROUND(SUM(transaction_amount), 2) AS fraudulent_transaction_amount,
+    ROUND(AVG(transaction_amount), 2) AS avg_fraud_transaction_amount
+FROM banking_transactions
+WHERE fraud_flag = TRUE
+GROUP BY payment_channel
+ORDER BY fraudulent_transaction_amount DESC;
+
+
+-- 31. Fraud Contribution by Payment Channel
+
+WITH channel_fraud AS (
+    SELECT
+        payment_channel,
+        COUNT(*) AS fraudulent_transactions,
+        SUM(transaction_amount) AS fraudulent_amount
+    FROM banking_transactions
+    WHERE fraud_flag = TRUE
+    GROUP BY payment_channel
+)
+
+SELECT
+    payment_channel,
+    fraudulent_transactions,
+    ROUND(fraudulent_amount, 2) AS fraudulent_amount,
+    ROUND(
+        100.0 * fraudulent_amount /
+        SUM(fraudulent_amount) OVER (),
+        2
+    ) AS fraud_amount_percentage
+FROM channel_fraud
+ORDER BY fraud_amount_percentage DESC;
+
+
+-- 32. High-Anomaly Fraud Financial Exposure
+
+SELECT
+    COUNT(*) AS high_anomaly_transactions,
+    SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) AS fraudulent_transactions,
+    ROUND(SUM(transaction_amount), 2) AS total_transaction_amount,
+    ROUND(
+        SUM(CASE WHEN fraud_flag = TRUE THEN transaction_amount ELSE 0 END),
+        2
+    ) AS fraudulent_transaction_amount,
+    ROUND(
+        100.0 * SUM(CASE WHEN fraud_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraud_rate_percentage
+FROM banking_transactions
+WHERE anomaly_score >= 0.70;
+
+
+-- 33. Critical Transactions for Fraud Investigation
+
+WITH scored_transactions AS (
+    SELECT
+        transaction_id,
+        transaction_amount,
+        payment_channel,
+        authentication_type,
+        anomaly_score,
+        fraud_flag,
+
+        (
+            CASE WHEN anomaly_score >= 0.70 THEN 1 ELSE 0 END +
+            CASE WHEN device_risk_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN transaction_velocity_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN suspicious_ip_flag = 1 THEN 1 ELSE 0 END +
+            CASE WHEN international_transaction_flag = 1 THEN 1 ELSE 0 END
+        ) AS risk_factor_count
+
+    FROM banking_transactions
+)
+
+SELECT
+    transaction_id,
+    transaction_amount,
+    payment_channel,
+    authentication_type,
+    anomaly_score,
+    risk_factor_count,
+    fraud_flag
+FROM scored_transactions
+WHERE risk_factor_count >= 4
+ORDER BY risk_factor_count DESC, transaction_amount DESC
+LIMIT 20;
+
+
+-- 34. Fraud Detection Effectiveness of High-Risk Segmentation
+
+WITH risk_scoring AS (
+    SELECT
+        fraud_flag,
+        (
+            CASE WHEN anomaly_score >= 0.70 THEN 1 ELSE 0 END +
+            CASE WHEN device_risk_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN transaction_velocity_score >= 70 THEN 1 ELSE 0 END +
+            CASE WHEN suspicious_ip_flag = 1 THEN 1 ELSE 0 END +
+            CASE WHEN international_transaction_flag = 1 THEN 1 ELSE 0 END
+        ) AS risk_factor_count
+    FROM banking_transactions
+)
+
+SELECT
+    SUM(
+        CASE
+            WHEN risk_factor_count >= 4 AND fraud_flag = TRUE
+            THEN 1 ELSE 0
+        END
+    ) AS fraud_detected_in_high_risk,
+
+    SUM(
+        CASE
+            WHEN fraud_flag = TRUE
+            THEN 1 ELSE 0
+        END
+    ) AS total_fraudulent_transactions,
+
+    ROUND(
+        100.0 *
+        SUM(
+            CASE
+                WHEN risk_factor_count >= 4 AND fraud_flag = TRUE
+                THEN 1 ELSE 0
+            END
+        )
+        /
+        SUM(
+            CASE
+                WHEN fraud_flag = TRUE
+                THEN 1 ELSE 0
+            END
+        ),
+        2
+    ) AS high_risk_fraud_capture_rate
+
+FROM risk_scoring;

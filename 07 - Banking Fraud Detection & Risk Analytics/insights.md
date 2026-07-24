@@ -279,3 +279,102 @@ The advanced fraud analysis helps financial institutions:
 - Conditional Aggregation
 - Multi-Factor Risk Scoring
 - Risk Segmentation
+
+---
+
+## Day 5 Insights - Fraud Monitoring & Final Risk Analysis
+
+## Key Findings
+
+### Financial Exposure by Risk Segment
+
+- Medium Risk transactions represented the largest overall transaction exposure at approximately $64.55 million.
+- Medium Risk transactions also generated the largest fraudulent transaction amount at approximately $9.62 million.
+- Low Risk transactions represented approximately $54.13 million in total transaction value, with approximately $3.57 million associated with fraud.
+- High Risk transactions represented approximately $5.45 million in total transaction value, of which approximately $2.47 million was fraudulent.
+- Although the High Risk segment had the highest fraud rate, the Medium Risk segment generated the greatest absolute financial fraud exposure because of its much larger transaction volume.
+
+### Fraudulent Amount by Payment Channel
+
+- Mobile App transactions generated the largest fraudulent transaction amount at approximately $7.71 million across 616 fraudulent transactions.
+- Web Banking recorded approximately $5.04 million in fraudulent transaction value across 400 fraudulent transactions.
+- POS Terminal fraud accounted for approximately $1.71 million.
+- ATM fraud represented approximately $1.19 million.
+- POS Terminal transactions had the highest average fraudulent transaction amount at approximately $12,793.34.
+
+### Fraud Contribution by Payment Channel
+
+- Mobile App transactions accounted for 49.25% of the total fraudulent transaction value.
+- Web Banking contributed another 32.18%.
+- POS Terminal transactions accounted for 10.95%.
+- ATM transactions represented the remaining 7.62%.
+- Mobile App and Web Banking together accounted for approximately 81.43% of total fraudulent transaction value.
+- Digital banking channels therefore represent the largest financial fraud exposure in this dataset.
+
+### High-Anomaly Transaction Exposure
+
+- A total of 1,058 transactions were classified as High Anomaly.
+- Of these transactions, 899 were fraudulent.
+- High-anomaly transactions represented approximately $13.13 million in total transaction value.
+- Approximately $11.23 million of that amount was associated with fraudulent transactions.
+- High-anomaly transactions recorded a fraud rate of 84.97%.
+- This reinforces anomaly score as the strongest individual fraud indicator identified during the analysis.
+
+### Critical Transaction Investigation
+
+- Transactions containing four or more risk factors were identified as critical candidates for fraud investigation.
+- Transactions containing all five analyzed risk factors showed extremely strong fraud concentration.
+- Of the 23 transactions containing all five risk factors, 22 were fraudulent.
+- High-value transactions with multiple simultaneous risk signals provide strong candidates for prioritized investigation.
+- Combining transaction value with risk-factor counts can help fraud teams prioritize alerts based on both probability and potential financial impact.
+
+### High-Risk Fraud Capture
+
+- A total of 199 fraudulent transactions were classified in the High Risk segment using the four-or-more-risk-factor threshold.
+- The dataset contains 1,251 fraudulent transactions overall.
+- The High Risk segment therefore captured 15.91% of all fraudulent transactions.
+- Although this segment has a high fraud concentration, the relatively low capture rate demonstrates that using only the strictest risk threshold would miss a large portion of fraudulent activity.
+- A tiered monitoring strategy covering both High Risk and selected Medium Risk transactions would provide broader fraud coverage.
+
+## Final Business Findings
+
+- The dataset contains 10,000 transactions worth approximately $124.13 million.
+- A total of 1,251 transactions were fraudulent, producing an overall fraud rate of 12.51%.
+- Fraudulent transactions represented approximately $15.66 million in financial exposure.
+- Anomaly score emerged as the strongest individual fraud indicator.
+- High-anomaly transactions recorded an 84.97% fraud rate compared with only 0.02% for low-anomaly transactions.
+- Fraud risk increased substantially as multiple risk indicators appeared together.
+- Transactions with all five analyzed risk factors recorded a 95.65% fraud rate.
+- Mobile App transactions contributed 49.25% of total fraudulent transaction value.
+- Mobile App and Web Banking combined contributed approximately 81.43% of fraudulent transaction value.
+- Medium Risk transactions generated the largest absolute fraudulent amount despite High Risk transactions having a significantly higher fraud rate.
+- A multi-tier fraud monitoring strategy is more effective than relying exclusively on the highest-risk transactions.
+
+## Business Recommendations
+
+- Prioritize anomaly score as a major signal within transaction monitoring systems.
+- Combine multiple behavioral and transactional indicators when calculating fraud risk.
+- Apply enhanced monitoring to transactions containing three or more simultaneous risk factors.
+- Prioritize high-value transactions with four or five risk indicators for immediate investigation.
+- Maintain additional monitoring for Medium Risk transactions because they represent substantial transaction volume and fraud exposure.
+- Strengthen monitoring of Mobile App and Web Banking transactions because these channels account for the majority of fraudulent transaction value.
+- Use stronger authentication controls for higher-risk digital transactions.
+- Implement tiered fraud alerts rather than using a single binary high-risk threshold.
+- Continuously evaluate fraud detection thresholds to balance fraud capture against unnecessary alerts.
+
+## SQL Techniques Demonstrated
+
+- Aggregate Functions
+- GROUP BY
+- CASE Expressions
+- Conditional Aggregation
+- Common Table Expressions (CTEs)
+- Window Functions
+- RANK()
+- DENSE_RANK()
+- ROW_NUMBER()
+- PARTITION BY
+- Risk Segmentation
+- Multi-Factor Risk Scoring
+- Percentage Contribution Analysis
+- Financial Exposure Analysis

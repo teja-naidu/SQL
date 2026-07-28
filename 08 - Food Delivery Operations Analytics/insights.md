@@ -65,3 +65,84 @@
 - Monthly demand is relatively stable, with August showing the strongest overall performance.
 - Order activity is distributed fairly evenly across hours, suggesting continuous operational demand.
 - With an average of 6.49 items per order, customers typically place multi-item food delivery orders.
+
+## Customer & Revenue Analytics
+
+### Premium Customer Analysis
+
+- Non-premium customers accounted for 10,779 orders and generated 1,242,595.34 in total customer payments.
+- Premium customers accounted for 4,221 orders and generated 543,659.94.
+- Premium customers spent an average of 128.80 per order compared with 115.28 for non-premium customers.
+- Although premium customers represent a smaller share of total orders, their higher average spending makes them a valuable customer segment.
+
+### Customer Age Analysis
+
+- Customers aged 55+ generated the highest order volume with 5,425 orders and 642,587.34 in total payments.
+- Customers aged 35-44 generated 2,670 orders, followed by the 25-34 segment with 2,563 orders.
+- The 45-54 age group recorded the highest average amount paid at 120.03.
+- Customers under 25 recorded the lowest average amount paid at 118.16.
+- Average spending remained relatively consistent across age groups despite significant differences in order volume.
+
+### Promo Code Analysis
+
+- Promo codes were used on 6,347 orders, while 8,653 orders were placed without promo codes.
+- Orders using promo codes generated an average discount of 14.95.
+- Orders without promo codes recorded an average discount of 14.92.
+- Average customer spending was almost identical between promo and non-promo orders at approximately 119.
+- Promo code usage therefore does not appear to be associated with a substantial difference in average final spending in this dataset.
+
+### Discount Analysis
+
+- Total discounts across all orders amounted to 223,988.72.
+- The average discount per order was 14.93.
+- The maximum discount recorded was 30.00.
+- Discounts represent a significant promotional investment across the food delivery platform.
+
+### Tip Analysis
+
+- Tip information was available for 14,850 orders.
+- 150 orders contained missing tip values.
+- Total recorded tips amounted to 186,660.63.
+- The average recorded tip was 12.57.
+- The maximum recorded tip was 25.00.
+- The presence of missing tip records should be considered when interpreting overall tipping behaviour.
+
+### Premium Customer & Promotion Analysis
+
+- Premium customers maintained significantly higher average spending regardless of promo code usage.
+- Premium customers using promo codes spent an average of 128.86 compared with 128.75 for premium customers without promo codes.
+- Non-premium customers using promo codes spent an average of 115.10 compared with 115.41 without promo codes.
+- These results suggest premium status has a much stronger relationship with customer spending than promo code usage.
+
+### Festival and Weekend Analysis
+
+- Regular-period orders accounted for 11,913 orders and generated 1,395,050.83.
+- Festival or weekend periods accounted for 3,087 orders and generated 391,204.45.
+- Festival/weekend orders had an average order value of 121.71 compared with 111.94 during regular periods.
+- Average final spending increased from 117.10 during regular periods to 126.73 during festival/weekend periods.
+- This indicates stronger customer spending during festivals and weekends.
+
+### Customer Loyalty & Premium Status
+
+- Non-premium customers had an average loyalty score of 50.10, while premium customers averaged 49.82.
+- Despite nearly identical loyalty scores, premium customers had a substantially higher average order value of 123.63 compared with 110.16 for non-premium customers.
+- Premium customers also spent an average of 128.80 compared with 115.28 for non-premium customers.
+- The results suggest premium membership is associated with higher spending, while average loyalty scores are similar between the two groups.
+
+### Customer Segment Analysis
+
+- Non-premium customers in City Tier 3 formed the largest segment with 5,446 orders and 628,881.50 in total payments.
+- Premium customers in City Tier 3 generated 267,681.36 from 2,074 orders.
+- Premium customers in City Tiers 1 and 3 both recorded an average amount paid of 129.07.
+- Across every city tier, premium customers recorded higher average spending than non-premium customers.
+- City Tier 3 remains the strongest market primarily because of its significantly larger order volume.
+
+## Customer & Revenue Business Insights
+
+- Premium customers are a high-value segment, spending approximately 13.52 more per order than non-premium customers.
+- Festival and weekend periods generate noticeably higher order values and customer spending.
+- Customers aged 55+ represent the largest age segment by order volume and total payments.
+- Promo code usage is common, but average spending is almost unchanged between promo and non-promo orders.
+- Premium membership appears more strongly associated with higher spending than either loyalty score or promo usage.
+- City Tier 3 continues to be the largest contributor to overall business volume.
+- Discount and tip data provide useful indicators for evaluating promotional costs and customer engagement.

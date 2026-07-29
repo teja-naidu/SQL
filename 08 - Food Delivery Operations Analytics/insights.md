@@ -146,3 +146,100 @@
 - Premium membership appears more strongly associated with higher spending than either loyalty score or promo usage.
 - City Tier 3 continues to be the largest contributor to overall business volume.
 - Discount and tip data provide useful indicators for evaluating promotional costs and customer engagement.
+
+## Delivery Performance & Operational Efficiency
+
+### Overall Delivery Performance
+
+- Average actual delivery time was 94.14 minutes.
+- Average estimated delivery time was also 94.14 minutes.
+- Average food preparation time was 32.75 minutes.
+- Average delivery distance was 20.13 km.
+- At the overall dataset level, estimated and actual delivery times were closely aligned.
+
+### Delivery Delay Analysis
+
+- Out of 15,000 orders, 1,420 orders were classified as delayed.
+- The overall delayed delivery rate was 9.47%.
+- On-time deliveries had an average delivery time of 92.43 minutes.
+- Delayed deliveries averaged 110.49 minutes, compared with an estimated time of 96.18 minutes.
+- Average customer ratings were almost identical between on-time and delayed deliveries at 3.99 and 4.01 respectively.
+- In this dataset, delivery delays therefore do not show a meaningful difference in average customer ratings.
+
+### Delivery Distance Analysis
+
+- Delivery distance had a strong relationship with delivery time and operational efficiency.
+- Orders within 0-3 km had the shortest average delivery time at 47.34 minutes and the highest average efficiency score at 77.42.
+- Orders between 3-6 km averaged 54.64 minutes with an efficiency score of 74.98.
+- Orders between 6-10 km averaged 64.34 minutes with an efficiency score of 71.06.
+- Deliveries above 10 km represented 11,303 orders and averaged 106.51 minutes.
+- The 10+ km segment recorded the lowest average efficiency score at 54.26.
+- These results indicate that longer delivery distances are associated with substantially longer delivery times and lower operational efficiency.
+
+### Traffic Impact
+
+- Delivery times generally increased as traffic severity increased.
+- Lower traffic scores were associated with delivery times largely in the mid-80-minute range.
+- At higher traffic levels, average delivery times frequently exceeded 100 minutes.
+- Delivery efficiency also generally declined as traffic severity increased.
+- For example, traffic score 1.0 recorded an average efficiency score of 70.85, while traffic score 9.9 recorded 44.98.
+- Delay rates fluctuate between individual traffic scores, but the broader results indicate that heavier traffic creates operational pressure on delivery speed and efficiency.
+
+### Weather Impact
+
+- Weather conditions also showed an association with delivery performance.
+- Lower weather-severity scores generally produced shorter delivery times and higher efficiency scores.
+- At higher weather-severity levels, average delivery times frequently approached or exceeded 100 minutes.
+- Delivery efficiency generally declined as weather severity increased.
+- For example, weather severity 0.0 recorded an average efficiency score of 69.56, compared with 48.62 at severity 9.9.
+- Severe weather therefore appears to create additional operational challenges for food delivery.
+
+### City Tier Delivery Performance
+
+- Delivery performance remained relatively consistent across all three city tiers.
+- City Tier 1 recorded an average delivery time of 94.17 minutes and a 9.32% delay rate.
+- City Tier 2 recorded the shortest average delivery time at 93.72 minutes and the lowest delay rate at 9.05%.
+- City Tier 3 averaged 94.33 minutes and recorded the highest delay rate at 9.75%.
+- Average delivery distances were approximately 20 km across every city tier.
+- Average efficiency scores were also very similar at approximately 59.
+- Geographic city tier therefore appears to have relatively little influence on overall delivery performance in this dataset.
+
+### Delivery Partner Experience
+
+- Delivery times remained remarkably similar across delivery-partner experience groups, ranging from 93.79 to 94.32 minutes.
+- Partners with 2-4 years of experience recorded the shortest average delivery time at 93.79 minutes.
+- Delivery partners with 8+ years of experience handled the largest number of orders at 8,086.
+- The 8+ years group also achieved the highest average efficiency score at 65.34.
+- Partners with less than 2 years of experience recorded the lowest average efficiency score at 46.75.
+- Average delivery-partner ratings remained stable at approximately 4.19-4.20 across experience groups.
+- Experience appears to have a stronger relationship with delivery efficiency than with average delivery time or partner ratings.
+
+### Preparation Time Analysis
+
+- Longer restaurant preparation times were associated with longer overall delivery times.
+- Orders prepared within 15 minutes had an average delivery time of 76.11 minutes.
+- Orders requiring 16-30 minutes of preparation averaged 85.94 minutes.
+- Orders requiring 31-45 minutes averaged 97.78 minutes.
+- Orders with preparation times above 45 minutes averaged 111.23 minutes.
+- Delay rates remained relatively stable between 9.10% and 9.69% across preparation-time groups.
+- Average customer ratings also remained stable at approximately 4.0.
+- Restaurant preparation time is therefore an important contributor to total delivery duration.
+
+### Estimated vs Actual Delivery Time
+
+- Across all 15,000 orders, the average estimated delivery time was 94.14 minutes.
+- Average actual delivery time was also 94.14 minutes.
+- The overall average difference between estimated and actual delivery time was approximately zero.
+- However, delayed orders individually averaged 110.49 minutes compared with an estimated 96.18 minutes.
+- This indicates that strong overall estimation accuracy can still coexist with meaningful delays for a subset of orders.
+
+## Delivery Operations Business Insights
+
+- Approximately 9.47% of orders were classified as delayed, representing an important operational improvement opportunity.
+- Delivery distance is one of the clearest drivers of delivery performance, with 10+ km orders taking substantially longer and recording lower efficiency.
+- Longer restaurant preparation times directly contribute to longer end-to-end delivery times.
+- Higher traffic and weather severity generally correspond with longer delivery times and reduced delivery efficiency.
+- Delivery performance is relatively consistent across city tiers, suggesting operational challenges are not concentrated in one geographic tier.
+- Highly experienced delivery partners achieved substantially better efficiency scores, although average delivery times remained similar across experience groups.
+- Delivery-time estimates are highly accurate at the aggregate level, but delayed orders still experience meaningful overruns.
+- Long-distance deliveries, restaurant preparation time, traffic conditions, and severe weather should be key areas for operational optimisation.

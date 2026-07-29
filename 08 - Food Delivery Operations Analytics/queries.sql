@@ -221,3 +221,166 @@ SELECT
 FROM food_delivery
 GROUP BY premium_customer_flag, city_tier
 ORDER BY total_amount_paid DESC;
+
+-- ==========================================
+-- Delivery Performance & Operational Efficiency
+-- ==========================================
+
+
+-- 21. Overall Delivery Performance
+
+SELECT
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(estimated_delivery_time), 2) AS average_estimated_delivery_time,
+    ROUND(AVG(preparation_time_minutes), 2) AS average_preparation_time,
+    ROUND(AVG(delivery_distance_km), 2) AS average_delivery_distance
+FROM food_delivery;
+
+
+-- 22. Delayed vs On-Time Delivery Analysis
+
+SELECT
+    delayed_delivery_flag,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(estimated_delivery_time), 2) AS average_estimated_time,
+    ROUND(AVG(customer_rating), 2) AS average_customer_rating
+FROM food_delivery
+GROUP BY delayed_delivery_flag
+ORDER BY total_orders DESC;
+
+
+-- 23. Delivery Delay Rate
+
+SELECT
+    COUNT(*) AS total_orders,
+    SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        AS delayed_orders,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        / COUNT(*),
+        2
+    ) AS delay_rate_percentage
+FROM food_delivery;
+
+
+-- 24. Delivery Performance by Distance Range
+
+SELECT
+    CASE
+        WHEN delivery_distance_km <= 3 THEN '0-3 km'
+        WHEN delivery_distance_km <= 6 THEN '3-6 km'
+        WHEN delivery_distance_km <= 10 THEN '6-10 km'
+        ELSE '10+ km'
+    END AS distance_range,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(delivery_efficiency_score), 2) AS average_efficiency_score
+FROM food_delivery
+GROUP BY distance_range
+ORDER BY average_delivery_time;
+
+
+-- 25. Traffic Impact on Delivery Performance
+
+SELECT
+    traffic_level_score,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(delivery_efficiency_score), 2) AS average_efficiency_score,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        / COUNT(*),
+        2
+    ) AS delay_rate_percentage
+FROM food_delivery
+GROUP BY traffic_level_score
+ORDER BY traffic_level_score;
+
+
+-- 26. Weather Impact on Delivery Performance
+
+SELECT
+    weather_severity_score,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(delivery_efficiency_score), 2) AS average_efficiency_score,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        / COUNT(*),
+        2
+    ) AS delay_rate_percentage
+FROM food_delivery
+GROUP BY weather_severity_score
+ORDER BY weather_severity_score;
+
+
+-- 27. Delivery Performance by City Tier
+
+SELECT
+    city_tier,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_distance_km), 2) AS average_distance,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(delivery_efficiency_score), 2) AS average_efficiency_score,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        / COUNT(*),
+        2
+    ) AS delay_rate_percentage
+FROM food_delivery
+GROUP BY city_tier
+ORDER BY city_tier;
+
+
+-- 28. Delivery Partner Experience Analysis
+
+SELECT
+    CASE
+        WHEN delivery_partner_experience_years < 2 THEN 'Less than 2 years'
+        WHEN delivery_partner_experience_years < 5 THEN '2-4 years'
+        WHEN delivery_partner_experience_years < 8 THEN '5-7 years'
+        ELSE '8+ years'
+    END AS experience_group,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(delivery_partner_rating), 2) AS average_partner_rating,
+    ROUND(AVG(delivery_efficiency_score), 2) AS average_efficiency_score
+FROM food_delivery
+GROUP BY experience_group
+ORDER BY average_delivery_time;
+
+
+-- 29. Preparation Time Impact on Delivery
+
+SELECT
+    CASE
+        WHEN preparation_time_minutes <= 15 THEN '0-15 min'
+        WHEN preparation_time_minutes <= 30 THEN '16-30 min'
+        WHEN preparation_time_minutes <= 45 THEN '31-45 min'
+        ELSE '45+ min'
+    END AS preparation_time_group,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_delivery_time,
+    ROUND(AVG(customer_rating), 2) AS average_customer_rating,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag = TRUE THEN 1 ELSE 0 END)
+        / COUNT(*),
+        2
+    ) AS delay_rate_percentage
+FROM food_delivery
+GROUP BY preparation_time_group
+ORDER BY average_delivery_time;
+
+
+-- 30. Estimated vs Actual Delivery Time
+
+SELECT
+    COUNT(*) AS total_orders,
+    ROUND(AVG(estimated_delivery_time), 2) AS average_estimated_time,
+    ROUND(AVG(delivery_time_minutes), 2) AS average_actual_time,
+    ROUND(
+        AVG(delivery_time_minutes - estimated_delivery_time),
+        2
+    ) AS average_delivery_time_difference
+FROM food_delivery;

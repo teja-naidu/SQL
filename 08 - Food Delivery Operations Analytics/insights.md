@@ -243,3 +243,90 @@
 - Highly experienced delivery partners achieved substantially better efficiency scores, although average delivery times remained similar across experience groups.
 - Delivery-time estimates are highly accurate at the aggregate level, but delayed orders still experience meaningful overruns.
 - Long-distance deliveries, restaurant preparation time, traffic conditions, and severe weather should be key areas for operational optimisation.
+
+## Cancellation, Refund & Rating Analytics
+
+### Cancellation Analysis
+
+- Out of 15,000 total orders, 2,003 orders were cancelled.
+- The overall cancellation rate was 13.35%.
+- Successfully completed orders accounted for 12,997 orders, representing 86.65% of all orders.
+- The majority of customer orders were completed successfully, indicating stable operational performance.
+
+### Refund Analysis
+
+- A total of 618 orders received refunds.
+- The overall refund rate was 4.12%.
+- 95.88% of all orders did not require any refund.
+- Refunds occurred much less frequently than cancellations.
+
+### Cancellation & Refund Relationship
+
+- 78 orders were both cancelled and refunded.
+- 1,925 cancelled orders did not receive refunds.
+- 540 completed orders still resulted in refunds.
+- 12,457 orders were neither cancelled nor refunded.
+- The results indicate that refunds are not exclusively associated with cancelled orders.
+
+### Customer Rating Analysis
+
+- The average customer rating across all orders was 3.99 out of 5.
+- Customer ratings ranged from 1.50 to 5.00.
+- Overall customer satisfaction remained consistently close to 4 stars.
+
+### Restaurant Rating Analysis
+
+- Restaurants achieved an average rating of 4.10.
+- Restaurant ratings ranged from 2.30 to 5.00.
+- Restaurant performance remained consistently strong across the platform.
+
+### Delivery Partner Rating Analysis
+
+- Delivery partner ratings were available for 14,850 orders.
+- Only 150 records contained missing delivery partner ratings.
+- Delivery partners achieved an average rating of 4.20.
+- Ratings ranged from 2.70 to 5.00.
+- Overall delivery partner performance was rated highly by customers.
+
+### Customer Ratings & Delivery Delays
+
+- On-time deliveries received an average customer rating of 3.99.
+- Delayed deliveries received an average customer rating of 4.01.
+- Delivery partner ratings remained nearly identical between delayed and non-delayed deliveries.
+- The dataset suggests delivery delays had minimal impact on average customer ratings.
+
+### Restaurant Ratings by City Tier
+
+- Restaurant ratings remained highly consistent across all city tiers.
+- City Tier 1 averaged 4.10.
+- City Tier 2 averaged 4.09.
+- City Tier 3 averaged 4.10.
+- Customer ratings also remained stable at approximately 4.0 across every city tier.
+- Geographic location therefore appears to have little influence on customer satisfaction.
+
+### Festival & Weekend Ratings
+
+- Regular operating days recorded an average customer rating of 4.00.
+- Festival and weekend orders averaged 3.98.
+- Restaurant ratings remained stable at approximately 4.10 during both periods.
+- Delivery partner ratings remained consistent at approximately 4.20.
+- Customer satisfaction therefore remained largely unaffected during higher-demand periods.
+
+### Cancellation & Refund by City Tier
+
+- Cancellation rates were very similar across all city tiers.
+- City Tier 1 recorded the highest cancellation rate at 13.56%.
+- City Tier 2 recorded the highest refund rate at 4.52%.
+- City Tier 3 handled the highest order volume while maintaining similar cancellation and refund rates.
+- Operational consistency appears strong across different geographic markets.
+
+## Customer Experience Business Insights
+
+- Approximately 86.65% of all orders were completed successfully.
+- Only 4.12% of orders required refunds, indicating relatively low post-order financial adjustments.
+- Customer, restaurant, and delivery partner ratings all remained close to or above 4 stars.
+- Customer satisfaction remained stable regardless of delivery delays, city tier, or festival periods.
+- Refunds occurred independently of cancellations in many cases, suggesting additional service-related refund scenarios.
+- Restaurant and delivery partner performance remained consistently strong across the platform.
+- Cancellation and refund rates showed minimal variation between city tiers, indicating standardized operational performance.
+- Overall customer experience appears stable, with consistently high ratings despite occasional cancellations, refunds, and delivery delays.

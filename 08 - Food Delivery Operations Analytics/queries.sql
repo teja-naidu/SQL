@@ -384,3 +384,128 @@ SELECT
         2
     ) AS average_delivery_time_difference
 FROM food_delivery;
+
+-- ==========================================
+-- Cancellation, Refund & Rating Analytics
+-- ==========================================
+
+
+-- 31. Cancellation Analysis
+
+SELECT
+    cancellation_flag,
+    COUNT(*) AS total_orders,
+    ROUND(
+        100.0 * COUNT(*) / (SELECT COUNT(*) FROM food_delivery),
+        2
+    ) AS percentage_of_orders
+FROM food_delivery
+GROUP BY cancellation_flag;
+
+
+-- 32. Refund Analysis
+
+SELECT
+    refund_flag,
+    COUNT(*) AS total_orders,
+    ROUND(
+        100.0 * COUNT(*) / (SELECT COUNT(*) FROM food_delivery),
+        2
+    ) AS percentage_of_orders
+FROM food_delivery
+GROUP BY refund_flag;
+
+
+-- 33. Cancellation vs Refund Analysis
+
+SELECT
+    cancellation_flag,
+    refund_flag,
+    COUNT(*) AS total_orders
+FROM food_delivery
+GROUP BY cancellation_flag, refund_flag
+ORDER BY cancellation_flag DESC, refund_flag DESC;
+
+
+-- 34. Customer Rating Analysis
+
+SELECT
+    ROUND(AVG(customer_rating),2) AS average_customer_rating,
+    ROUND(MIN(customer_rating),2) AS minimum_rating,
+    ROUND(MAX(customer_rating),2) AS maximum_rating
+FROM food_delivery;
+
+
+-- 35. Restaurant Rating Analysis
+
+SELECT
+    ROUND(AVG(restaurant_rating),2) AS average_restaurant_rating,
+    ROUND(MIN(restaurant_rating),2) AS minimum_rating,
+    ROUND(MAX(restaurant_rating),2) AS maximum_rating
+FROM food_delivery;
+
+
+-- 36. Delivery Partner Rating Analysis
+
+SELECT
+    COUNT(delivery_partner_rating) AS available_ratings,
+    COUNT(*) - COUNT(delivery_partner_rating) AS missing_ratings,
+    ROUND(AVG(delivery_partner_rating),2) AS average_partner_rating,
+    ROUND(MIN(delivery_partner_rating),2) AS minimum_rating,
+    ROUND(MAX(delivery_partner_rating),2) AS maximum_rating
+FROM food_delivery;
+
+
+-- 37. Customer Rating by Delay Status
+
+SELECT
+    delayed_delivery_flag,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(customer_rating),2) AS average_customer_rating,
+    ROUND(AVG(delivery_partner_rating),2) AS average_partner_rating
+FROM food_delivery
+GROUP BY delayed_delivery_flag;
+
+
+-- 38. Restaurant Rating by City Tier
+
+SELECT
+    city_tier,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(restaurant_rating),2) AS average_restaurant_rating,
+    ROUND(AVG(customer_rating),2) AS average_customer_rating
+FROM food_delivery
+GROUP BY city_tier
+ORDER BY city_tier;
+
+
+-- 39. Ratings During Festival / Weekend
+
+SELECT
+    festival_or_weekend_flag,
+    COUNT(*) AS total_orders,
+    ROUND(AVG(customer_rating),2) AS average_customer_rating,
+    ROUND(AVG(restaurant_rating),2) AS average_restaurant_rating,
+    ROUND(AVG(delivery_partner_rating),2) AS average_partner_rating
+FROM food_delivery
+GROUP BY festival_or_weekend_flag;
+
+
+-- 40. Cancellation & Refund by City Tier
+
+SELECT
+    city_tier,
+    COUNT(*) AS total_orders,
+    SUM(CASE WHEN cancellation_flag = TRUE THEN 1 ELSE 0 END) AS cancelled_orders,
+    SUM(CASE WHEN refund_flag = TRUE THEN 1 ELSE 0 END) AS refunded_orders,
+    ROUND(
+        100.0 * SUM(CASE WHEN cancellation_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS cancellation_rate,
+    ROUND(
+        100.0 * SUM(CASE WHEN refund_flag = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS refund_rate
+FROM food_delivery
+GROUP BY city_tier
+ORDER BY city_tier;

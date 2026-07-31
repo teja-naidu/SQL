@@ -330,3 +330,85 @@
 - Restaurant and delivery partner performance remained consistently strong across the platform.
 - Cancellation and refund rates showed minimal variation between city tiers, indicating standardized operational performance.
 - Overall customer experience appears stable, with consistently high ratings despite occasional cancellations, refunds, and delivery delays.
+
+## Advanced SQL Analytics & Business KPIs
+
+### Revenue Ranking by City Tier
+
+- City Tier 3 generated the highest revenue of **$896,562.86**, ranking first among all city tiers.
+- City Tier 2 generated **$445,735.04**, ranking second.
+- City Tier 1 generated **$443,957.37**, ranking third.
+- Higher order volume in Tier 3 contributed significantly to overall platform revenue.
+
+### Revenue by Customer Age Group
+
+- Customers aged **55+** generated the highest revenue of **$642,587.34**.
+- The **35–44** age group ranked second with **$318,971.95**.
+- Customers aged **25–34** generated **$306,898.84**.
+- The **45–54** segment contributed **$304,395.00**.
+- Customers under **25 years** generated the lowest revenue at **$213,402.14**.
+
+### Premium Customer Revenue Contribution
+
+- Premium customers contributed **30.44%** of total platform revenue.
+- Non-premium customers generated **69.56%** of overall revenue.
+- Although premium customers represented a smaller customer base, they generated considerably higher average order values.
+
+### Monthly Revenue Trend
+
+- Monthly revenue remained relatively stable throughout the year.
+- **August** recorded the highest monthly revenue at **$155,567.37**.
+- **November** generated the lowest monthly revenue at **$143,693.17**.
+- Revenue fluctuations across months remained relatively small, indicating consistent business performance.
+
+### Delivery Efficiency Ranking
+
+- City Tier 2 achieved the highest average delivery efficiency score (**59.36**).
+- City Tier 1 ranked second with **59.13**.
+- City Tier 3 ranked third with **59.08**.
+- Delivery efficiency remained highly consistent across all geographic markets.
+
+### Customer Rating Distribution
+
+- Customer ratings were divided into four quartiles using the **NTILE()** window function.
+- The highest-rated quartile primarily contained 5-star ratings.
+- Lower quartiles included progressively lower customer ratings and some missing values.
+- Window functions effectively segmented customer satisfaction levels for further analysis.
+
+### Revenue by Delivery Status
+
+- On-time deliveries generated **$1,618,145.76** in revenue.
+- Delayed deliveries generated **$168,109.51**.
+- Average revenue per order remained very similar for delayed and on-time deliveries.
+- Delivery delays had minimal financial impact on average order value.
+
+### Festival Revenue Analysis
+
+- Regular business days generated **$1,395,050.83**, ranking first in total revenue.
+- Festival and weekend periods generated **$391,204.45**.
+- However, festival and weekend orders produced a higher average order value (**$126.73**) compared to regular days (**$117.10**).
+
+### Executive KPI Dashboard
+
+- Total Orders: **15,000**
+- Total Revenue: **$1,786,255.27**
+- Average Order Value: **$119.08**
+- Average Customer Rating: **3.99**
+- Average Restaurant Rating: **4.10**
+- Average Delivery Partner Rating: **4.20**
+- Delivery Delay Rate: **9.47%**
+- Cancellation Rate: **13.35%**
+- Refund Rate: **4.12%**
+
+## Final Business Insights
+
+- The platform generated **$1.79 million** in revenue from **15,000** completed orders.
+- Premium customers contributed nearly one-third of total revenue while maintaining significantly higher average order values.
+- City Tier 3 served as the primary revenue-generating market because of its substantially higher order volume.
+- Customers aged **55 years and above** represented the highest revenue-generating demographic segment.
+- Monthly revenue remained stable throughout the year, demonstrating consistent operational performance.
+- Customer satisfaction remained close to **4 out of 5**, while restaurant and delivery partner ratings consistently exceeded 4 stars.
+- Delivery efficiency remained consistent across all city tiers, with only minor performance differences.
+- Cancellation and refund rates remained relatively low compared to total completed orders.
+- Festival periods increased average order value despite contributing a smaller share of annual revenue.
+- Overall, the platform demonstrated stable financial performance, efficient delivery operations, and consistently positive customer experience across all analytical dimensions.

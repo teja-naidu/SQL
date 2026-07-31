@@ -509,3 +509,169 @@ SELECT
 FROM food_delivery
 GROUP BY city_tier
 ORDER BY city_tier;
+
+-- ==========================================
+-- Advanced SQL Analytics (CTEs & Window Functions)
+-- ==========================================
+
+
+-- 41. Revenue Ranking by City Tier
+
+SELECT
+    city_tier,
+    COUNT(*) AS total_orders,
+    ROUND(SUM(final_amount_paid),2) AS total_revenue,
+    RANK() OVER(
+        ORDER BY SUM(final_amount_paid) DESC
+    ) AS revenue_rank
+FROM food_delivery
+GROUP BY city_tier
+ORDER BY revenue_rank;
+
+
+-- 42. Customer Age Group Revenue Ranking
+
+WITH age_revenue AS
+(
+SELECT
+CASE
+WHEN customer_age <25 THEN 'Under 25'
+WHEN customer_age BETWEEN 25 AND 34 THEN '25-34'
+WHEN customer_age BETWEEN 35 AND 44 THEN '35-44'
+WHEN customer_age BETWEEN 45 AND 54 THEN '45-54'
+ELSE '55+'
+END AS age_group,
+SUM(final_amount_paid) revenue
+FROM food_delivery
+GROUP BY age_group
+)
+
+SELECT *,
+RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM age_revenue;
+
+
+-- 43. Premium Customer Revenue Contribution
+
+WITH revenue_cte AS
+(
+SELECT
+premium_customer_flag,
+SUM(final_amount_paid) revenue
+FROM food_delivery
+GROUP BY premium_customer_flag
+)
+
+SELECT
+premium_customer_flag,
+ROUND(revenue,2) revenue,
+ROUND(
+100*revenue/SUM(revenue) OVER(),
+2
+) revenue_percentage
+FROM revenue_cte;
+
+
+-- 44. Monthly Revenue Trend with Previous Month
+
+SELECT
+order_month,
+ROUND(SUM(final_amount_paid),2) monthly_revenue,
+ROUND(
+LAG(SUM(final_amount_paid))
+OVER(ORDER BY order_month),
+2
+) previous_month_revenue
+FROM food_delivery
+GROUP BY order_month
+ORDER BY order_month;
+
+
+-- 45. Monthly Revenue Growth Ranking
+
+WITH monthly_sales AS
+(
+SELECT
+order_month,
+SUM(final_amount_paid) revenue
+FROM food_delivery
+GROUP BY order_month
+)
+
+SELECT
+order_month,
+ROUND(revenue,2) revenue,
+DENSE_RANK() OVER(ORDER BY revenue DESC) revenue_rank
+FROM monthly_sales
+ORDER BY revenue_rank;
+
+
+-- 46. Delivery Efficiency Ranking
+
+SELECT
+city_tier,
+ROUND(AVG(delivery_efficiency_score),2) average_efficiency,
+RANK() OVER(
+ORDER BY AVG(delivery_efficiency_score) DESC
+) efficiency_rank
+FROM food_delivery
+GROUP BY city_tier;
+
+
+-- 47. Customer Rating Quartiles
+
+SELECT
+NTILE(4) OVER(
+ORDER BY customer_rating DESC
+) rating_quartile,
+customer_rating
+FROM food_delivery;
+
+
+-- 48. Average Revenue by Delay Status
+
+SELECT
+delayed_delivery_flag,
+COUNT(*) total_orders,
+ROUND(AVG(final_amount_paid),2) average_revenue,
+ROUND(SUM(final_amount_paid),2) total_revenue
+FROM food_delivery
+GROUP BY delayed_delivery_flag;
+
+
+-- 49. Revenue by Festival Status
+
+SELECT
+festival_or_weekend_flag,
+COUNT(*) total_orders,
+ROUND(SUM(final_amount_paid),2) total_revenue,
+ROUND(AVG(final_amount_paid),2) average_order_value,
+DENSE_RANK() OVER(
+ORDER BY SUM(final_amount_paid) DESC
+) revenue_rank
+FROM food_delivery
+GROUP BY festival_or_weekend_flag;
+
+
+-- 50. Executive KPI Dashboard
+
+SELECT
+    COUNT(*) AS total_orders,
+    ROUND(SUM(final_amount_paid),2) AS total_revenue,
+    ROUND(AVG(final_amount_paid),2) AS average_order_value,
+    ROUND(AVG(customer_rating),2) AS average_customer_rating,
+    ROUND(AVG(restaurant_rating),2) AS average_restaurant_rating,
+    ROUND(AVG(delivery_partner_rating),2) AS average_partner_rating,
+    ROUND(
+        100.0 * SUM(CASE WHEN delayed_delivery_flag THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS delay_rate,
+    ROUND(
+        100.0 * SUM(CASE WHEN cancellation_flag THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS cancellation_rate,
+    ROUND(
+        100.0 * SUM(CASE WHEN refund_flag THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS refund_rate
+FROM food_delivery;

@@ -1,59 +1,53 @@
 -- ==========================================================
--- Day 1
--- Dataset Overview
+-- Day 1 - Dataset Exploration
 -- ==========================================================
 
--- Total Movies
+-- Movies by Decade
 SELECT
+FLOOR(Year / 10) * 10 AS decade,
 COUNT(*) AS total_movies
+FROM movies
+GROUP BY decade
+ORDER BY decade;
+
+-- Top 10 Production Companies
+SELECT
+Production,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY Production
+ORDER BY total_movies DESC
+LIMIT 10;
+
+-- Top 10 Languages
+SELECT
+Language,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY Language
+ORDER BY total_movies DESC
+LIMIT 10;
+
+-- Rating Distribution
+SELECT
+CASE
+    WHEN IMDb_10 >= 9 THEN '9.0 - 10'
+    WHEN IMDb_10 >= 8 THEN '8.0 - 8.9'
+    WHEN IMDb_10 >= 7 THEN '7.0 - 7.9'
+    ELSE 'Below 7'
+END AS rating_range,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY rating_range
+ORDER BY total_movies DESC;
+
+-- Average Movie Release Year
+SELECT
+ROUND(AVG(Year),0) AS average_release_year
 FROM movies;
 
--- Earliest Release Year
+-- Movies Available on Multiple Streaming Platforms
 SELECT
-MIN(Year) AS earliest_movie
-FROM movies;
-
--- Latest Release Year
-SELECT
-MAX(Year) AS latest_movie
-FROM movies;
-
--- Average Custom Score
-SELECT
-ROUND(AVG(Custom_Score),2) AS average_custom_score
-FROM movies;
-
--- Average IMDb Rating
-SELECT
-ROUND(AVG(IMDb_10),2) AS average_imdb_rating
-FROM movies;
-
--- Average IMDb Votes
-SELECT
-ROUND(AVG(IMDb_Votes),0) AS average_imdb_votes
-FROM movies;
-
--- Highest IMDb Rating
-SELECT
-MAX(IMDb_10) AS highest_imdb_rating
-FROM movies;
-
--- Highest Flickmetrix Score
-SELECT
-MAX(Flickmetrix_Score) AS highest_flickmetrix_score
-FROM movies;
-
--- Total Streaming Providers Listed
-SELECT
-COUNT(DISTINCT Streaming_On) AS streaming_provider_combinations
-FROM movies;
-
--- Number of Languages
-SELECT
-COUNT(DISTINCT Language) AS total_languages
-FROM movies;
-
--- Number of Production Companies
-SELECT
-COUNT(DISTINCT Production) AS total_production_companies
-FROM movies;
+COUNT(*) AS multi_platform_movies
+FROM movies
+WHERE Streaming_On LIKE '%,%';

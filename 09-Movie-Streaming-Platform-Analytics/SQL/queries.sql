@@ -51,3 +51,98 @@ SELECT
 COUNT(*) AS multi_platform_movies
 FROM movies
 WHERE Streaming_On LIKE '%,%';
+
+-- ==========================================================
+-- Day 2 - Movie Ratings & Genre Analytics
+-- ==========================================================
+
+-- Top 10 Highest Rated Movies by Custom Score
+SELECT
+Rank,
+Title,
+Year,
+Custom_Score
+FROM movies
+ORDER BY Custom_Score DESC
+LIMIT 10;
+
+-- Top 10 Highest IMDb Rated Movies
+SELECT
+Title,
+Year,
+IMDb_10
+FROM movies
+ORDER BY IMDb_10 DESC, IMDb_Votes DESC
+LIMIT 10;
+
+-- Top 10 Most Popular Movies (IMDb Votes)
+SELECT
+Title,
+Year,
+IMDb_Votes
+FROM movies
+ORDER BY IMDb_Votes DESC
+LIMIT 10;
+
+-- Genre Distribution
+SELECT
+Genre,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY Genre
+ORDER BY total_movies DESC
+LIMIT 15;
+
+-- Average IMDb Rating by Genre
+SELECT
+Genre,
+ROUND(AVG(IMDb_10),2) AS average_imdb_rating
+FROM movies
+GROUP BY Genre
+HAVING COUNT(*) >= 3
+ORDER BY average_imdb_rating DESC;
+
+-- Average Custom Score by Genre
+SELECT
+Genre,
+ROUND(AVG(Custom_Score),2) AS average_custom_score
+FROM movies
+GROUP BY Genre
+HAVING COUNT(*) >= 3
+ORDER BY average_custom_score DESC;
+
+-- Genre with Highest Audience Rating
+SELECT
+Genre,
+ROUND(AVG(Audience_Rating),2) AS average_audience_rating
+FROM movies
+GROUP BY Genre
+HAVING COUNT(*) >= 3
+ORDER BY average_audience_rating DESC;
+
+-- Top 15 Movies by Audience Rating
+SELECT
+Title,
+Year,
+Audience_Rating
+FROM movies
+ORDER BY Audience_Rating DESC
+LIMIT 15;
+
+-- Top 15 Movies by Rotten Tomatoes Critic Rating
+SELECT
+Title,
+Year,
+Critic_Rating_RT
+FROM movies
+ORDER BY Critic_Rating_RT DESC
+LIMIT 15;
+
+-- Top 15 Movies by Metacritic Score
+SELECT
+Title,
+Year,
+Metacritic
+FROM movies
+ORDER BY Metacritic DESC
+LIMIT 15;

@@ -69,3 +69,67 @@ This dataset enables analysis of:
 - Audience engagement
 - Critic versus audience preferences
 - Historical movie trends across decades
+
+# Day 2 Insights - Movie Ratings & Genre Analytics
+
+## Key Findings
+
+### Highest Rated Movies
+
+- **The Godfather (1972)** ranks as the highest-rated movie in the dataset with a **Custom Score of 93.83**.
+- Other top-performing movies include **Seven Samurai**, **12 Angry Men**, **Schindler's List**, and **The Godfather: Part II**.
+- These films consistently receive exceptional ratings across IMDb, Rotten Tomatoes, Metacritic, and audience reviews.
+
+### IMDb Ratings
+
+- **The Godfather** holds the highest IMDb rating of **9.2/10**.
+- Five movies have IMDb ratings of **9.0 or higher**, making them exceptionally rare among the 449 selected films.
+- Highly rated classics such as **The Lord of the Rings: The Return of the King**, **Schindler's List**, and **12 Angry Men** continue to maintain outstanding audience appreciation.
+
+### Movie Popularity
+
+- **Inception** is the most popular movie based on IMDb votes, receiving more than **2.66 million votes**.
+- **Fight Club**, **Forrest Gump**, **Pulp Fiction**, and **Interstellar** also rank among the most widely watched and reviewed films.
+- Popularity does not always correspond directly with the highest critic ratings, demonstrating differences between audience reach and critical acclaim.
+
+### Genre Distribution
+
+- **Drama** is the most represented genre with **56 movies**.
+- Drama-related combinations such as **Drama, Romance**, **Drama, Crime**, and **Comedy, Drama** dominate the dataset.
+- Documentary and historical dramas also have strong representation.
+
+### Genre Performance
+
+- **Adventure, Fantasy, Action** achieves the highest average IMDb rating (**8.90**) and the highest average Custom Score (**88.39**).
+- **Drama, History, War** records the highest average audience rating (**90.60**).
+- Crime, thriller, western, and historical drama genres consistently achieve above-average ratings across multiple review platforms.
+
+### Audience Ratings
+
+- **The Godfather** and **Wolfwalkers** receive the highest audience rating of **95**.
+- Several classics including **Seven Samurai**, **Schindler's List**, and **Goodfellas** maintain audience ratings above **94**, demonstrating long-term popularity.
+
+### Critic Ratings
+
+- **Citizen Kane** leads Rotten Tomatoes critic ratings with a score of **98**.
+- Several legendary films including **Seven Samurai**, **Casablanca**, **Lawrence of Arabia**, and **Parasite** receive critic ratings above **95**.
+- These movies continue to be recognized as benchmark films in cinematic history.
+
+### Metacritic Analysis
+
+- Seven movies achieve a perfect **100 Metacritic score**, including **The Godfather**, **Citizen Kane**, **Rear Window**, and **Lawrence of Arabia**.
+- Classic cinema dominates the highest Metacritic rankings, reflecting strong critical consensus over multiple decades.
+
+---
+
+## Business Value
+
+The analysis demonstrates how different rating platforms evaluate movies from distinct perspectives.
+
+These insights can help streaming platforms:
+
+- Recommend highly rated movies to users.
+- Balance audience favorites with critically acclaimed films.
+- Identify genres that consistently perform well.
+- Improve recommendation systems using multi-platform rating data.
+- Understand long-term popularity through audience engagement and critic consensus.

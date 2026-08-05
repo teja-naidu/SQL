@@ -133,3 +133,66 @@ These insights can help streaming platforms:
 - Identify genres that consistently perform well.
 - Improve recommendation systems using multi-platform rating data.
 - Understand long-term popularity through audience engagement and critic consensus.
+
+# Day 3 Insights - Directors, Production & Language Analytics
+
+## Key Findings
+
+### Director Performance
+
+- **Steven Spielberg** and **Martin Scorsese** lead the dataset with **8 movies each**, followed by **Hayao Miyazaki**, **Alfred Hitchcock**, and **Stanley Kubrick** with **7 movies each**.
+- Directors such as **Quentin Tarantino**, **Christopher Nolan**, **Denis Villeneuve**, and **Alfonso Cuarón** also have strong representation among the highest-ranked films.
+
+### Highest Rated Directors
+
+- **Francis Ford Coppola** has the highest average IMDb rating (**8.58**) among directors with at least three movies.
+- **Peter Jackson**, **Christopher Nolan**, **Quentin Tarantino**, and **Akira Kurosawa** consistently achieve average IMDb ratings above **8.3**, demonstrating exceptional filmmaking quality.
+
+### Production Company Analysis
+
+- **Warner Bros. Pictures** contributes the largest number of movies (**24**), followed by **Paramount Pictures (21)** and **Sony Pictures Classics (19)**.
+- **Criterion Collection** records the highest average Custom Score (**87.35**) among production companies with at least three movies.
+- **Paramount Pictures**, **Columbia Pictures**, and **United Artists** also maintain consistently high average movie scores.
+
+### Language Analysis
+
+- **English** dominates the dataset with **334 movies**, accounting for the majority of highly rated films.
+- **Japanese (21)**, **French (20)**, **Spanish (14)**, and **Italian (11)** are the next most represented languages.
+- Italian-language movies achieve the highest average Custom Score (**86.13**), followed by Portuguese and Japanese films.
+
+### Movie Release Trends
+
+- Movie releases increase significantly after the 1990s, with the **2010s** contributing the highest number of top-ranked movies.
+- Recent years such as **2023** continue to produce critically acclaimed films, demonstrating that modern cinema remains well represented.
+
+### Popularity Rankings
+
+- **Inception** ranks as the most popular movie based on IMDb votes, followed by **Fight Club**, **Forrest Gump**, **Pulp Fiction**, and **Interstellar**.
+- These movies have each accumulated more than **2 million IMDb votes**, highlighting their global popularity.
+
+### Best Movie by Decade
+
+- Every decade has a standout movie based on the highest Custom Score.
+- Notable decade leaders include:
+  - **Metropolis (1920s)**
+  - **City Lights (1930s)**
+  - **Casablanca (1940s)**
+  - **Seven Samurai (1950s)**
+  - **The Godfather (1970s)**
+  - **Schindler's List (1990s)**
+  - **Spirited Away (2000s)**
+  - **Parasite (2010s)**
+
+---
+
+## Business Value
+
+The analysis highlights the long-term consistency of legendary directors, production companies, and international cinema.
+
+These insights can help streaming platforms:
+
+- Promote high-performing directors and franchises.
+- Recommend movies based on production studio quality.
+- Improve multilingual content recommendations.
+- Understand historical trends in critically acclaimed cinema.
+- Identify timeless classics alongside modern audience favorites.

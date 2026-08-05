@@ -146,3 +146,111 @@ Metacritic
 FROM movies
 ORDER BY Metacritic DESC
 LIMIT 15;
+
+
+-- ==========================================================
+-- Day 3 - Directors, Production & Language Analytics
+-- ==========================================================
+
+-- Top 15 Directors by Number of Movies
+SELECT
+Director,
+COUNT(*) AS total_movies
+FROM movies
+WHERE Director IS NOT NULL
+GROUP BY Director
+ORDER BY total_movies DESC
+LIMIT 15;
+
+-- Top 15 Production Companies
+SELECT
+Production,
+COUNT(*) AS total_movies
+FROM movies
+WHERE Production IS NOT NULL
+GROUP BY Production
+ORDER BY total_movies DESC
+LIMIT 15;
+
+-- Top Languages
+SELECT
+Language,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY Language
+ORDER BY total_movies DESC;
+
+-- Average IMDb Rating by Director
+SELECT
+Director,
+COUNT(*) AS total_movies,
+ROUND(AVG(IMDb_10),2) AS average_imdb_rating
+FROM movies
+WHERE Director IS NOT NULL
+GROUP BY Director
+HAVING COUNT(*) >= 3
+ORDER BY average_imdb_rating DESC
+LIMIT 15;
+
+-- Average Custom Score by Production Company
+SELECT
+Production,
+COUNT(*) AS total_movies,
+ROUND(AVG(Custom_Score),2) AS average_custom_score
+FROM movies
+WHERE Production IS NOT NULL
+GROUP BY Production
+HAVING COUNT(*) >= 3
+ORDER BY average_custom_score DESC
+LIMIT 15;
+
+-- Average Custom Score by Language
+SELECT
+Language,
+COUNT(*) AS total_movies,
+ROUND(AVG(Custom_Score),2) AS average_custom_score
+FROM movies
+GROUP BY Language
+HAVING COUNT(*) >= 3
+ORDER BY average_custom_score DESC;
+
+-- Movie Releases by Year
+SELECT
+Year,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY Year
+ORDER BY Year;
+
+-- Top 20 Movies Ranked by IMDb Votes
+SELECT
+ROW_NUMBER() OVER(ORDER BY IMDb_Votes DESC) AS popularity_rank,
+Title,
+Year,
+IMDb_Votes
+FROM movies
+LIMIT 20;
+
+-- Top Movie for Each Decade (Based on Custom Score)
+WITH ranked_movies AS
+(
+SELECT
+FLOOR(Year/10)*10 AS decade,
+Title,
+Year,
+Custom_Score,
+ROW_NUMBER() OVER(
+PARTITION BY FLOOR(Year/10)
+ORDER BY Custom_Score DESC
+) AS rank_num
+FROM movies
+)
+
+SELECT
+decade,
+Title,
+Year,
+Custom_Score
+FROM ranked_movies
+WHERE rank_num = 1
+ORDER BY decade;

@@ -196,3 +196,84 @@ These insights can help streaming platforms:
 - Improve multilingual content recommendations.
 - Understand historical trends in critically acclaimed cinema.
 - Identify timeless classics alongside modern audience favorites.
+
+# Day 4 Insights - Streaming Platform & Audience Analytics
+
+## Key Findings
+
+### Streaming Platform Availability
+
+- The most common streaming provider combination is **iTunes + Amazon Video**, covering **134 movies**.
+- **iTunes + Amazon Video + Max** appears for **51 movies**, while **Prime Video + iTunes + Amazon Video** includes **31 movies**.
+- More than **362 movies** are available on multiple streaming platforms, providing viewers with greater accessibility.
+
+### Streaming Quality Analysis
+
+- Movies available on **HBO + iTunes + Amazon Video + Max** have the highest average Custom Score (**88.85**).
+- Streaming combinations including **Paramount+**, **Prime Video**, and **Max** also maintain above-average movie quality.
+- Popular streaming services consistently host critically acclaimed and audience-favorite films.
+
+### Audience vs Critic Preferences
+
+- **Fight Club** shows the largest positive difference between audience and critic ratings, with audiences rating it **21 points higher** than critics.
+- **Se7en**, **Casino**, **Oldboy**, and **Dead Poets Society** also receive significantly stronger audience appreciation.
+- These results demonstrate that audience favorites are not always the highest-rated films among professional critics.
+
+### Critics vs Audience Preferences
+
+- **Uncut Gems** has the largest critic advantage, receiving **29 points higher** from critics than audiences.
+- **Pinocchio (1940)**, **E.T. the Extra-Terrestrial**, **Roma**, and **Boyhood** also receive considerably stronger critic scores.
+- This highlights the differences between critical evaluation and mainstream audience reception.
+
+### Rating Platform Comparison
+
+Average ratings across review platforms:
+
+- IMDb Rating: **7.97 / 10**
+- Metacritic: **86.75**
+- Rotten Tomatoes Critics: **85.58**
+- Rotten Tomatoes Audience: **85.75**
+- Custom Score: **84.23**
+
+The relatively small variation indicates strong consistency across major review platforms.
+
+### IMDb Popularity Analysis
+
+- **203 movies** have between **100K and 500K IMDb votes**, representing the largest popularity category.
+- Only **9 movies** have surpassed **2 million IMDb votes**, making them exceptionally popular worldwide.
+- The dataset balances blockbuster films with critically acclaimed niche cinema.
+
+### Audience Favorites
+
+- **The Godfather** and **Wolfwalkers** share the highest audience rating (**95**).
+- Other audience favorites include **Schindler's List**, **Goodfellas**, **12 Angry Men**, and **Seven Samurai**.
+- These movies continue to receive exceptional appreciation across generations.
+
+### Critically Acclaimed Movies
+
+- **Citizen Kane**, **The Godfather**, **Casablanca**, **Lawrence of Arabia**, and **Rear Window** dominate critic-based rankings.
+- Several classic films achieve perfect **100 Metacritic** scores, demonstrating long-term critical recognition.
+
+### Highly Rated Blockbusters
+
+Among movies with more than **1 million IMDb votes**, the highest Custom Scores belong to:
+
+- The Godfather
+- Schindler's List
+- The Godfather: Part II
+- Pulp Fiction
+- Parasite
+
+These films successfully combine massive popularity with exceptional critical acclaim.
+
+---
+
+## Business Value
+
+The analysis provides valuable insights for streaming platforms and recommendation systems by identifying:
+
+- Streaming provider coverage for premium content.
+- Differences between audience and critic preferences.
+- Globally popular blockbuster movies.
+- High-quality movies available across multiple streaming services.
+- Opportunities to personalize recommendations based on audience or critic preferences.

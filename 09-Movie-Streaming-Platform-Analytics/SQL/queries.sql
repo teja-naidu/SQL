@@ -254,3 +254,117 @@ Custom_Score
 FROM ranked_movies
 WHERE rank_num = 1
 ORDER BY decade;
+
+-- ==========================================================
+-- Day 4 - Streaming Platform & Audience Analytics
+-- ==========================================================
+
+-- Top 15 Streaming Provider Combinations
+SELECT
+Streaming_On,
+COUNT(*) AS total_movies
+FROM movies
+WHERE Streaming_On IS NOT NULL
+GROUP BY Streaming_On
+ORDER BY total_movies DESC
+LIMIT 15;
+
+-- Average Custom Score by Streaming Provider Combination
+SELECT
+Streaming_On,
+COUNT(*) AS total_movies,
+ROUND(AVG(Custom_Score),2) AS average_custom_score
+FROM movies
+WHERE Streaming_On IS NOT NULL
+GROUP BY Streaming_On
+HAVING COUNT(*) >= 3
+ORDER BY average_custom_score DESC
+LIMIT 15;
+
+-- Audience vs Critic Rating Difference
+SELECT
+Title,
+Year,
+Audience_Rating,
+Critic_Rating_RT,
+ROUND(Audience_Rating - Critic_Rating_RT,2) AS rating_difference
+FROM movies
+ORDER BY rating_difference DESC
+LIMIT 15;
+
+-- Critics Rated Higher than Audience
+SELECT
+Title,
+Year,
+Audience_Rating,
+Critic_Rating_RT,
+ROUND(Critic_Rating_RT - Audience_Rating,2) AS critic_difference
+FROM movies
+ORDER BY critic_difference DESC
+LIMIT 15;
+
+-- Average Ratings Across Platforms
+SELECT
+ROUND(AVG(IMDb_10),2) AS avg_imdb_rating,
+ROUND(AVG(Metacritic),2) AS avg_metacritic,
+ROUND(AVG(Critic_Rating_RT),2) AS avg_rt_critic,
+ROUND(AVG(Audience_Rating),2) AS avg_rt_audience,
+ROUND(AVG(Custom_Score),2) AS avg_custom_score
+FROM movies;
+
+-- IMDb Vote Categories
+SELECT
+CASE
+    WHEN IMDb_Votes >= 2000000 THEN '2M+ Votes'
+    WHEN IMDb_Votes >= 1000000 THEN '1M - 2M Votes'
+    WHEN IMDb_Votes >= 500000 THEN '500K - 1M Votes'
+    WHEN IMDb_Votes >= 100000 THEN '100K - 500K Votes'
+    ELSE 'Below 100K'
+END AS vote_category,
+COUNT(*) AS total_movies
+FROM movies
+GROUP BY vote_category
+ORDER BY total_movies DESC;
+
+-- Top Audience Favorites
+SELECT
+Title,
+Year,
+Audience_Rating,
+IMDb_Votes
+FROM movies
+ORDER BY Audience_Rating DESC, IMDb_Votes DESC
+LIMIT 15;
+
+-- Most Critically Acclaimed Movies
+SELECT
+Title,
+Year,
+Metacritic,
+Critic_Rating_RT,
+Custom_Score
+FROM movies
+ORDER BY Metacritic DESC, Critic_Rating_RT DESC
+LIMIT 15;
+
+-- Highest Rated Movies with More Than 1 Million IMDb Votes
+SELECT
+Title,
+Year,
+IMDb_Votes,
+IMDb_10,
+Custom_Score
+FROM movies
+WHERE IMDb_Votes >= 1000000
+ORDER BY Custom_Score DESC
+LIMIT 15;
+
+-- Movies Available on Multiple Streaming Platforms
+SELECT
+Title,
+Year,
+Streaming_On
+FROM movies
+WHERE Streaming_On LIKE '%,%'
+ORDER BY Custom_Score DESC
+LIMIT 20;

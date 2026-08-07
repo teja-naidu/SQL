@@ -277,3 +277,64 @@ The analysis provides valuable insights for streaming platforms and recommendati
 - Globally popular blockbuster movies.
 - High-quality movies available across multiple streaming services.
 - Opportunities to personalize recommendations based on audience or critic preferences.
+
+# Day 5 Insights - Advanced Analytics & Business Intelligence
+
+## Key Findings
+
+### Director Excellence
+
+- Each director has a standout movie that represents their highest-rated work based on the Custom Score.
+- Francis Ford Coppola, Christopher Nolan, Akira Kurosawa, Peter Jackson, and Quentin Tarantino consistently rank among the highest-performing directors.
+- Legendary directors demonstrate remarkable consistency across multiple critically acclaimed films.
+
+### Production Company Performance
+
+- Criterion Collection ranks as the highest-performing production company based on average Custom Score.
+- Paramount Pictures, Columbia Pictures, United Artists, and Warner Bros. Pictures contribute both a high volume of films and strong average ratings.
+- Large studios successfully balance quantity with quality.
+
+### Language Leaders
+
+- Italian-language films achieve the highest average Custom Score.
+- Japanese cinema continues to perform exceptionally well across audience and critic ratings.
+- English-language movies dominate in volume while maintaining strong average quality.
+
+### Movie Popularity
+
+- Only a small percentage of movies exceed two million IMDb votes.
+- Blockbuster films such as **The Godfather**, **Pulp Fiction**, **The Lord of the Rings**, and **Inception** combine massive audience reach with exceptional review scores.
+- Highly popular movies generally maintain above-average ratings across all review platforms.
+
+### Rating Consistency
+
+- The highest-ranked movies consistently perform well across IMDb, Rotten Tomatoes, Metacritic, and Audience Ratings.
+- The Godfather remains the strongest overall performer by combining exceptional critic reviews, audience ratings, IMDb score, and Custom Score.
+
+### Business Intelligence
+
+The advanced SQL analysis demonstrates how window functions and ranking techniques can be used to:
+
+- Rank movies within directors and languages.
+- Compare production company performance.
+- Segment movies by popularity.
+- Identify premium content across multiple review platforms.
+- Build recommendation systems using multiple ranking metrics.
+
+---
+
+## Project Summary
+
+This project analyzed **449 highly rated movies** using advanced SQL techniques, including:
+
+- Aggregations
+- CASE expressions
+- Common Table Expressions (CTEs)
+- Window Functions
+- RANK()
+- DENSE_RANK()
+- NTILE()
+- Subqueries
+- Business KPI Analysis
+
+The project provides actionable insights into movie quality, streaming availability, audience engagement, critic reviews, production companies, directors, genres, languages, and historical cinema trends.

@@ -368,3 +368,183 @@ FROM movies
 WHERE Streaming_On LIKE '%,%'
 ORDER BY Custom_Score DESC
 LIMIT 20;
+
+-- ==========================================================
+-- Day 5 - Advanced Analytics & Business Intelligence
+-- ==========================================================
+
+-- Top Movie for Each Director (Window Function)
+WITH ranked_movies AS
+(
+SELECT
+Director,
+Title,
+Year,
+Custom_Score,
+ROW_NUMBER() OVER
+(
+PARTITION BY Director
+ORDER BY Custom_Score DESC
+) AS movie_rank
+FROM movies
+WHERE Director IS NOT NULL
+)
+
+SELECT
+Director,
+Title,
+Year,
+Custom_Score
+FROM ranked_movies
+WHERE movie_rank = 1
+ORDER BY Custom_Score DESC
+LIMIT 20;
+
+------------------------------------------------------------
+
+-- Rank Movies by IMDb Rating
+SELECT
+Title,
+Year,
+IMDb_10,
+RANK() OVER(ORDER BY IMDb_10 DESC) AS imdb_rank
+FROM movies
+LIMIT 25;
+
+------------------------------------------------------------
+
+-- Dense Rank by Custom Score
+SELECT
+Title,
+Year,
+Custom_Score,
+DENSE_RANK() OVER
+(
+ORDER BY Custom_Score DESC
+) AS custom_rank
+FROM movies
+LIMIT 25;
+
+------------------------------------------------------------
+
+-- Movies Quartile Based on IMDb Votes
+SELECT
+Title,
+IMDb_Votes,
+NTILE(4) OVER
+(
+ORDER BY IMDb_Votes DESC
+) AS popularity_quartile
+FROM movies
+LIMIT 30;
+
+------------------------------------------------------------
+
+-- Highest Rated Movie for Each Language
+WITH language_rank AS
+(
+SELECT
+Language,
+Title,
+Custom_Score,
+ROW_NUMBER() OVER
+(
+PARTITION BY Language
+ORDER BY Custom_Score DESC
+) AS rn
+FROM movies
+)
+
+SELECT
+Language,
+Title,
+Custom_Score
+FROM language_rank
+WHERE rn=1
+ORDER BY Custom_Score DESC;
+
+------------------------------------------------------------
+
+-- Production Company Ranking
+SELECT
+Production,
+COUNT(*) Total_Movies,
+ROUND(AVG(Custom_Score),2) Avg_Custom_Score,
+RANK() OVER
+(
+ORDER BY AVG(Custom_Score) DESC
+) Production_Rank
+FROM movies
+WHERE Production IS NOT NULL
+GROUP BY Production
+HAVING COUNT(*)>=3
+ORDER BY Production_Rank
+LIMIT 20;
+
+------------------------------------------------------------
+
+-- Director Ranking
+SELECT
+Director,
+COUNT(*) Total_Movies,
+ROUND(AVG(IMDb_10),2) Avg_IMDb,
+DENSE_RANK() OVER
+(
+ORDER BY AVG(IMDb_10) DESC
+) Director_Rank
+FROM movies
+WHERE Director IS NOT NULL
+GROUP BY Director
+HAVING COUNT(*)>=3
+ORDER BY Director_Rank
+LIMIT 20;
+
+------------------------------------------------------------
+
+-- Movies Released After 2000 With IMDb Above Average
+SELECT
+Title,
+Year,
+IMDb_10
+FROM movies
+WHERE Year>=2000
+AND IMDb_10 >
+(
+SELECT AVG(IMDb_10)
+FROM movies
+)
+ORDER BY IMDb_10 DESC;
+
+------------------------------------------------------------
+
+-- Movies With Above Average Custom Score
+SELECT
+Title,
+Year,
+Genre,
+Custom_Score
+FROM movies
+WHERE Custom_Score >
+(
+SELECT AVG(Custom_Score)
+FROM movies
+)
+ORDER BY Custom_Score DESC
+LIMIT 30;
+
+------------------------------------------------------------
+
+-- Top 20 Most Consistent Movies Across Rating Platforms
+SELECT
+Title,
+Year,
+IMDb_10,
+Metacritic,
+Critic_Rating_RT,
+Audience_Rating,
+Custom_Score
+FROM movies
+ORDER BY Custom_Score DESC,
+IMDb_10 DESC,
+Metacritic DESC
+LIMIT 20;

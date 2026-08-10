@@ -6,9 +6,18 @@
 
 -- ============================================================
 -- 1. View Sample Records
+-- Selected columns only for cleaner terminal output
 -- ============================================================
 
-SELECT *
+SELECT
+    "Date",
+    "Time",
+    "Booking ID",
+    "Booking Status",
+    "Customer ID",
+    "Vehicle Type",
+    "Pickup Location",
+    "Drop Location"
 FROM uber_bookings
 LIMIT 10;
 
@@ -52,7 +61,7 @@ ORDER BY "Vehicle Type";
 
 
 -- ============================================================
--- 6. Number of Vehicle Types
+-- 6. Total Number of Vehicle Types
 -- ============================================================
 
 SELECT
@@ -82,32 +91,24 @@ SELECT
     ROUND(
         COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
         2
-    ) AS percentage_of_bookings
+    ) AS booking_percentage
 FROM uber_bookings
 GROUP BY "Booking Status"
 ORDER BY total_bookings DESC;
 
 
 -- ============================================================
--- 9. Total Pickup Locations
+-- 9. Location Coverage
 -- ============================================================
 
 SELECT
-    COUNT(DISTINCT "Pickup Location") AS total_pickup_locations
+    COUNT(DISTINCT "Pickup Location") AS pickup_locations,
+    COUNT(DISTINCT "Drop Location") AS drop_locations
 FROM uber_bookings;
 
 
 -- ============================================================
--- 10. Total Drop Locations
--- ============================================================
-
-SELECT
-    COUNT(DISTINCT "Drop Location") AS total_drop_locations
-FROM uber_bookings;
-
-
--- ============================================================
--- 11. Most Common Pickup Locations
+-- 10. Top 10 Pickup Locations
 -- ============================================================
 
 SELECT
@@ -120,7 +121,7 @@ LIMIT 10;
 
 
 -- ============================================================
--- 12. Most Common Drop Locations
+-- 11. Top 10 Drop Locations
 -- ============================================================
 
 SELECT
@@ -133,20 +134,19 @@ LIMIT 10;
 
 
 -- ============================================================
--- 13. Payment Methods Available
+-- 12. Payment Method Distribution
 -- ============================================================
 
 SELECT
     "Payment Method",
     COUNT(*) AS total_bookings
 FROM uber_bookings
-WHERE "Payment Method" IS NOT NULL
 GROUP BY "Payment Method"
 ORDER BY total_bookings DESC;
 
 
 -- ============================================================
--- 14. Duplicate Booking ID Check
+-- 13. Duplicate Booking ID Sample
 -- ============================================================
 
 SELECT
@@ -155,82 +155,268 @@ SELECT
 FROM uber_bookings
 GROUP BY "Booking ID"
 HAVING COUNT(*) > 1
-ORDER BY duplicate_count DESC;
+ORDER BY duplicate_count DESC, "Booking ID"
+LIMIT 10;
 
 
 -- ============================================================
--- 15. Missing Value Analysis
+-- 14. Duplicate Booking Summary
+-- ============================================================
+
+SELECT
+    COUNT(*) AS duplicated_booking_ids,
+    SUM(booking_count - 1) AS extra_duplicate_rows
+FROM (
+    SELECT
+        "Booking ID",
+        COUNT(*) AS booking_count
+    FROM uber_bookings
+    GROUP BY "Booking ID"
+    HAVING COUNT(*) > 1
+) AS duplicates;
+
+
+-- ============================================================
+-- 15. Missing Values - Core Fields
+-- ============================================================
+
+SELECT
+    SUM(
+        CASE
+            WHEN "Booking ID" IS NULL
+                 OR LOWER(TRIM("Booking ID")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_booking_ids,
+
+    SUM(
+        CASE
+            WHEN "Customer ID" IS NULL
+                 OR LOWER(TRIM("Customer ID")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_customer_ids,
+
+    SUM(
+        CASE
+            WHEN "Vehicle Type" IS NULL
+                 OR LOWER(TRIM("Vehicle Type")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_vehicle_types
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 16. Missing Values - Location Fields
+-- ============================================================
+
+SELECT
+    SUM(
+        CASE
+            WHEN "Pickup Location" IS NULL
+                 OR LOWER(TRIM("Pickup Location")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_pickup_locations,
+
+    SUM(
+        CASE
+            WHEN "Drop Location" IS NULL
+                 OR LOWER(TRIM("Drop Location")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_drop_locations
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 17. Missing Values - Ride Metrics
+-- ============================================================
+
+SELECT
+    SUM(
+        CASE
+            WHEN "Booking Value" IS NULL
+                 OR LOWER(TRIM("Booking Value")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_booking_values,
+
+    SUM(
+        CASE
+            WHEN "Ride Distance" IS NULL
+                 OR LOWER(TRIM("Ride Distance")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_ride_distances,
+
+    SUM(
+        CASE
+            WHEN "Payment Method" IS NULL
+                 OR LOWER(TRIM("Payment Method")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_payment_methods
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 18. Missing Values - Rating Fields
+-- ============================================================
+
+SELECT
+    SUM(
+        CASE
+            WHEN "Driver Ratings" IS NULL
+                 OR LOWER(TRIM("Driver Ratings")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_driver_ratings,
+
+    SUM(
+        CASE
+            WHEN "Customer Rating" IS NULL
+                 OR LOWER(TRIM("Customer Rating")) = 'null'
+            THEN 1 ELSE 0
+        END
+    ) AS missing_customer_ratings
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 19. Booking Value Statistics
+-- ============================================================
+
+SELECT
+    ROUND(
+        MIN(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS minimum_booking_value,
+
+    ROUND(
+        MAX(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS maximum_booking_value,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_booking_value,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 20. Ride Distance Statistics
+-- ============================================================
+
+SELECT
+    ROUND(
+        MIN(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS minimum_ride_distance,
+
+    ROUND(
+        MAX(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS maximum_ride_distance,
+
+    ROUND(
+        AVG(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS average_ride_distance,
+
+    ROUND(
+        SUM(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS total_ride_distance
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 21. Driver Rating Statistics
+-- ============================================================
+
+SELECT
+    ROUND(
+        AVG(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS average_driver_rating,
+
+    ROUND(
+        MIN(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS minimum_driver_rating,
+
+    ROUND(
+        MAX(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS maximum_driver_rating
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 22. Customer Rating Statistics
+-- ============================================================
+
+SELECT
+    ROUND(
+        AVG(TRY_CAST("Customer Rating" AS DOUBLE)),
+        2
+    ) AS average_customer_rating,
+
+    ROUND(
+        MIN(TRY_CAST("Customer Rating" AS DOUBLE)),
+        2
+    ) AS minimum_customer_rating,
+
+    ROUND(
+        MAX(TRY_CAST("Customer Rating" AS DOUBLE)),
+        2
+    ) AS maximum_customer_rating
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 23. Final Dataset Overview - Records
 -- ============================================================
 
 SELECT
     COUNT(*) AS total_rows,
-
-    COUNT(*) - COUNT("Booking ID")
-        AS missing_booking_id,
-
-    COUNT(*) - COUNT("Customer ID")
-        AS missing_customer_id,
-
-    COUNT(*) - COUNT("Vehicle Type")
-        AS missing_vehicle_type,
-
-    COUNT(*) - COUNT("Pickup Location")
-        AS missing_pickup_location,
-
-    COUNT(*) - COUNT("Drop Location")
-        AS missing_drop_location,
-
-    COUNT(*) - COUNT("Booking Value")
-        AS missing_booking_value,
-
-    COUNT(*) - COUNT("Ride Distance")
-        AS missing_ride_distance,
-
-    COUNT(*) - COUNT("Driver Ratings")
-        AS missing_driver_ratings,
-
-    COUNT(*) - COUNT("Customer Rating")
-        AS missing_customer_rating,
-
-    COUNT(*) - COUNT("Payment Method")
-        AS missing_payment_method
-
+    COUNT(DISTINCT "Booking ID") AS unique_booking_ids,
+    COUNT(DISTINCT "Customer ID") AS unique_customers
 FROM uber_bookings;
 
 
 -- ============================================================
--- 16. Basic Booking Value Statistics
+-- 24. Final Dataset Overview - Dimensions
 -- ============================================================
 
 SELECT
-    ROUND(MIN("Booking Value"), 2) AS minimum_booking_value,
-    ROUND(MAX("Booking Value"), 2) AS maximum_booking_value,
-    ROUND(AVG("Booking Value"), 2) AS average_booking_value
-FROM uber_bookings;
-
-
--- ============================================================
--- 17. Basic Ride Distance Statistics
--- ============================================================
-
-SELECT
-    ROUND(MIN("Ride Distance"), 2) AS minimum_ride_distance,
-    ROUND(MAX("Ride Distance"), 2) AS maximum_ride_distance,
-    ROUND(AVG("Ride Distance"), 2) AS average_ride_distance
-FROM uber_bookings;
-
-
--- ============================================================
--- 18. Dataset Overview
--- ============================================================
-
-SELECT
-    COUNT(*) AS total_bookings,
-    COUNT(DISTINCT "Booking ID") AS unique_bookings,
-    COUNT(DISTINCT "Customer ID") AS unique_customers,
     COUNT(DISTINCT "Vehicle Type") AS vehicle_types,
     COUNT(DISTINCT "Pickup Location") AS pickup_locations,
-    COUNT(DISTINCT "Drop Location") AS drop_locations,
+    COUNT(DISTINCT "Drop Location") AS drop_locations
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 25. Final Dataset Overview - Date Coverage
+-- ============================================================
+
+SELECT
     MIN("Date") AS start_date,
     MAX("Date") AS end_date
 FROM uber_bookings;

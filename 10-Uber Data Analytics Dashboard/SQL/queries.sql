@@ -420,3 +420,392 @@ SELECT
     MIN("Date") AS start_date,
     MAX("Date") AS end_date
 FROM uber_bookings;
+
+-- ============================================================
+-- Uber Ride Bookings Analytics
+-- Day 2: Booking & Revenue Analytics
+-- ============================================================
+
+
+-- ============================================================
+-- 26. Completed Ride Summary
+-- ============================================================
+
+SELECT
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS completed_booking_value,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_completed_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed';
+
+
+-- ============================================================
+-- 27. Completion Rate
+-- ============================================================
+
+SELECT
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 28. Booking Performance by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 29. Booking Value by Vehicle Type
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Vehicle Type"
+ORDER BY total_booking_value DESC;
+
+
+-- ============================================================
+-- 30. Booking Value by Payment Method
+-- ============================================================
+
+SELECT
+    "Payment Method",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+  AND "Payment Method" IS NOT NULL
+  AND LOWER(TRIM("Payment Method")) <> 'null'
+GROUP BY "Payment Method"
+ORDER BY total_booking_value DESC;
+
+
+-- ============================================================
+-- 31. Monthly Booking Trend
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 32. Monthly Completed Ride Trend
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+    COUNT(*) AS completed_rides
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 33. Monthly Booking Value Trend
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 34. Monthly Completion Rate
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate
+
+FROM uber_bookings
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 35. Day-of-Week Booking Performance
+-- ============================================================
+
+SELECT
+    DAYOFWEEK("Date") AS day_number,
+    DAYNAME("Date") AS day_name,
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides
+
+FROM uber_bookings
+GROUP BY
+    DAYOFWEEK("Date"),
+    DAYNAME("Date")
+ORDER BY day_number;
+
+
+-- ============================================================
+-- 36. Day-of-Week Booking Value
+-- ============================================================
+
+SELECT
+    DAYOFWEEK("Date") AS day_number,
+    DAYNAME("Date") AS day_name,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    DAYOFWEEK("Date"),
+    DAYNAME("Date")
+ORDER BY day_number;
+
+
+-- ============================================================
+-- 37. Hourly Booking Demand
+-- ============================================================
+
+SELECT
+    HOUR("Time") AS booking_hour,
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY HOUR("Time")
+ORDER BY booking_hour;
+
+
+-- ============================================================
+-- 38. Peak Booking Hours
+-- ============================================================
+
+SELECT
+    HOUR("Time") AS booking_hour,
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY HOUR("Time")
+ORDER BY total_bookings DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 39. Booking Value by Hour
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    HOUR("Time") AS booking_hour,
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY HOUR("Time")
+ORDER BY total_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 40. Highest Booking Value Rides
+-- ============================================================
+
+SELECT
+    "Booking ID",
+    "Date",
+    "Time",
+    "Vehicle Type",
+    "Pickup Location",
+    "Drop Location",
+
+    TRY_CAST(
+        "Booking Value" AS DOUBLE
+    ) AS booking_value,
+
+    TRY_CAST(
+        "Ride Distance" AS DOUBLE
+    ) AS ride_distance
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+ORDER BY booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 41. Overall Day 2 KPI Summary
+-- ============================================================
+
+SELECT
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings;

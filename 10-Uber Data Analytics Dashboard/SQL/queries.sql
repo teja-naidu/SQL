@@ -809,3 +809,500 @@ SELECT
     ) AS completed_booking_value
 
 FROM uber_bookings;
+
+-- ============================================================
+-- Uber Ride Bookings Analytics
+-- Day 3: Vehicle & Location Analytics
+-- ============================================================
+
+
+-- ============================================================
+-- 42. Booking Demand by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 43. Completed Rides by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+    COUNT(*) AS completed_rides
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Vehicle Type"
+ORDER BY completed_rides DESC;
+
+
+-- ============================================================
+-- 44. Ride Distance by Vehicle Type
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        AVG(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS average_ride_distance,
+
+    ROUND(
+        SUM(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS total_ride_distance
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Vehicle Type"
+ORDER BY total_ride_distance DESC;
+
+
+-- ============================================================
+-- 45. Average Booking Value per KM by Vehicle Type
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE))
+        /
+        NULLIF(
+            SUM(TRY_CAST("Ride Distance" AS DOUBLE)),
+            0
+        ),
+        2
+    ) AS booking_value_per_km
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Vehicle Type"
+ORDER BY booking_value_per_km DESC;
+
+
+-- ============================================================
+-- 46. Top 10 Pickup Locations
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY "Pickup Location"
+ORDER BY total_bookings DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 47. Top 10 Pickup Locations by Completed Rides
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    COUNT(*) AS completed_rides
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Pickup Location"
+ORDER BY completed_rides DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 48. Top 10 Drop Locations
+-- ============================================================
+
+SELECT
+    "Drop Location",
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY "Drop Location"
+ORDER BY total_bookings DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 49. Top 10 Drop Locations by Completed Rides
+-- ============================================================
+
+SELECT
+    "Drop Location",
+    COUNT(*) AS completed_rides
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Drop Location"
+ORDER BY completed_rides DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 50. Top 10 Pickup Locations by Booking Value
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Pickup Location"
+ORDER BY total_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 51. Top 10 Drop Locations by Booking Value
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Drop Location",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Drop Location"
+ORDER BY total_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 52. Most Popular Pickup-Drop Routes
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    "Drop Location",
+    COUNT(*) AS total_bookings
+FROM uber_bookings
+GROUP BY
+    "Pickup Location",
+    "Drop Location"
+ORDER BY total_bookings DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 53. Most Popular Completed Routes
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    "Drop Location",
+    COUNT(*) AS completed_rides
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    "Pickup Location",
+    "Drop Location"
+ORDER BY completed_rides DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 54. Highest-Value Routes
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    "Drop Location",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    "Pickup Location",
+    "Drop Location"
+ORDER BY total_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 55. Longest Average-Distance Routes
+-- Minimum 5 completed rides to avoid one-off routes
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    "Drop Location",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        AVG(TRY_CAST("Ride Distance" AS DOUBLE)),
+        2
+    ) AS average_ride_distance
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY
+    "Pickup Location",
+    "Drop Location"
+HAVING COUNT(*) >= 5
+ORDER BY average_ride_distance DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 56. Pickup Location Completion Performance
+-- Minimum 500 bookings for meaningful comparison
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate
+
+FROM uber_bookings
+GROUP BY "Pickup Location"
+HAVING COUNT(*) >= 500
+ORDER BY completion_rate DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 57. Pickup Locations with Lowest Completion Rates
+-- Minimum 500 bookings
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate
+
+FROM uber_bookings
+GROUP BY "Pickup Location"
+HAVING COUNT(*) >= 500
+ORDER BY completion_rate ASC
+LIMIT 10;
+
+
+-- ============================================================
+-- 58. Distance Categories
+-- Completed rides only
+-- ============================================================
+
+SELECT
+    CASE
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 10
+            THEN 'Short (1-10 km)'
+
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 25
+            THEN 'Medium (11-25 km)'
+
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 40
+            THEN 'Long (26-40 km)'
+
+        ELSE 'Very Long (41-50 km)'
+    END AS distance_category,
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        AVG(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS average_booking_value,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+        2
+    ) AS total_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+  AND TRY_CAST("Ride Distance" AS DOUBLE) IS NOT NULL
+GROUP BY distance_category
+ORDER BY
+    MIN(TRY_CAST("Ride Distance" AS DOUBLE));
+
+
+-- ============================================================
+-- 59. Vehicle Type Ranking by Booking Value
+-- Window Function
+-- ============================================================
+
+WITH vehicle_performance AS (
+
+    SELECT
+        "Vehicle Type",
+
+        COUNT(*) AS completed_rides,
+
+        ROUND(
+            SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+            2
+        ) AS total_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY "Vehicle Type"
+)
+
+SELECT
+    "Vehicle Type",
+    completed_rides,
+    total_booking_value,
+
+    RANK() OVER (
+        ORDER BY total_booking_value DESC
+    ) AS booking_value_rank
+
+FROM vehicle_performance
+ORDER BY booking_value_rank;
+
+
+-- ============================================================
+-- 60. Pickup Location Ranking by Completed Booking Value
+-- Window Function
+-- ============================================================
+
+WITH location_performance AS (
+
+    SELECT
+        "Pickup Location",
+
+        COUNT(*) AS completed_rides,
+
+        ROUND(
+            SUM(TRY_CAST("Booking Value" AS DOUBLE)),
+            2
+        ) AS total_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY "Pickup Location"
+),
+
+ranked_locations AS (
+
+    SELECT
+        "Pickup Location",
+        completed_rides,
+        total_booking_value,
+
+        RANK() OVER (
+            ORDER BY total_booking_value DESC
+        ) AS location_rank
+
+    FROM location_performance
+)
+
+SELECT *
+FROM ranked_locations
+WHERE location_rank <= 10
+ORDER BY location_rank;
+
+
+-- ============================================================
+-- 61. Day 3 Vehicle Summary
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1
+            ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        AVG(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Ride Distance" AS DOUBLE)
+            END
+        ),
+        2
+    ) AS average_completed_distance,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY completed_booking_value DESC;

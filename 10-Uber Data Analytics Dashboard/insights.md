@@ -343,3 +343,236 @@ Booking demand varied significantly throughout the day.
 * **6 PM was the strongest hour for both booking demand and completed booking value**.
 * Booking activity showed clear morning and evening demand peaks, with the strongest concentration occurring during evening commuting hours.
 * Weekend booking-value results warrant additional validation before being interpreted as a confirmed weekend pricing or revenue pattern.
+
+
+---
+
+# Vehicle & Location Analytics
+
+## Vehicle Demand Analysis
+
+* **Auto** was the most frequently booked vehicle type with **37,419 total bookings** and **23,155 completed rides**.
+* Go Mini ranked second with **29,806 bookings** and **18,549 completed rides**.
+* Go Sedan recorded **27,141 bookings** and **16,676 completed rides**.
+* Bike accounted for **22,517 bookings** and **14,034 completed rides**.
+* Uber XL had the lowest booking volume with **4,449 bookings** and **2,783 completed rides**.
+* Vehicle demand is therefore concentrated primarily around Auto, Go Mini, and Go Sedan.
+
+---
+
+## Ride Distance by Vehicle Type
+
+| Vehicle Type  | Completed Rides | Avg. Ride Distance | Total Ride Distance |
+| ------------- | --------------: | -----------------: | ------------------: |
+| Auto          |          23,155 |              25.99 |          601,788.90 |
+| Go Mini       |          18,549 |              25.99 |          482,085.62 |
+| Go Sedan      |          16,676 |              25.98 |          433,203.25 |
+| Bike          |          14,034 |              26.00 |          364,866.60 |
+| Premier Sedan |          11,252 |              25.95 |          291,946.14 |
+| eBike         |           6,551 |              26.34 |          172,567.43 |
+| Uber XL       |           2,783 |              25.72 |           71,587.90 |
+
+* **Auto generated the highest total ride distance at 601,788.90**, mainly because of its larger ride volume.
+* **eBike recorded the highest average ride distance at 26.34**.
+* Uber XL recorded the lowest average distance at **25.72**.
+* Average ride distances are remarkably similar across vehicle categories, generally remaining around **26 distance units**.
+
+---
+
+## Booking Value per Distance
+
+| Vehicle Type  | Booking Value per KM |
+| ------------- | -------------------: |
+| Go Sedan      |                19.71 |
+| Premier Sedan |                19.64 |
+| Uber XL       |                19.64 |
+| Bike          |                19.58 |
+| Go Mini       |                19.52 |
+| Auto          |                19.49 |
+| eBike         |                19.11 |
+
+* **Go Sedan recorded the highest booking value per distance unit at 19.71**.
+* Premier Sedan and Uber XL followed at **19.64**.
+* eBike recorded the lowest value at **19.11**.
+* The relatively narrow range indicates similar booking-value efficiency across vehicle categories.
+
+---
+
+## Pickup Location Analysis
+
+* **Khandsa** recorded the highest overall pickup demand with **949 bookings**.
+* Barakhamba Road followed with **946 bookings**, while Saket recorded **931 bookings**.
+* For completed rides, Khandsa remained the leading pickup location with **600 completed rides**.
+* Barakhamba Road ranked second with **594 completed rides**.
+* Subhash Chowk ranked third with **582 completed rides**.
+
+### Top Pickup Locations by Completed Booking Value
+
+| Pickup Location | Completed Rides | Booking Value |
+| --------------- | --------------: | ------------: |
+| Barakhamba Road |             594 |       309,713 |
+| Khandsa         |             600 |       309,041 |
+| Pataudi Chowk   |             556 |       306,774 |
+| Tughlakabad     |             552 |       299,419 |
+| Subhash Chowk   |             582 |       299,023 |
+| Badarpur        |             567 |       298,309 |
+| Inderlok        |             559 |       296,487 |
+| AIIMS           |             562 |       296,028 |
+| ITO             |             551 |       292,168 |
+| Saidulajab      |             543 |       291,251 |
+
+* **Barakhamba Road generated the highest completed booking value among pickup locations at 309,713**.
+* Khandsa followed extremely closely at **309,041**.
+* High booking volume does not always translate directly into the highest booking value, as demonstrated by Pataudi Chowk and Tughlakabad.
+
+---
+
+## Drop Location Analysis
+
+* **Ashram** was the most frequent overall drop location with **936 bookings**.
+* Basai Dhankot ranked second with **917 bookings**, followed by Lok Kalyan Marg with **916 bookings**.
+* Ashram also led completed drop-offs with **592 completed rides**.
+* Preet Vihar followed with **589 completed rides**, while Sultanpur recorded **584**.
+
+### Top Drop Locations by Completed Booking Value
+
+| Drop Location   | Completed Rides | Booking Value |
+| --------------- | --------------: | ------------: |
+| Narsinghpur     |             574 |       325,331 |
+| Mayur Vihar     |             569 |       301,869 |
+| Sultanpur       |             584 |       299,292 |
+| Lajpat Nagar    |             572 |       298,564 |
+| Sarojini Nagar  |             551 |       298,015 |
+| Sarai Kale Khan |             573 |       297,659 |
+| Noida Extension |             579 |       296,588 |
+| Gwal Pahari     |             558 |       294,219 |
+| Lok Kalyan Marg |             560 |       292,900 |
+| Punjabi Bagh    |             561 |       292,034 |
+
+* **Narsinghpur generated the highest completed booking value among drop locations at 325,331**.
+* Mayur Vihar ranked second with **301,869**.
+* Sultanpur combined strong completed ride volume with **299,292 in booking value**.
+
+---
+
+## Route Analysis
+
+### Most Popular Routes
+
+* **DLF City Court → Bhiwadi** was the most frequently booked route with **17 bookings**.
+* Janakpuri → Faridabad Sector 15 and Akshardham → RK Puram each recorded **16 bookings**.
+* The relatively small counts for even the most popular routes indicate that rides are distributed across a large number of pickup-drop combinations.
+
+### Most Popular Completed Routes
+
+* **Rohini West → Sohna Road** and **DLF City Court → Bhiwadi** each recorded **13 completed rides**.
+* Lok Kalyan Marg → Jhilmil, Ambience Mall → Akshardham, Sushant Lok → Sarai Kale Khan, Noida Sector 62 → Sarai Kale Khan, Rithala → Udyog Vihar Phase 4, and Subhash Chowk → IGNOU Road each recorded **11 completed rides**.
+* This reinforces the highly distributed nature of route demand.
+
+---
+
+## Highest-Value Routes
+
+* **Nirman Vihar → Vatika Chowk** generated the highest total completed booking value among the ranked routes at **9,284**, across 5 completed rides.
+* Ashok Vihar → Basai Dhankot followed closely with **9,280** across 9 completed rides.
+* Anand Vihar ISBT → Noida Film City generated **8,960** across 7 completed rides.
+* Nirman Vihar → Vatika Chowk also had a particularly high average booking value of **1,856.80**.
+
+High-value routes are not necessarily the routes with the largest booking volumes, highlighting the difference between demand concentration and booking-value contribution.
+
+---
+
+## Long-Distance Route Analysis
+
+Among routes with at least five completed rides:
+
+* **Shivaji Park → Ashram** recorded the highest average ride distance at **43.69**.
+* Inderlok → ITO followed at **43.59**.
+* IMT Manesar → Subhash Nagar averaged **42.95**.
+* Tughlakabad → Inderlok averaged **42.73**.
+* Meerut → Connaught Place averaged **42.71**.
+
+The longest recurring routes averaged more than **40 distance units**, substantially above the overall completed-ride average of approximately 26.
+
+---
+
+## Pickup Location Completion Performance
+
+Among pickup locations with at least 500 bookings:
+
+### Highest Completion Rates
+
+| Pickup Location | Total Bookings | Completed Rides | Completion Rate |
+| --------------- | -------------: | --------------: | --------------: |
+| Welcome         |            836 |             554 |          66.27% |
+| Subhash Chowk   |            887 |             582 |          65.61% |
+| Yamuna Bank     |            824 |             534 |          64.81% |
+| IMT Manesar     |            840 |             544 |          64.76% |
+| RK Puram        |            850 |             550 |          64.71% |
+
+* **Welcome recorded the highest pickup-location completion rate at 66.27%**.
+* This is more than four percentage points above the overall dataset completion rate of 62%.
+
+### Lowest Completion Rates
+
+| Pickup Location | Total Bookings | Completed Rides | Completion Rate |
+| --------------- | -------------: | --------------: | --------------: |
+| Vinobapuri      |            823 |             450 |          54.68% |
+| Akshardham      |            839 |             471 |          56.14% |
+| Chhatarpur      |            829 |             482 |          58.14% |
+| Badshahpur      |            868 |             506 |          58.29% |
+| Pragati Maidan  |            920 |             538 |          58.48% |
+
+* **Vinobapuri recorded the lowest completion rate at 54.68%**.
+* Akshardham followed at **56.14%**.
+* The gap between the highest and lowest observed pickup-location completion rates is approximately **11.6 percentage points**.
+* These differences suggest that booking completion performance varies meaningfully by pickup location and warrants deeper cancellation analysis.
+
+---
+
+## Distance Segment Analysis
+
+| Distance Category    | Completed Rides | Avg. Booking Value | Total Booking Value |
+| -------------------- | --------------: | -----------------: | ------------------: |
+| Short (1–10 km)      |          15,524 |             503.34 |           7,813,891 |
+| Medium (11–25 km)    |          28,983 |             508.71 |          14,743,954 |
+| Long (26–40 km)      |          29,245 |             508.30 |          14,865,125 |
+| Very Long (41–50 km) |          19,248 |             511.10 |           9,837,604 |
+
+* **Long-distance rides between 26–40 km formed the largest segment with 29,245 completed rides**.
+* This segment also generated the highest booking value at **14,865,125**.
+* Medium-distance rides were close behind with **28,983 completed rides** and **14,743,954 in booking value**.
+* Very long rides recorded the highest average booking value at **511.10**.
+* Short rides had the lowest average booking value at **503.34**.
+* Average booking value increases only modestly across distance categories, indicating that distance alone may not fully explain booking-value variation.
+
+---
+
+## Vehicle Booking Value Ranking
+
+Based on completed booking value:
+
+1. **Auto — 11,727,615**
+2. **Go Mini — 9,411,418**
+3. **Go Sedan — 8,538,560**
+4. **Bike — 7,144,913**
+5. **Premier Sedan — 5,733,655**
+6. **eBike — 3,298,157**
+7. **Uber XL — 1,406,256**
+
+Auto clearly leads total booking value due to its substantially larger completed ride volume.
+
+---
+
+## Key Findings
+
+* **Auto is the dominant vehicle category**, leading both booking volume and completed booking value.
+* Average ride distance is remarkably consistent across vehicle types at approximately **26 distance units**.
+* **Go Sedan generated the highest booking value per distance unit at 19.71**.
+* **Khandsa leads overall pickup demand**, while **Barakhamba Road leads pickup-location completed booking value**.
+* **Ashram is the most common drop location**, while **Narsinghpur generates the highest completed booking value among drop locations**.
+* Route demand is highly fragmented, with even the most frequently booked individual route recording only **17 bookings**.
+* **Welcome achieved the highest pickup-location completion rate at 66.27%**, while **Vinobapuri recorded the lowest at 54.68%** among locations meeting the 500-booking threshold.
+* Long rides between **26–40 km** represent the largest distance segment and generate the highest total booking value.
+* Very long rides have the highest average booking value at **511.10**.
+* Location-level completion-rate differences indicate potential operational opportunities that can be investigated further through cancellation and driver-performance analysis.

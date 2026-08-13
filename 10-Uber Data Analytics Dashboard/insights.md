@@ -576,3 +576,282 @@ Auto clearly leads total booking value due to its substantially larger completed
 * Long rides between **26–40 km** represent the largest distance segment and generate the highest total booking value.
 * Very long rides have the highest average booking value at **511.10**.
 * Location-level completion-rate differences indicate potential operational opportunities that can be investigated further through cancellation and driver-performance analysis.
+
+---
+
+# Cancellation, Driver & Customer Experience Analytics
+
+## Overall Booking Outcome
+
+- Total Bookings: **150,000**
+- Completed Rides: **93,000**
+- Driver Cancellations: **27,000**
+- Customer Cancellations: **10,500**
+- No Driver Found: **10,500**
+- Incomplete Rides: **9,000**
+- Average Driver Rating: **4.23**
+- Average Customer Rating: **4.40**
+
+The overall ride completion rate remained at **62%**, while driver cancellations accounted for **18%** of all bookings. Customer cancellations and no-driver-found bookings each represented **7%**, while incomplete rides accounted for **6%**.
+
+---
+
+## Customer Cancellation Analysis
+
+Customer cancellations totaled **10,500 bookings**.
+
+### Customer Cancellation Reasons
+
+| Cancellation Reason | Cancelled Bookings | Percentage |
+|---|---:|---:|
+| Wrong Address | 2,362 | 22.50% |
+| Change of plans | 2,353 | 22.41% |
+| Driver is not moving towards pickup location | 2,335 | 22.24% |
+| Driver asked to cancel | 2,295 | 21.86% |
+| AC is not working | 1,155 | 11.00% |
+
+- **Wrong Address** was the most common customer cancellation reason, accounting for **22.50%** of customer cancellations.
+- Change of plans followed closely at **22.41%**.
+- Driver movement toward the pickup location contributed to **22.24%** of cancellations.
+- Customers reporting that the driver asked them to cancel accounted for **21.86%**.
+- AC-related issues were less common but still represented **11%** of customer cancellations.
+- The relatively even distribution across the four largest reasons indicates that customer cancellations are driven by multiple factors rather than one dominant issue.
+
+---
+
+## Driver Cancellation Analysis
+
+Driver cancellations totaled **27,000 bookings**, making them the largest unsuccessful booking category.
+
+### Driver Cancellation Reasons
+
+| Cancellation Reason | Cancelled Bookings | Percentage |
+|---|---:|---:|
+| Customer related issue | 6,837 | 25.32% |
+| The customer was coughing/sick | 6,751 | 25.00% |
+| Personal & Car related issues | 6,726 | 24.91% |
+| More than permitted people in there | 6,686 | 24.76% |
+
+- **Customer related issues** were the most frequently recorded driver cancellation reason at **25.32%**.
+- Customer illness-related cancellations represented **25.00%**.
+- Personal or vehicle-related issues accounted for **24.91%**.
+- Passenger-capacity issues represented **24.76%**.
+- Driver cancellation reasons are distributed almost equally across the four recorded categories.
+
+---
+
+## Incomplete Ride Analysis
+
+A total of **9,000 rides** were classified as incomplete.
+
+| Incomplete Ride Reason | Rides | Percentage |
+|---|---:|---:|
+| Customer Demand | 3,040 | 33.78% |
+| Vehicle Breakdown | 3,012 | 33.47% |
+| Other Issue | 2,948 | 32.76% |
+
+- **Customer Demand** was the largest incomplete-ride reason at **33.78%**.
+- Vehicle breakdowns accounted for **33.47%**.
+- Other issues represented **32.76%**.
+- All three categories contributed almost equally to incomplete rides.
+
+---
+
+## Driver Cancellation Rate by Vehicle Type
+
+| Vehicle Type | Total Bookings | Driver Cancellations | Cancellation Rate |
+|---|---:|---:|---:|
+| Go Sedan | 27,141 | 5,031 | 18.54% |
+| Bike | 22,517 | 4,077 | 18.11% |
+| eBike | 10,557 | 1,907 | 18.06% |
+| Premier Sedan | 18,111 | 3,250 | 17.94% |
+| Go Mini | 29,806 | 5,330 | 17.88% |
+| Auto | 37,419 | 6,643 | 17.75% |
+| Uber XL | 4,449 | 762 | 17.13% |
+
+- **Go Sedan had the highest driver cancellation rate at 18.54%**.
+- Bike and eBike followed at **18.11% and 18.06%**, respectively.
+- **Uber XL had the lowest driver cancellation rate at 17.13%**.
+- Driver cancellation rates are relatively close across vehicle categories.
+
+---
+
+## Customer Cancellation Rate by Vehicle Type
+
+- **Uber XL recorded the highest customer cancellation rate at 7.35%**.
+- Auto followed at **7.16%**.
+- Go Mini recorded **7.04%**.
+- **Go Sedan had the lowest customer cancellation rate at 6.75%**.
+- Overall customer cancellation rates remained close to the platform-wide rate of approximately 7%.
+
+---
+
+## No Driver Found Analysis
+
+- **Go Sedan had the highest no-driver-found rate at 7.22%**.
+- Auto followed at **7.16%**.
+- Uber XL recorded **7.08%**.
+- **Bike had the lowest rate at 6.67%**.
+- Differences across vehicle categories were relatively small, indicating that driver availability issues are not isolated to a single vehicle category.
+
+---
+
+## Monthly Cancellation Trends
+
+### Driver Cancellations
+
+- **August recorded the highest number of driver cancellations with 2,351**.
+- July followed with **2,332**, while January recorded **2,324**.
+- **September had the lowest driver cancellation count at 2,165**.
+- Monthly driver cancellations remained relatively stable throughout the year.
+
+### Customer Cancellations
+
+- **July recorded the highest customer cancellation count with 932**.
+- May followed with **919**, while March recorded **906**.
+- **April had the lowest customer cancellation count at 779**.
+- Similar to driver cancellations, customer cancellations did not show extreme month-to-month volatility.
+
+---
+
+## Hourly Cancellation Analysis
+
+### Driver Cancellations
+
+- **6 PM recorded the highest number of driver cancellations with 2,257**.
+- 5 PM followed with **2,003**.
+- 7 PM recorded **1,998 driver cancellations**.
+- The strongest concentration of driver cancellations occurred during the evening demand peak.
+
+### Customer Cancellations
+
+- **6 PM also recorded the highest customer cancellations with 889**.
+- 7 PM followed with **822**.
+- 5 PM recorded **746 customer cancellations**.
+
+The concentration of both driver and customer cancellations around **5 PM–7 PM** corresponds with the peak booking-demand period identified earlier in the analysis.
+
+---
+
+## Pickup Location Cancellation Analysis
+
+### Highest Driver Cancellation Counts
+
+- Nehru Place: **190**
+- Shivaji Park: **185**
+- GTB Nagar: **183**
+- Pragati Maidan: **179**
+- Saket: **179**
+
+### Highest Driver Cancellation Rates
+
+Among pickup locations with at least 500 bookings:
+
+| Pickup Location | Total Bookings | Driver Cancellations | Cancellation Rate |
+|---|---:|---:|---:|
+| Nehru Place | 885 | 190 | 21.47% |
+| Vinobapuri | 823 | 176 | 21.39% |
+| GTB Nagar | 872 | 183 | 20.99% |
+| Munirka | 815 | 171 | 20.98% |
+| Qutub Minar | 823 | 172 | 20.90% |
+| Chhatarpur | 829 | 173 | 20.87% |
+| Rajouri Garden | 852 | 176 | 20.66% |
+| Shivaji Park | 900 | 185 | 20.56% |
+| Shahdara | 820 | 168 | 20.49% |
+| Vatika Chowk | 833 | 170 | 20.41% |
+
+- **Nehru Place had the highest driver cancellation rate at 21.47%**, substantially above the overall driver cancellation rate of 18%.
+- Vinobapuri followed closely at **21.39%**.
+- These locations may represent areas where driver availability, pickup conditions, traffic, or other operational factors deserve further investigation.
+
+---
+
+## Driver Rating Analysis
+
+- Overall Average Driver Rating: **4.23**
+- Driver ratings ranged from **3.0 to 5.0**.
+- **Uber XL recorded the highest average driver rating at 4.24**.
+- All other vehicle categories averaged approximately **4.23**.
+- Driver-rating performance was therefore highly consistent across vehicle categories.
+
+The most frequently observed driver ratings included:
+
+- **4.3 — 14,081 ratings**
+- **4.2 — 13,841 ratings**
+- **4.6 — 9,368 ratings**
+- **4.4 — 7,018 ratings**
+- **4.1 — 6,966 ratings**
+
+---
+
+## Customer Rating Analysis
+
+- Overall Average Customer Rating: **4.40**
+- Customer ratings ranged from **3.0 to 5.0**.
+- **Go Sedan recorded the highest average customer rating at 4.41**.
+- All remaining vehicle categories averaged approximately **4.40**.
+
+Frequently observed customer ratings included:
+
+- **4.9 — 11,642 ratings**
+- **4.6 — 11,533 ratings**
+- **4.3 — 10,995 ratings**
+- **4.2 — 10,697 ratings**
+- **4.5 — 5,890 ratings**
+
+---
+
+## Driver vs Customer Ratings
+
+Across every vehicle category, average customer ratings were higher than average driver ratings.
+
+- Go Sedan: **4.23 driver vs 4.41 customer**
+- Go Mini: **4.23 vs 4.40**
+- eBike: **4.23 vs 4.40**
+- Uber XL: **4.24 vs 4.40**
+- Premier Sedan: **4.23 vs 4.40**
+- Bike: **4.23 vs 4.40**
+- Auto: **4.23 vs 4.40**
+
+The difference was approximately **0.17–0.18 rating points** across vehicle categories.
+
+---
+
+## Low Rating Analysis
+
+### Driver Ratings Below 4.0
+
+- Auto: **5,188 rides**
+- Go Mini: **4,261 rides**
+- Go Sedan: **3,762 rides**
+- Bike: **3,195 rides**
+- Premier Sedan: **2,504 rides**
+- eBike: **1,500 rides**
+- Uber XL: **611 rides**
+
+### Customer Ratings Below 4.0
+
+- Auto: **3,199 rides**
+- Go Mini: **2,645 rides**
+- Go Sedan: **2,212 rides**
+- Bike: **1,976 rides**
+- Premier Sedan: **1,603 rides**
+- eBike: **901 rides**
+- Uber XL: **367 rides**
+
+Auto has the largest number of low-rated rides, but it also has the highest overall ride volume. Therefore, these counts should not be interpreted as evidence that Auto has worse rating performance without comparing rates.
+
+---
+
+## Key Findings
+
+- **Driver cancellations are the largest operational issue**, accounting for 27,000 bookings and **18% of total demand**.
+- Customer cancellation reasons are diverse, with Wrong Address being the largest individual reason at **22.50%**.
+- Driver cancellation reasons are almost evenly distributed across four major categories.
+- **Go Sedan has the highest driver cancellation rate at 18.54%**, while Uber XL has the lowest at 17.13%.
+- Both driver and customer cancellations peak around **6 PM**, coinciding with the platform's highest-demand period.
+- **Nehru Place has the highest driver cancellation rate among high-volume pickup locations at 21.47%**.
+- Average ratings remain strong, with **4.23 for drivers and 4.40 for customers**.
+- Rating performance varies very little across vehicle categories.
+- Customer ratings are consistently around **0.17–0.18 points higher than driver ratings**.
+- The combination of high evening demand and elevated cancellation counts suggests that peak-hour operational capacity should be investigated further.

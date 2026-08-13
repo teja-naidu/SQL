@@ -1306,3 +1306,542 @@ SELECT
 FROM uber_bookings
 GROUP BY "Vehicle Type"
 ORDER BY completed_booking_value DESC;
+
+-- ============================================================
+-- Uber Ride Bookings Analytics
+-- Day 4: Cancellation, Driver & Customer Experience Analytics
+-- ============================================================
+
+
+-- ============================================================
+-- 62. Overall Unsuccessful Booking Summary
+-- ============================================================
+
+SELECT
+    "Booking Status",
+    COUNT(*) AS total_bookings,
+
+    ROUND(
+        COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
+        2
+    ) AS booking_percentage
+
+FROM uber_bookings
+GROUP BY "Booking Status"
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 63. Customer Cancellation Reasons
+-- ============================================================
+
+SELECT
+    "Reason for cancelling by Customer" AS cancellation_reason,
+    COUNT(*) AS cancelled_bookings,
+
+    ROUND(
+        COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
+        2
+    ) AS cancellation_percentage
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Customer'
+  AND "Reason for cancelling by Customer" IS NOT NULL
+  AND LOWER(TRIM("Reason for cancelling by Customer")) <> 'null'
+GROUP BY "Reason for cancelling by Customer"
+ORDER BY cancelled_bookings DESC;
+
+
+-- ============================================================
+-- 64. Driver Cancellation Reasons
+-- ============================================================
+
+SELECT
+    "Driver Cancellation Reason" AS cancellation_reason,
+    COUNT(*) AS cancelled_bookings,
+
+    ROUND(
+        COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
+        2
+    ) AS cancellation_percentage
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Driver'
+  AND "Driver Cancellation Reason" IS NOT NULL
+  AND LOWER(TRIM("Driver Cancellation Reason")) <> 'null'
+GROUP BY "Driver Cancellation Reason"
+ORDER BY cancelled_bookings DESC;
+
+
+-- ============================================================
+-- 65. Incomplete Ride Reasons
+-- ============================================================
+
+SELECT
+    "Incomplete Rides Reason" AS incomplete_reason,
+    COUNT(*) AS incomplete_rides,
+
+    ROUND(
+        COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
+        2
+    ) AS incomplete_percentage
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Incomplete'
+  AND "Incomplete Rides Reason" IS NOT NULL
+  AND LOWER(TRIM("Incomplete Rides Reason")) <> 'null'
+GROUP BY "Incomplete Rides Reason"
+ORDER BY incomplete_rides DESC;
+
+
+-- ============================================================
+-- 66. Cancellation Performance by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Driver'
+            THEN 1 ELSE 0
+        END
+    ) AS driver_cancellations,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Customer'
+            THEN 1 ELSE 0
+        END
+    ) AS customer_cancellations,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'No Driver Found'
+            THEN 1 ELSE 0
+        END
+    ) AS no_driver_found,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Incomplete'
+            THEN 1 ELSE 0
+        END
+    ) AS incomplete_rides
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 67. Driver Cancellation Rate by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Driver'
+            THEN 1 ELSE 0
+        END
+    ) AS driver_cancellations,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Cancelled by Driver'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS driver_cancellation_rate
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY driver_cancellation_rate DESC;
+
+
+-- ============================================================
+-- 68. Customer Cancellation Rate by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Customer'
+            THEN 1 ELSE 0
+        END
+    ) AS customer_cancellations,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Cancelled by Customer'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS customer_cancellation_rate
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY customer_cancellation_rate DESC;
+
+
+-- ============================================================
+-- 69. No Driver Found Rate by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'No Driver Found'
+            THEN 1 ELSE 0
+        END
+    ) AS no_driver_found,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'No Driver Found'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS no_driver_found_rate
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY no_driver_found_rate DESC;
+
+
+-- ============================================================
+-- 70. Monthly Driver Cancellation Trend
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+
+    COUNT(*) AS driver_cancellations
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Driver'
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 71. Monthly Customer Cancellation Trend
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+
+    COUNT(*) AS customer_cancellations
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Customer'
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 72. Hourly Driver Cancellation Analysis
+-- ============================================================
+
+SELECT
+    HOUR("Time") AS booking_hour,
+
+    COUNT(*) AS driver_cancellations
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Driver'
+GROUP BY HOUR("Time")
+ORDER BY driver_cancellations DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 73. Hourly Customer Cancellation Analysis
+-- ============================================================
+
+SELECT
+    HOUR("Time") AS booking_hour,
+
+    COUNT(*) AS customer_cancellations
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Customer'
+GROUP BY HOUR("Time")
+ORDER BY customer_cancellations DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 74. Pickup Locations with Most Driver Cancellations
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+    COUNT(*) AS driver_cancellations
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Cancelled by Driver'
+GROUP BY "Pickup Location"
+ORDER BY driver_cancellations DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 75. Pickup Locations with Highest Driver Cancellation Rate
+-- Minimum 500 bookings
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Driver'
+            THEN 1 ELSE 0
+        END
+    ) AS driver_cancellations,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Cancelled by Driver'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS driver_cancellation_rate
+
+FROM uber_bookings
+GROUP BY "Pickup Location"
+HAVING COUNT(*) >= 500
+ORDER BY driver_cancellation_rate DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 76. Average Driver Rating by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(
+        TRY_CAST("Driver Ratings" AS DOUBLE)
+    ) AS rated_rides,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Driver Ratings" AS DOUBLE)
+        ),
+        2
+    ) AS average_driver_rating
+
+FROM uber_bookings
+WHERE TRY_CAST("Driver Ratings" AS DOUBLE) IS NOT NULL
+GROUP BY "Vehicle Type"
+ORDER BY average_driver_rating DESC;
+
+
+-- ============================================================
+-- 77. Average Customer Rating by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(
+        TRY_CAST("Customer Rating" AS DOUBLE)
+    ) AS rated_rides,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Customer Rating" AS DOUBLE)
+        ),
+        2
+    ) AS average_customer_rating
+
+FROM uber_bookings
+WHERE TRY_CAST("Customer Rating" AS DOUBLE) IS NOT NULL
+GROUP BY "Vehicle Type"
+ORDER BY average_customer_rating DESC;
+
+
+-- ============================================================
+-- 78. Driver Rating Distribution
+-- ============================================================
+
+SELECT
+    TRY_CAST("Driver Ratings" AS DOUBLE) AS driver_rating,
+    COUNT(*) AS total_ratings
+
+FROM uber_bookings
+WHERE TRY_CAST("Driver Ratings" AS DOUBLE) IS NOT NULL
+GROUP BY TRY_CAST("Driver Ratings" AS DOUBLE)
+ORDER BY driver_rating DESC;
+
+
+-- ============================================================
+-- 79. Customer Rating Distribution
+-- ============================================================
+
+SELECT
+    TRY_CAST("Customer Rating" AS DOUBLE) AS customer_rating,
+    COUNT(*) AS total_ratings
+
+FROM uber_bookings
+WHERE TRY_CAST("Customer Rating" AS DOUBLE) IS NOT NULL
+GROUP BY TRY_CAST("Customer Rating" AS DOUBLE)
+ORDER BY customer_rating DESC;
+
+
+-- ============================================================
+-- 80. Driver vs Customer Rating by Vehicle Type
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    ROUND(
+        AVG(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS average_driver_rating,
+
+    ROUND(
+        AVG(TRY_CAST("Customer Rating" AS DOUBLE)),
+        2
+    ) AS average_customer_rating,
+
+    ROUND(
+        AVG(TRY_CAST("Customer Rating" AS DOUBLE))
+        -
+        AVG(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS rating_difference
+
+FROM uber_bookings
+WHERE TRY_CAST("Driver Ratings" AS DOUBLE) IS NOT NULL
+  AND TRY_CAST("Customer Rating" AS DOUBLE) IS NOT NULL
+GROUP BY "Vehicle Type"
+ORDER BY rating_difference DESC;
+
+
+-- ============================================================
+-- 81. Low-Rated Rides by Vehicle Type
+-- Driver rating below 4.0
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS low_rated_rides
+
+FROM uber_bookings
+WHERE TRY_CAST("Driver Ratings" AS DOUBLE) < 4.0
+GROUP BY "Vehicle Type"
+ORDER BY low_rated_rides DESC;
+
+
+-- ============================================================
+-- 82. Low Customer Rating Rides by Vehicle Type
+-- Customer rating below 4.0
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS low_customer_rating_rides
+
+FROM uber_bookings
+WHERE TRY_CAST("Customer Rating" AS DOUBLE) < 4.0
+GROUP BY "Vehicle Type"
+ORDER BY low_customer_rating_rides DESC;
+
+
+-- ============================================================
+-- 83. Day 4 Operational KPI Summary
+-- ============================================================
+
+SELECT
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Driver'
+            THEN 1 ELSE 0
+        END
+    ) AS driver_cancellations,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Customer'
+            THEN 1 ELSE 0
+        END
+    ) AS customer_cancellations,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'No Driver Found'
+            THEN 1 ELSE 0
+        END
+    ) AS no_driver_found,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Incomplete'
+            THEN 1 ELSE 0
+        END
+    ) AS incomplete_rides,
+
+    ROUND(
+        AVG(TRY_CAST("Driver Ratings" AS DOUBLE)),
+        2
+    ) AS average_driver_rating,
+
+    ROUND(
+        AVG(TRY_CAST("Customer Rating" AS DOUBLE)),
+        2
+    ) AS average_customer_rating
+
+FROM uber_bookings;

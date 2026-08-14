@@ -855,3 +855,254 @@ Auto has the largest number of low-rated rides, but it also has the highest over
 - Rating performance varies very little across vehicle categories.
 - Customer ratings are consistently around **0.17–0.18 points higher than driver ratings**.
 - The combination of high evening demand and elevated cancellation counts suggests that peak-hour operational capacity should be investigated further.
+
+---
+
+# Advanced Business Analytics & Performance Insights
+
+## Monthly Business Performance
+
+The platform maintained relatively stable booking activity throughout 2024, with monthly bookings generally ranging between approximately 11,900 and 12,900.
+
+| Month | Total Bookings | Completed Rides | Completion Rate | Completed Booking Value |
+|---|---:|---:|---:|---:|
+| January | 12,861 | 7,951 | 61.82% | 4,001,547 |
+| February | 11,927 | 7,368 | 61.78% | 3,756,610 |
+| March | 12,719 | 7,954 | 62.54% | 4,174,900 |
+| April | 12,199 | 7,632 | 62.56% | 3,885,255 |
+| May | 12,778 | 7,905 | 61.86% | 3,935,207 |
+| June | 12,440 | 7,757 | 62.36% | 3,964,298 |
+| July | 12,897 | 7,926 | 61.46% | 3,961,939 |
+| August | 12,636 | 7,780 | 61.57% | 3,867,753 |
+| September | 12,248 | 7,542 | 61.58% | 3,820,536 |
+| October | 12,651 | 7,905 | 62.49% | 4,008,403 |
+| November | 12,394 | 7,659 | 61.80% | 3,938,458 |
+| December | 12,250 | 7,621 | 62.21% | 3,945,668 |
+
+- **July recorded the highest booking volume with 12,897 bookings.**
+- March recorded the highest number of completed rides with **7,954**.
+- **April achieved the highest completion rate at 62.56%**.
+- March generated the highest completed booking value at **4,174,900**.
+- Monthly completion rates remained highly stable, staying between approximately **61.46% and 62.56%**.
+
+---
+
+## Month-over-Month Booking Growth
+
+Booking volume fluctuated throughout the year rather than following a consistent upward or downward trend.
+
+- February experienced a **7.26% decline** compared with January.
+- March recorded the strongest positive booking growth at **6.64%**.
+- May increased by **4.75%**.
+- July increased by **3.67%**.
+- October increased by **3.29%**.
+- December ended with a modest **1.16% decline** from November.
+
+Overall, booking demand remained relatively stable despite short-term monthly fluctuations.
+
+---
+
+## Month-over-Month Booking Value Growth
+
+Completed booking value also showed moderate month-to-month variation.
+
+- **March recorded the strongest growth at 11.13%**, increasing from 3,756,610 in February to 4,174,900.
+- October recorded another notable increase of **4.92%**.
+- May and June increased by **1.29% and 0.74%**, respectively.
+- April experienced the largest decline at **6.94%**.
+- February declined by **6.12%**.
+- July remained almost unchanged from June with a decline of only **0.06%**.
+
+This indicates relatively stable annual booking value with a few notable monthly movements.
+
+---
+
+## Vehicle Booking Value Contribution
+
+Completed rides generated a total booking value of **47,260,574**.
+
+| Vehicle Type | Completed Booking Value | Contribution |
+|---|---:|---:|
+| Auto | 11,727,615 | 24.81% |
+| Go Mini | 9,411,418 | 19.91% |
+| Go Sedan | 8,538,560 | 18.07% |
+| Bike | 7,144,913 | 15.12% |
+| Premier Sedan | 5,733,655 | 12.13% |
+| eBike | 3,298,157 | 6.98% |
+| Uber XL | 1,406,256 | 2.98% |
+
+- **Auto was the largest booking-value contributor at 24.81%**.
+- Go Mini contributed another **19.91%**.
+- Go Sedan accounted for **18.07%**.
+- The top three vehicle categories together generated **62.80% of completed booking value**.
+- The top five vehicle categories generated approximately **90.05%**.
+- Uber XL contributed the smallest share at **2.98%**.
+
+This shows that booking value is concentrated primarily in Auto, Go Mini, and Go Sedan.
+
+---
+
+## Customer Booking Behavior
+
+The dataset contains **148,788 unique customers**.
+
+### Booking Frequency
+
+| Bookings per Customer | Customers |
+|---:|---:|
+| 1 | 147,582 |
+| 2 | 1,200 |
+| 3 | 6 |
+
+- **147,582 customers booked only once**.
+- Only **1,206 customers were repeat customers**.
+- The repeat-customer rate was just **0.81%**.
+- Only six customers recorded three bookings.
+
+The extremely low repeat-customer percentage is one of the most significant customer-behavior findings in the dataset and indicates that the analyzed booking activity is dominated by one-time customers.
+
+---
+
+## Top Customers by Completed Booking Value
+
+The highest-value customer generated **4,987** across two completed rides.
+
+- Customer `CID2674107` generated **4,987** from 2 completed rides.
+- Customer `CID7828101` generated **4,722** from 3 completed rides.
+- Several other top customers recorded only a single completed ride with unusually high booking values.
+
+This further supports the finding that customer activity is highly fragmented rather than concentrated among frequent riders.
+
+---
+
+## Peak vs Non-Peak Performance
+
+Peak hours were defined as **5 PM through 7 PM**.
+
+| Time Period | Total Bookings | Completed Rides | Completion Rate | Driver Cancellations | Completed Booking Value |
+|---|---:|---:|---:|---:|---:|
+| Peak Hours | 34,488 | 21,275 | 61.69% | 6,258 | 10,826,379 |
+| Non-Peak Hours | 115,512 | 71,725 | 62.09% | 20,742 | 36,434,195 |
+
+- Peak hours accounted for **34,488 bookings**.
+- Peak-hour completion rate was **61.69%**, slightly below the **62.09% non-peak completion rate**.
+- Peak hours generated **10.83 million** in completed booking value.
+- The slightly lower completion rate during peak periods suggests increased operational pressure when demand is highest.
+
+---
+
+## Weekday vs Weekend Performance
+
+| Day Type | Total Bookings | Completed Rides | Completion Rate | Completed Booking Value | Average Booking Value |
+|---|---:|---:|---:|---:|---:|
+| Weekday | 107,060 | 66,244 | 61.88% | 29,721,690 | 448.67 |
+| Weekend | 42,940 | 26,756 | 62.31% | 17,538,884 | 655.51 |
+
+- Weekdays generated significantly more bookings because they represent more days in the dataset.
+- Weekend rides achieved a slightly higher completion rate of **62.31%** compared with **61.88% on weekdays**.
+- Weekend completed rides had an average booking value of **655.51**, compared with only **448.67 on weekdays**.
+- Weekend average booking value was therefore substantially higher despite lower overall booking volume.
+
+---
+
+## Pickup Location Performance
+
+Among the leading pickup locations by completed booking value:
+
+| Pickup Location | Total Bookings | Completed Rides | Completion Rate | Driver Cancellation Rate | Completed Booking Value |
+|---|---:|---:|---:|---:|---:|
+| Barakhamba Road | 946 | 594 | 62.79% | 17.97% | 309,713 |
+| Khandsa | 949 | 600 | 63.22% | 17.81% | 309,041 |
+| Pataudi Chowk | 907 | 556 | 61.30% | 16.54% | 306,774 |
+| Tughlakabad | 869 | 552 | 63.52% | 18.30% | 299,419 |
+| Subhash Chowk | 887 | 582 | 65.61% | 16.01% | 299,023 |
+
+- **Barakhamba Road generated the highest completed booking value at 309,713**.
+- Khandsa followed closely with **309,041**.
+- Pataudi Chowk generated **306,774**.
+- **Subhash Chowk achieved a particularly strong 65.61% completion rate** while maintaining a relatively lower 16.01% driver cancellation rate.
+- High booking volume does not necessarily translate directly into the highest booking value, making location-level operational performance an important metric.
+
+---
+
+## Distance Segment Performance
+
+| Distance Category | Completed Rides | Average Distance | Total Booking Value | Booking Value per KM |
+|---|---:|---:|---:|---:|
+| Short (1–10 km) | 15,524 | 6.02 km | 7,813,891 | 83.60 |
+| Medium (11–25 km) | 28,983 | 17.54 km | 14,743,954 | 29.01 |
+| Long (26–40 km) | 29,245 | 32.51 km | 14,865,125 | 15.64 |
+| Very Long (41–50 km) | 19,248 | 44.98 km | 9,837,604 | 11.36 |
+
+- **Long rides generated the highest total booking value at 14,865,125**.
+- Medium-distance rides followed closely at **14,743,954**.
+- Short rides generated the lowest total value among the four segments but had the **highest booking value per kilometer at 83.60**.
+- Booking value per kilometer decreased significantly as ride distance increased.
+- Very long rides generated only **11.36 per kilometer**.
+
+This suggests that longer rides generate higher total transaction value but lower value relative to distance traveled.
+
+---
+
+## Monthly Booking Value Ranking
+
+Completed booking value ranked as follows:
+
+1. **March — 4,174,900**
+2. **October — 4,008,403**
+3. **January — 4,001,547**
+4. June — 3,964,298
+5. July — 3,961,939
+6. December — 3,945,668
+7. November — 3,938,458
+8. May — 3,935,207
+9. April — 3,885,255
+10. August — 3,867,753
+11. September — 3,820,536
+12. **February — 3,756,610**
+
+March was the strongest month by completed booking value, while February generated the lowest.
+
+---
+
+## Cumulative Booking Value
+
+Completed booking value accumulated steadily throughout the year:
+
+- Q1 cumulative value reached approximately **11.93 million**.
+- By June, cumulative value reached approximately **23.72 million**.
+- By September, it reached approximately **35.37 million**.
+- The year ended at a cumulative completed booking value of **47,260,574**.
+
+---
+
+## Final Business Performance Summary
+
+The advanced analysis highlights several important business patterns:
+
+- The platform processed **150,000 bookings**, of which **93,000 were completed**, resulting in a **62% overall completion rate**.
+- Completed rides generated **47.26 million in booking value**.
+- Monthly booking activity remained relatively stable throughout the year.
+- **March was the highest-value month**, generating 4.17 million in completed booking value.
+- Auto was the strongest vehicle category, contributing **24.81% of completed booking value**.
+- Auto, Go Mini, and Go Sedan together accounted for **62.80% of completed booking value**.
+- Customer retention appears extremely limited, with only **0.81% of customers making more than one booking** in the dataset.
+- Peak-hour completion performance was slightly weaker than non-peak performance, suggesting additional operational pressure during the evening demand period.
+- Weekend rides generated substantially higher average booking values than weekday rides.
+- Long-distance rides generated the highest total booking value, while short rides produced the highest booking value per kilometer.
+- Location-level performance varies meaningfully, with some pickup locations combining strong booking value, high completion rates, and lower cancellation rates.
+- Average ratings remained strong at approximately **4.23 for drivers and 4.40 for customers**.
+
+---
+
+## Business Recommendations
+
+Based on the analysis:
+
+- **Improve customer retention:** Investigate why only 0.81% of customers returned for additional bookings and evaluate loyalty, promotional, or re-engagement strategies.
+- **Strengthen peak-hour driver availability:** Evening peak periods generate substantial demand but have slightly weaker completion performance.
+- **Prioritize high-value vehicle categories:** Auto, Go Mini, and Go Sedan account for nearly two-thirds of completed booking value.
+- **Study high-performing pickup locations:** Locations such as Subhash Chowk combine strong completion rates with relatively lower driver cancellation rates and may provide operational best practices.
+- **Optimize ride-distance economics:** Short rides generate significantly more booking value per kilometer, while longer rides contribute more total booking value.
+- **Leverage weekend demand:** Weekend completed rides have substantially higher average booking values and may present opportunities for targeted pricing, promotions, or driver allocation.
+- **Continue monitoring cancellations:** With only 62% of bookings completed, reducing driver cancellations, customer cancellations, and driver-availability failures remains a major opportunity for improving overall platform performance.

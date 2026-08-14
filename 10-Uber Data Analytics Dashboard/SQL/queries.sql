@@ -1845,3 +1845,822 @@ SELECT
     ) AS average_customer_rating
 
 FROM uber_bookings;
+
+-- ============================================================
+-- Uber Ride Bookings Analytics
+-- Day 5: Advanced Business Analytics
+-- ============================================================
+
+
+-- ============================================================
+-- 84. Monthly Performance Summary
+-- ============================================================
+
+SELECT
+    MONTH("Date") AS month_number,
+    MONTHNAME("Date") AS month_name,
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings
+GROUP BY
+    MONTH("Date"),
+    MONTHNAME("Date")
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 85. Month-over-Month Booking Growth
+-- Window Function: LAG
+-- ============================================================
+
+WITH monthly_bookings AS (
+
+    SELECT
+        MONTH("Date") AS month_number,
+        MONTHNAME("Date") AS month_name,
+        COUNT(*) AS total_bookings
+
+    FROM uber_bookings
+    GROUP BY
+        MONTH("Date"),
+        MONTHNAME("Date")
+),
+
+monthly_growth AS (
+
+    SELECT
+        month_number,
+        month_name,
+        total_bookings,
+
+        LAG(total_bookings) OVER (
+            ORDER BY month_number
+        ) AS previous_month_bookings
+
+    FROM monthly_bookings
+)
+
+SELECT
+    month_number,
+    month_name,
+    total_bookings,
+    previous_month_bookings,
+
+    ROUND(
+        (
+            total_bookings - previous_month_bookings
+        ) * 100.0
+        / NULLIF(previous_month_bookings, 0),
+        2
+    ) AS booking_growth_percentage
+
+FROM monthly_growth
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 86. Month-over-Month Completed Booking Value Growth
+-- ============================================================
+
+WITH monthly_value AS (
+
+    SELECT
+        MONTH("Date") AS month_number,
+        MONTHNAME("Date") AS month_name,
+
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ) AS completed_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY
+        MONTH("Date"),
+        MONTHNAME("Date")
+),
+
+value_growth AS (
+
+    SELECT
+        month_number,
+        month_name,
+        completed_booking_value,
+
+        LAG(completed_booking_value) OVER (
+            ORDER BY month_number
+        ) AS previous_month_value
+
+    FROM monthly_value
+)
+
+SELECT
+    month_number,
+    month_name,
+
+    ROUND(
+        completed_booking_value,
+        2
+    ) AS completed_booking_value,
+
+    ROUND(
+        previous_month_value,
+        2
+    ) AS previous_month_value,
+
+    ROUND(
+        (
+            completed_booking_value - previous_month_value
+        ) * 100.0
+        / NULLIF(previous_month_value, 0),
+        2
+    ) AS booking_value_growth_percentage
+
+FROM value_growth
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 87. Vehicle Booking Value Contribution
+-- ============================================================
+
+WITH vehicle_value AS (
+
+    SELECT
+        "Vehicle Type",
+
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ) AS total_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY "Vehicle Type"
+)
+
+SELECT
+    "Vehicle Type",
+
+    ROUND(
+        total_booking_value,
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        total_booking_value * 100.0
+        / SUM(total_booking_value) OVER (),
+        2
+    ) AS booking_value_contribution_percentage
+
+FROM vehicle_value
+ORDER BY total_booking_value DESC;
+
+
+-- ============================================================
+-- 88. Cumulative Vehicle Booking Value Contribution
+-- ============================================================
+
+WITH vehicle_value AS (
+
+    SELECT
+        "Vehicle Type",
+
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ) AS total_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY "Vehicle Type"
+),
+
+vehicle_ranked AS (
+
+    SELECT
+        "Vehicle Type",
+        total_booking_value,
+
+        SUM(total_booking_value) OVER (
+            ORDER BY total_booking_value DESC
+            ROWS BETWEEN UNBOUNDED PRECEDING
+            AND CURRENT ROW
+        ) AS cumulative_booking_value,
+
+        SUM(total_booking_value) OVER ()
+            AS overall_booking_value
+
+    FROM vehicle_value
+)
+
+SELECT
+    "Vehicle Type",
+
+    ROUND(
+        total_booking_value,
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        cumulative_booking_value * 100.0
+        / overall_booking_value,
+        2
+    ) AS cumulative_contribution_percentage
+
+FROM vehicle_ranked
+ORDER BY total_booking_value DESC;
+
+
+-- ============================================================
+-- 89. Top 10 Customers by Completed Booking Value
+-- ============================================================
+
+SELECT
+    "Customer ID",
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ),
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ),
+        2
+    ) AS average_booking_value
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+GROUP BY "Customer ID"
+ORDER BY total_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 90. Customer Ride Frequency Distribution
+-- ============================================================
+
+WITH customer_bookings AS (
+
+    SELECT
+        "Customer ID",
+        COUNT(*) AS total_bookings
+
+    FROM uber_bookings
+    GROUP BY "Customer ID"
+)
+
+SELECT
+    total_bookings AS bookings_per_customer,
+    COUNT(*) AS total_customers
+
+FROM customer_bookings
+GROUP BY total_bookings
+ORDER BY bookings_per_customer;
+
+
+-- ============================================================
+-- 91. Repeat Customer Summary
+-- ============================================================
+
+WITH customer_bookings AS (
+
+    SELECT
+        "Customer ID",
+        COUNT(*) AS total_bookings
+
+    FROM uber_bookings
+    GROUP BY "Customer ID"
+)
+
+SELECT
+    COUNT(*) AS total_customers,
+
+    SUM(
+        CASE
+            WHEN total_bookings = 1
+            THEN 1 ELSE 0
+        END
+    ) AS one_time_customers,
+
+    SUM(
+        CASE
+            WHEN total_bookings > 1
+            THEN 1 ELSE 0
+        END
+    ) AS repeat_customers,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN total_bookings > 1
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS repeat_customer_percentage
+
+FROM customer_bookings;
+
+
+-- ============================================================
+-- 92. Peak vs Non-Peak Booking Performance
+-- Peak hours: 17:00 - 19:59
+-- ============================================================
+
+SELECT
+    CASE
+        WHEN HOUR("Time") BETWEEN 17 AND 19
+            THEN 'Peak Hours'
+        ELSE 'Non-Peak Hours'
+    END AS time_period,
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Cancelled by Driver'
+            THEN 1 ELSE 0
+        END
+    ) AS driver_cancellations,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings
+GROUP BY time_period
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 93. Weekend vs Weekday Performance
+-- ============================================================
+
+SELECT
+    CASE
+        WHEN DAYOFWEEK("Date") IN (0, 6)
+            THEN 'Weekend'
+        ELSE 'Weekday'
+    END AS day_type,
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value,
+
+    ROUND(
+        AVG(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+            END
+        ),
+        2
+    ) AS average_booking_value
+
+FROM uber_bookings
+GROUP BY day_type
+ORDER BY total_bookings DESC;
+
+
+-- ============================================================
+-- 94. Vehicle Operational Performance Scorecard
+-- ============================================================
+
+SELECT
+    "Vehicle Type",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Cancelled by Driver'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS driver_cancellation_rate,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Driver Ratings" AS DOUBLE)
+        ),
+        2
+    ) AS average_driver_rating,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Customer Rating" AS DOUBLE)
+        ),
+        2
+    ) AS average_customer_rating,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings
+GROUP BY "Vehicle Type"
+ORDER BY completed_booking_value DESC;
+
+
+-- ============================================================
+-- 95. Top Pickup Locations - Combined Performance
+-- Minimum 500 bookings
+-- ============================================================
+
+SELECT
+    "Pickup Location",
+
+    COUNT(*) AS total_bookings,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Cancelled by Driver'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS driver_cancellation_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value
+
+FROM uber_bookings
+GROUP BY "Pickup Location"
+HAVING COUNT(*) >= 500
+ORDER BY completed_booking_value DESC
+LIMIT 10;
+
+
+-- ============================================================
+-- 96. Distance Segment Performance
+-- ============================================================
+
+SELECT
+    CASE
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 10
+            THEN 'Short (1-10 km)'
+
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 25
+            THEN 'Medium (11-25 km)'
+
+        WHEN TRY_CAST("Ride Distance" AS DOUBLE) <= 40
+            THEN 'Long (26-40 km)'
+
+        ELSE 'Very Long (41-50 km)'
+    END AS distance_category,
+
+    COUNT(*) AS completed_rides,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Ride Distance" AS DOUBLE)
+        ),
+        2
+    ) AS average_distance,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ),
+        2
+    ) AS average_booking_value,
+
+    ROUND(
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ),
+        2
+    ) AS total_booking_value,
+
+    ROUND(
+        SUM(TRY_CAST("Booking Value" AS DOUBLE))
+        /
+        NULLIF(
+            SUM(TRY_CAST("Ride Distance" AS DOUBLE)),
+            0
+        ),
+        2
+    ) AS booking_value_per_km
+
+FROM uber_bookings
+WHERE "Booking Status" = 'Completed'
+  AND TRY_CAST("Ride Distance" AS DOUBLE) IS NOT NULL
+GROUP BY distance_category
+ORDER BY MIN(TRY_CAST("Ride Distance" AS DOUBLE));
+
+
+-- ============================================================
+-- 97. Monthly Booking Value Ranking
+-- ============================================================
+
+WITH monthly_performance AS (
+
+    SELECT
+        MONTH("Date") AS month_number,
+        MONTHNAME("Date") AS month_name,
+
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ) AS completed_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY
+        MONTH("Date"),
+        MONTHNAME("Date")
+)
+
+SELECT
+    month_number,
+    month_name,
+
+    ROUND(
+        completed_booking_value,
+        2
+    ) AS completed_booking_value,
+
+    RANK() OVER (
+        ORDER BY completed_booking_value DESC
+    ) AS booking_value_rank
+
+FROM monthly_performance
+ORDER BY booking_value_rank;
+
+
+-- ============================================================
+-- 98. Monthly Running Booking Value
+-- Window Function: Running Total
+-- ============================================================
+
+WITH monthly_value AS (
+
+    SELECT
+        MONTH("Date") AS month_number,
+        MONTHNAME("Date") AS month_name,
+
+        SUM(
+            TRY_CAST("Booking Value" AS DOUBLE)
+        ) AS completed_booking_value
+
+    FROM uber_bookings
+    WHERE "Booking Status" = 'Completed'
+    GROUP BY
+        MONTH("Date"),
+        MONTHNAME("Date")
+)
+
+SELECT
+    month_number,
+    month_name,
+
+    ROUND(
+        completed_booking_value,
+        2
+    ) AS monthly_booking_value,
+
+    ROUND(
+        SUM(completed_booking_value) OVER (
+            ORDER BY month_number
+            ROWS BETWEEN UNBOUNDED PRECEDING
+            AND CURRENT ROW
+        ),
+        2
+    ) AS cumulative_booking_value
+
+FROM monthly_value
+ORDER BY month_number;
+
+
+-- ============================================================
+-- 99. Overall Business KPI Summary
+-- ============================================================
+
+SELECT
+    COUNT(*) AS total_bookings,
+
+    COUNT(
+        DISTINCT "Booking ID"
+    ) AS unique_booking_ids,
+
+    COUNT(
+        DISTINCT "Customer ID"
+    ) AS unique_customers,
+
+    SUM(
+        CASE
+            WHEN "Booking Status" = 'Completed'
+            THEN 1 ELSE 0
+        END
+    ) AS completed_rides,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN 1 ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS completion_rate,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+                ELSE 0
+            END
+        ),
+        2
+    ) AS completed_booking_value,
+
+    ROUND(
+        AVG(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Booking Value" AS DOUBLE)
+            END
+        ),
+        2
+    ) AS average_completed_booking_value,
+
+    ROUND(
+        AVG(
+            CASE
+                WHEN "Booking Status" = 'Completed'
+                THEN TRY_CAST("Ride Distance" AS DOUBLE)
+            END
+        ),
+        2
+    ) AS average_completed_ride_distance,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Driver Ratings" AS DOUBLE)
+        ),
+        2
+    ) AS average_driver_rating,
+
+    ROUND(
+        AVG(
+            TRY_CAST("Customer Rating" AS DOUBLE)
+        ),
+        2
+    ) AS average_customer_rating
+
+FROM uber_bookings;
+
+
+-- ============================================================
+-- 100. Final Booking Outcome Scorecard
+-- ============================================================
+
+SELECT
+    "Booking Status",
+
+    COUNT(*) AS total_bookings,
+
+    ROUND(
+        COUNT(*) * 100.0
+        / SUM(COUNT(*)) OVER (),
+        2
+    ) AS booking_percentage
+
+FROM uber_bookings
+GROUP BY "Booking Status"
+ORDER BY total_bookings DESC;

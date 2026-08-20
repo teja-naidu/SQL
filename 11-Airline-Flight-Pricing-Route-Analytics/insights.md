@@ -195,3 +195,94 @@ The airline pricing analysis shows a highly competitive and balanced market with
 ## Day 3 Summary
 
 Route analysis reveals that ticket pricing is influenced substantially by route and stop count. While airline-level average fares were relatively similar, individual routes show much larger price differences. The strongest pattern is the relationship between stops and price: fares increase consistently from non-stop flights through three-stop journeys. Connecting flights also represent nearly three-quarters of all flights and have considerably higher average fares than direct flights. These findings suggest that route structure and number of stops are important pricing factors within the dataset.
+
+## Day 4 - Time, Stops & Flight Duration Analysis
+
+### Yearly Flight and Pricing Trends
+
+* Flight volume remained relatively stable between 2019 and 2025, ranging from 2,074 to 2,208 flights per year.
+* 2022 recorded the highest flight volume with 2,208 flights.
+* 2019 had the highest yearly average ticket price at ₹9,438.22.
+* 2023 recorded the lowest yearly average ticket price at ₹9,236.24.
+* Overall, yearly average fares remained relatively stable throughout the dataset period.
+
+### Monthly Pricing Trends
+
+* September recorded the highest flight volume with 1,310 flights.
+* June had the highest average ticket price at ₹9,545.78.
+* April followed with an average fare of ₹9,506.85.
+* May recorded the lowest average ticket price at ₹9,205.88.
+* Monthly fare differences suggest some seasonal variation, although prices remain within a relatively narrow range.
+
+### Day-of-Week Analysis
+
+* Friday recorded the highest number of flights with 2,239 flights.
+* Monday had the lowest flight volume with 2,042 flights.
+* Sunday had the highest average ticket price at ₹9,436.10.
+* Tuesday had the lowest average ticket price at ₹9,259.31.
+* Day-of-week pricing differences are moderate compared with the much larger differences observed across stop categories.
+
+### Departure Period Analysis
+
+* Morning is the most common departure period with 4,419 flights.
+* Night departures follow with 4,281 flights.
+* Afternoon and evening departures recorded 3,152 and 3,148 flights respectively.
+* Morning flights have the highest average fare at ₹9,369.11.
+* Afternoon flights have the lowest average fare at ₹9,333.36.
+* Average fares across broad departure periods are very similar, indicating that departure period alone has limited influence on pricing.
+
+### Departure Hour Pricing
+
+* Flights departing at 7 AM have the highest hourly average ticket price at ₹9,711.03.
+* 1 AM departures have the second-highest average fare at ₹9,507.41.
+* Flights departing at 4 PM have the lowest average ticket price at ₹9,095.97.
+* 5 PM departures also have relatively low fares, averaging ₹9,100.49.
+* Hour-level analysis reveals greater pricing variation than the broader morning, afternoon, evening, and night categories.
+
+### Flight Duration Analysis
+
+* The shortest recorded flight duration is 60 minutes.
+* The longest recorded flight duration is 945 minutes, equivalent to 15 hours and 45 minutes.
+* Average flight duration across the dataset is 502.05 minutes, or approximately 8 hours and 22 minutes.
+* Very long flights of 10 hours or more form the largest duration category with 5,978 flights.
+* Long flights between 5 and 10 hours account for 5,025 flights.
+
+### Duration Category and Ticket Pricing
+
+* Short flights under 2 hours have the highest average ticket price at ₹9,483.06.
+* Medium-duration flights between 2 and 5 hours have the lowest average fare at ₹9,287.57.
+* Long flights between 5 and 10 hours average ₹9,327.32.
+* Very long flights of 10 hours or more average ₹9,390.61.
+* Ticket prices do not increase consistently with flight duration, suggesting that duration alone is not a strong pricing driver in this dataset.
+
+### Stops, Duration, and Pricing
+
+* Average flight duration is approximately 500 minutes across all stop categories.
+* Non-stop flights average 501.81 minutes, while 2-stop flights average 505.27 minutes.
+* Despite similar average durations, ticket prices vary substantially by number of stops.
+* Non-stop flights have the lowest average fare at ₹7,145.21.
+* One-stop flights average ₹8,481.81, while two-stop flights average ₹10,032.82.
+* Three-stop flights have the highest average fare at ₹11,737.15.
+* This indicates that stop count has a much stronger relationship with ticket price than average flight duration within this dataset.
+
+### Airline Departure Period Pricing
+
+* Alliance Air's most expensive departure period is Night, averaging ₹9,695.98.
+* Akasa Air's highest-priced period is Afternoon at ₹9,670.21.
+* GoAir's highest-priced period is Morning at ₹9,640.70.
+* TruJet's highest-priced period is Evening at ₹9,594.07.
+* The most expensive departure period varies by airline, indicating that there is no single time period that consistently commands the highest fare across all carriers.
+
+### Year-over-Year Ticket Price Changes
+
+* Average ticket prices decreased by 0.33% in 2020 and 0.68% in 2021.
+* Prices increased by 0.66% in 2022.
+* 2023 recorded the largest year-over-year decline at 1.78%.
+* Average fares recovered by 0.71% in 2024 and another 0.57% in 2025.
+* Overall year-over-year movements remain relatively small, showing that average ticket prices were broadly stable across the seven-year period.
+
+---
+
+## Day 4 Summary
+
+Time-based analysis shows relatively stable ticket pricing across years, months, weekdays, and broad departure periods, although individual departure hours display greater variation. Flight duration also does not show a consistent relationship with airfare. In contrast, the number of stops remains a strong pricing differentiator: average fares rise substantially from non-stop to three-stop flights even though average flight durations remain almost identical across stop categories. This suggests that stop structure is a more significant pricing factor than duration or general departure timing within this dataset.

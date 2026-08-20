@@ -445,3 +445,280 @@ FROM route_prices r
 CROSS JOIN overall_price o
 ORDER BY ABS(r.route_average_price - o.overall_average_price) DESC
 LIMIT 15;
+
+-- =====================================================
+-- Day 4: Time, Stops & Flight Duration Analysis
+-- =====================================================
+
+
+-- 31. Flights and Average Ticket Price by Year
+
+SELECT
+    YEAR(journey_date) AS journey_year,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flights
+GROUP BY journey_year
+ORDER BY journey_year;
+
+
+-- 32. Flights and Average Ticket Price by Month
+
+SELECT
+    MONTH(journey_date) AS month_number,
+    MONTHNAME(journey_date) AS month_name,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flights
+GROUP BY month_number, month_name
+ORDER BY month_number;
+
+
+-- 33. Flight Distribution by Day of Week
+
+SELECT
+    DAYNAME(journey_date) AS day_of_week,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flights
+GROUP BY day_of_week
+ORDER BY total_flights DESC;
+
+
+-- 34. Departure Time Distribution
+
+SELECT
+    CASE
+        WHEN HOUR(departure_time) BETWEEN 5 AND 11
+            THEN 'Morning'
+        WHEN HOUR(departure_time) BETWEEN 12 AND 16
+            THEN 'Afternoon'
+        WHEN HOUR(departure_time) BETWEEN 17 AND 21
+            THEN 'Evening'
+        ELSE 'Night'
+    END AS departure_period,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flights
+GROUP BY departure_period
+ORDER BY total_flights DESC;
+
+
+-- 35. Average Ticket Price by Departure Hour
+
+SELECT
+    HOUR(departure_time) AS departure_hour,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flights
+GROUP BY departure_hour
+ORDER BY departure_hour;
+
+
+-- 36. Convert Flight Duration into Minutes
+
+WITH duration_cleaned AS (
+    SELECT
+        duration,
+
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)h', 1)
+                AS INTEGER
+            ),
+            0
+        ) * 60
+        +
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)m', 1)
+                AS INTEGER
+            ),
+            0
+        ) AS duration_minutes
+
+    FROM flights
+)
+
+SELECT
+    MIN(duration_minutes) AS minimum_duration_minutes,
+    ROUND(AVG(duration_minutes), 2) AS average_duration_minutes,
+    MAX(duration_minutes) AS maximum_duration_minutes
+FROM duration_cleaned
+WHERE duration_minutes > 0;
+
+
+-- 37. Flight Duration Category Analysis
+
+WITH flight_duration AS (
+    SELECT
+        price,
+
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)h', 1)
+                AS INTEGER
+            ),
+            0
+        ) * 60
+        +
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)m', 1)
+                AS INTEGER
+            ),
+            0
+        ) AS duration_minutes
+
+    FROM flights
+),
+
+duration_categories AS (
+    SELECT
+        price,
+        duration_minutes,
+
+        CASE
+            WHEN duration_minutes < 120
+                THEN 'Short (<2 Hours)'
+            WHEN duration_minutes < 300
+                THEN 'Medium (2-5 Hours)'
+            WHEN duration_minutes < 600
+                THEN 'Long (5-10 Hours)'
+            ELSE 'Very Long (10+ Hours)'
+        END AS duration_category
+
+    FROM flight_duration
+    WHERE duration_minutes > 0
+)
+
+SELECT
+    duration_category,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(duration_minutes), 2) AS average_duration_minutes,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM duration_categories
+GROUP BY duration_category
+ORDER BY average_duration_minutes;
+
+
+-- 38. Average Duration and Price by Number of Stops
+
+WITH flight_duration AS (
+    SELECT
+        total_stops,
+        price,
+
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)h', 1)
+                AS INTEGER
+            ),
+            0
+        ) * 60
+        +
+        COALESCE(
+            TRY_CAST(
+                REGEXP_EXTRACT(duration, '([0-9]+)m', 1)
+                AS INTEGER
+            ),
+            0
+        ) AS duration_minutes
+
+    FROM flights
+)
+
+SELECT
+    total_stops,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(duration_minutes), 2) AS average_duration_minutes,
+    ROUND(AVG(price), 2) AS average_ticket_price
+FROM flight_duration
+WHERE duration_minutes > 0
+GROUP BY total_stops
+ORDER BY average_duration_minutes;
+
+
+-- 39. Most Expensive Departure Period by Airline
+
+WITH departure_analysis AS (
+    SELECT
+        airline,
+
+        CASE
+            WHEN HOUR(departure_time) BETWEEN 5 AND 11
+                THEN 'Morning'
+            WHEN HOUR(departure_time) BETWEEN 12 AND 16
+                THEN 'Afternoon'
+            WHEN HOUR(departure_time) BETWEEN 17 AND 21
+                THEN 'Evening'
+            ELSE 'Night'
+        END AS departure_period,
+
+        AVG(price) AS average_ticket_price
+
+    FROM flights
+    GROUP BY airline, departure_period
+),
+
+ranked_periods AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY airline
+            ORDER BY average_ticket_price DESC
+        ) AS price_rank
+    FROM departure_analysis
+)
+
+SELECT
+    airline,
+    departure_period,
+    ROUND(average_ticket_price, 2) AS average_ticket_price
+FROM ranked_periods
+WHERE price_rank = 1
+ORDER BY average_ticket_price DESC;
+
+
+-- 40. Year-over-Year Average Ticket Price Change
+
+WITH yearly_prices AS (
+    SELECT
+        YEAR(journey_date) AS journey_year,
+        AVG(price) AS average_ticket_price
+    FROM flights
+    GROUP BY journey_year
+),
+
+price_comparison AS (
+    SELECT
+        journey_year,
+        average_ticket_price,
+
+        LAG(average_ticket_price) OVER (
+            ORDER BY journey_year
+        ) AS previous_year_price
+
+    FROM yearly_prices
+)
+
+SELECT
+    journey_year,
+    ROUND(average_ticket_price, 2) AS average_ticket_price,
+    ROUND(previous_year_price, 2) AS previous_year_price,
+
+    ROUND(
+        average_ticket_price - previous_year_price,
+        2
+    ) AS price_change,
+
+    ROUND(
+        (
+            (average_ticket_price - previous_year_price)
+            / previous_year_price
+        ) * 100,
+        2
+    ) AS price_change_percentage
+
+FROM price_comparison
+ORDER BY journey_year;

@@ -722,3 +722,312 @@ SELECT
 
 FROM price_comparison
 ORDER BY journey_year;
+
+-- =====================================================
+-- Day 5: Advanced Business Insights & Final Analysis
+-- =====================================================
+
+
+-- 41. Rank Airlines by Average Ticket Price
+
+WITH airline_pricing AS (
+    SELECT
+        airline,
+        COUNT(*) AS total_flights,
+        AVG(price) AS average_ticket_price
+    FROM flights
+    GROUP BY airline
+)
+
+SELECT
+    airline,
+    total_flights,
+    ROUND(average_ticket_price, 2) AS average_ticket_price,
+    DENSE_RANK() OVER (
+        ORDER BY average_ticket_price DESC
+    ) AS price_rank
+FROM airline_pricing
+ORDER BY price_rank;
+
+
+-- 42. Rank Source Cities by Flight Demand
+
+WITH source_demand AS (
+    SELECT
+        source_city,
+        COUNT(*) AS total_flights
+    FROM flights
+    GROUP BY source_city
+)
+
+SELECT
+    source_city,
+    total_flights,
+    DENSE_RANK() OVER (
+        ORDER BY total_flights DESC
+    ) AS demand_rank
+FROM source_demand
+ORDER BY demand_rank;
+
+
+-- 43. Rank Destination Cities by Flight Demand
+
+WITH destination_demand AS (
+    SELECT
+        destination_city,
+        COUNT(*) AS total_flights
+    FROM flights
+    GROUP BY destination_city
+)
+
+SELECT
+    destination_city,
+    total_flights,
+    DENSE_RANK() OVER (
+        ORDER BY total_flights DESC
+    ) AS demand_rank
+FROM destination_demand
+ORDER BY demand_rank;
+
+
+-- 44. Ticket Price Segmentation
+
+WITH price_segments AS (
+    SELECT
+        CASE
+            WHEN price < 5000
+                THEN 'Budget (<5000)'
+            WHEN price < 10000
+                THEN 'Standard (5000-9999)'
+            WHEN price < 15000
+                THEN 'Premium (10000-14999)'
+            ELSE 'High Premium (15000+)'
+        END AS price_category
+    FROM flights
+)
+
+SELECT
+    price_category,
+    COUNT(*) AS total_flights,
+    ROUND(
+        COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),
+        2
+    ) AS flight_percentage
+FROM price_segments
+GROUP BY price_category
+ORDER BY total_flights DESC;
+
+
+-- 45. Airline Performance by Price Segment
+
+SELECT
+    airline,
+
+    COUNT(*) AS total_flights,
+
+    COUNT(*) FILTER (
+        WHERE price < 5000
+    ) AS budget_flights,
+
+    COUNT(*) FILTER (
+        WHERE price >= 5000
+          AND price < 10000
+    ) AS standard_flights,
+
+    COUNT(*) FILTER (
+        WHERE price >= 10000
+          AND price < 15000
+    ) AS premium_flights,
+
+    COUNT(*) FILTER (
+        WHERE price >= 15000
+    ) AS high_premium_flights
+
+FROM flights
+GROUP BY airline
+ORDER BY total_flights DESC;
+
+
+-- 46. Top 10 High-Value Routes by Total Ticket Value
+
+SELECT
+    source_city,
+    destination_city,
+    COUNT(*) AS total_flights,
+    ROUND(AVG(price), 2) AS average_ticket_price,
+    SUM(price) AS total_ticket_value
+FROM flights
+GROUP BY source_city, destination_city
+HAVING COUNT(*) >= 20
+ORDER BY total_ticket_value DESC
+LIMIT 10;
+
+
+-- 47. Route Pricing Rank Within Each Source City
+
+WITH route_pricing AS (
+    SELECT
+        source_city,
+        destination_city,
+        COUNT(*) AS total_flights,
+        AVG(price) AS average_ticket_price
+    FROM flights
+    GROUP BY source_city, destination_city
+    HAVING COUNT(*) >= 20
+),
+
+ranked_routes AS (
+    SELECT
+        *,
+        DENSE_RANK() OVER (
+            PARTITION BY source_city
+            ORDER BY average_ticket_price DESC
+        ) AS price_rank
+    FROM route_pricing
+)
+
+SELECT
+    source_city,
+    destination_city,
+    total_flights,
+    ROUND(average_ticket_price, 2) AS average_ticket_price,
+    price_rank
+FROM ranked_routes
+WHERE price_rank <= 3
+ORDER BY source_city, price_rank;
+
+
+-- 48. Airline Fare Premium or Discount vs Overall Market
+
+WITH overall_market AS (
+    SELECT
+        AVG(price) AS market_average_price
+    FROM flights
+),
+
+airline_market AS (
+    SELECT
+        airline,
+        COUNT(*) AS total_flights,
+        AVG(price) AS airline_average_price
+    FROM flights
+    GROUP BY airline
+)
+
+SELECT
+    a.airline,
+    a.total_flights,
+    ROUND(a.airline_average_price, 2) AS airline_average_price,
+    ROUND(o.market_average_price, 2) AS market_average_price,
+
+    ROUND(
+        (
+            (a.airline_average_price - o.market_average_price)
+            / o.market_average_price
+        ) * 100,
+        2
+    ) AS fare_difference_percentage,
+
+    CASE
+        WHEN a.airline_average_price > o.market_average_price
+            THEN 'Premium to Market'
+        WHEN a.airline_average_price < o.market_average_price
+            THEN 'Discount to Market'
+        ELSE 'At Market'
+    END AS market_position
+
+FROM airline_market a
+CROSS JOIN overall_market o
+ORDER BY fare_difference_percentage DESC;
+
+
+-- 49. Airline Performance Score
+
+WITH airline_metrics AS (
+    SELECT
+        airline,
+        COUNT(*) AS total_flights,
+        AVG(price) AS average_ticket_price,
+        SUM(price) AS total_ticket_value
+    FROM flights
+    GROUP BY airline
+),
+
+ranked_metrics AS (
+    SELECT
+        *,
+        DENSE_RANK() OVER (
+            ORDER BY total_flights DESC
+        ) AS volume_rank,
+
+        DENSE_RANK() OVER (
+            ORDER BY average_ticket_price DESC
+        ) AS price_rank,
+
+        DENSE_RANK() OVER (
+            ORDER BY total_ticket_value DESC
+        ) AS value_rank
+
+    FROM airline_metrics
+)
+
+SELECT
+    airline,
+    total_flights,
+    ROUND(average_ticket_price, 2) AS average_ticket_price,
+    total_ticket_value,
+    volume_rank,
+    price_rank,
+    value_rank,
+
+    volume_rank + price_rank + value_rank
+        AS combined_rank_score
+
+FROM ranked_metrics
+ORDER BY combined_rank_score ASC;
+
+
+-- 50. Executive Airline Performance Summary
+
+WITH airline_summary AS (
+    SELECT
+        airline,
+        COUNT(*) AS total_flights,
+        AVG(price) AS average_ticket_price,
+        MIN(price) AS minimum_ticket_price,
+        MAX(price) AS maximum_ticket_price,
+        SUM(price) AS total_ticket_value,
+
+        COUNT(*) FILTER (
+            WHERE total_stops = 'non-stop'
+        ) AS nonstop_flights
+
+    FROM flights
+    GROUP BY airline
+)
+
+SELECT
+    airline,
+    total_flights,
+
+    ROUND(
+        total_flights * 100.0
+        / SUM(total_flights) OVER (),
+        2
+    ) AS flight_share_percentage,
+
+    ROUND(average_ticket_price, 2)
+        AS average_ticket_price,
+
+    minimum_ticket_price,
+    maximum_ticket_price,
+    total_ticket_value,
+    nonstop_flights,
+
+    ROUND(
+        nonstop_flights * 100.0 / total_flights,
+        2
+    ) AS nonstop_percentage
+
+FROM airline_summary
+ORDER BY total_ticket_value DESC;

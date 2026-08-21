@@ -286,3 +286,110 @@ Route analysis reveals that ticket pricing is influenced substantially by route 
 ## Day 4 Summary
 
 Time-based analysis shows relatively stable ticket pricing across years, months, weekdays, and broad departure periods, although individual departure hours display greater variation. Flight duration also does not show a consistent relationship with airfare. In contrast, the number of stops remains a strong pricing differentiator: average fares rise substantially from non-stop to three-stop flights even though average flight durations remain almost identical across stop categories. This suggests that stop structure is a more significant pricing factor than duration or general departure timing within this dataset.
+
+## Day 5 - Advanced Business Insights & Final Analysis
+
+### Airline Pricing Rankings
+
+* Akasa Air ranks first by average ticket price at ₹9,478.98.
+* Alliance Air ranks second at ₹9,459.43, followed by TruJet at ₹9,430.78.
+* IndiGo has the lowest average ticket price at ₹9,174.49.
+* The relatively small difference between airline-level average fares indicates strong pricing competition across carriers.
+
+### Source City Demand Rankings
+
+* Hyderabad is the highest-demand source city with 799 departing flights.
+* Jaipur ranks second with 787 flights, followed by Delhi with 780 flights.
+* Guwahati and Chennai complete the top five source cities with 779 and 778 flights respectively.
+* Surat has the lowest departure volume among the 20 source cities with 709 flights.
+
+### Destination City Demand Rankings
+
+* Guwahati ranks first among destination cities with 814 arriving flights.
+* Lucknow ranks second with 809 flights, followed by Mumbai with 803 flights.
+* Kolkata ranks fourth with 787 flights, while Delhi ranks fifth with 773 flights.
+* Goa has the lowest destination volume with 664 flights.
+
+### Ticket Price Segmentation
+
+* Standard-priced flights between ₹5,000 and ₹9,999 form the largest fare segment with 6,986 flights, representing 46.57% of the dataset.
+* Premium flights between ₹10,000 and ₹14,999 account for 5,757 flights, or 38.38%.
+* Budget flights below ₹5,000 account for 1,566 flights, representing 10.44%.
+* High-premium flights priced at ₹15,000 or above represent only 691 flights, or 4.61%.
+* Standard and premium fares together account for 84.95% of all flights.
+
+### Airline Performance by Price Segment
+
+* TruJet has the highest overall flight volume with 1,556 flights.
+* SpiceJet records 597 premium flights, the highest premium-flight count among the airlines, closely followed by TruJet and Alliance Air with 596 each.
+* IndiGo has the highest number of budget flights with 181.
+* GoAir records the highest number of high-premium flights with 82.
+* Standard-priced flights form a substantial portion of each airline's operations, reinforcing the importance of the ₹5,000–₹9,999 fare segment.
+
+### High-Value Routes
+
+* Surat to Delhi generates the highest total ticket value among qualifying routes at ₹543,693 from 53 flights.
+* Cochin to Bangalore ranks second with ₹535,580 from 52 flights.
+* Hyderabad to Guwahati generates ₹527,600 from 54 flights.
+* Kolkata to Mumbai generates ₹523,235, while Bangalore to Hyderabad generates ₹512,795.
+* Route value is influenced by a combination of flight demand and average ticket price rather than either factor alone.
+
+### Route Pricing Within Source Cities
+
+* Ranking routes within individual source cities highlights substantial fare differences across destinations.
+* Bangalore to Delhi is Bangalore's highest-priced qualifying route with an average fare of ₹10,480.08.
+* Bhubaneswar to Indore leads qualifying routes from Bhubaneswar at ₹10,465.13.
+* Nagpur to Cochin averages ₹10,560.71 and ranks first among qualifying Nagpur routes.
+* Raipur to Varanasi leads qualifying routes from Raipur with an average fare of ₹10,523.30.
+* Route-level pricing therefore provides more detailed differentiation than source-city averages alone.
+
+### Airline Position vs Overall Market
+
+* The overall market average ticket price is approximately ₹9,355.
+* Akasa Air has the largest premium to the market average at 1.32%.
+* Alliance Air follows at a 1.11% premium.
+* TruJet and SpiceJet operate at premiums of 0.81% and 0.76% respectively.
+* Air India and GoAir are both approximately 0.35% above the market average.
+* Vistara operates at a 0.25% discount to the market average.
+* AirAsia India is 0.85% below market, while Star Air is 1.72% below market.
+* IndiGo has the largest discount to the overall market average at 1.93%.
+* All airline premiums and discounts remain within approximately ±2%, further demonstrating relatively competitive airline-level pricing.
+
+### Combined Airline Performance Ranking
+
+* The combined performance score evaluates airlines using flight volume rank, average fare rank, and total ticket value rank.
+* A lower combined score indicates stronger performance across these three dataset-specific measures.
+* TruJet ranks first with a combined score of 5.
+* SpiceJet ranks second with a score of 8.
+* Akasa Air ranks third with a score of 10.
+* Alliance Air follows with a score of 13.
+* Vistara records the highest combined score at 27.
+* This score is a comparative analytical measure for this dataset and should not be interpreted as a real-world airline quality or service ranking.
+
+### Executive Airline Performance
+
+* TruJet generates the highest total ticket value at ₹14,674,291 while also operating the highest number of flights at 1,556.
+* SpiceJet follows with ₹14,535,837 in total ticket value.
+* Akasa Air ranks third by total ticket value at ₹14,237,421.
+* GoAir has the highest non-stop flight percentage at 26.63%.
+* Star Air follows with 26.19%, while AirAsia India records 26.11%.
+* Vistara has the lowest non-stop share at 22.89%.
+* Non-stop percentages remain relatively close across airlines, indicating a broadly similar mix of direct and connecting services.
+
+---
+
+## Day 5 Summary
+
+The advanced analysis confirms that the airline market represented in the dataset is highly balanced at the carrier level but shows stronger variation at the route and flight-characteristic levels. Akasa Air commands the highest average fare, while IndiGo operates at the largest discount to the overall market average. TruJet leads in both flight volume and total ticket value and achieves the strongest dataset-specific combined ranking.
+
+Standard and premium fares dominate the dataset, together representing 84.95% of all flights. High-value route analysis further demonstrates that revenue potential depends on the interaction between flight demand and ticket pricing. Combined with the findings from earlier analyses, route selection and number of stops emerge as more significant pricing differentiators than airline, broad departure period, or flight duration.
+
+---
+
+## Final Project Conclusion
+
+The Airline Flight Pricing & Route Analytics project analyzed 15,000 flight records across 10 airlines, 20 source cities, and 20 destination cities covering journeys from 2019 through 2025.
+
+The analysis identified a relatively balanced airline market in terms of flight volume and average pricing. However, considerably greater differences appear at the route level and across stop categories. Connecting flights account for the majority of the dataset, and average ticket prices increase substantially as the number of stops rises. In contrast, flight duration, broad departure period, and yearly pricing trends show comparatively limited variation.
+
+Advanced ranking, segmentation, route-value analysis, and market-position comparisons further demonstrate how SQL can transform raw airline data into actionable business insights. Across 50 SQL analyses, the project applies aggregation, CTEs, conditional logic, date functions, regular expressions, subqueries, ranking, and window functions to examine airline performance, demand, pricing behavior, route economics, and flight characteristics.

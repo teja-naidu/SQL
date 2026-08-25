@@ -123,3 +123,220 @@ SELECT
 FROM telecom_customer_churn
 GROUP BY "Contract"
 ORDER BY churn_rate_percentage DESC;
+
+-- ============================================================
+-- Day 2: Customer Demographics & Churn Analysis
+-- ============================================================
+
+
+-- 11. Churn Analysis by Gender
+
+SELECT
+    "Gender",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Gender"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 12. Churn Analysis by Age Group
+
+SELECT
+    CASE
+        WHEN "Age" < 30 THEN 'Under 30'
+        WHEN "Age" BETWEEN 30 AND 44 THEN '30-44'
+        WHEN "Age" BETWEEN 45 AND 59 THEN '45-59'
+        ELSE '60+'
+    END AS age_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY age_group
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 13. Churn Analysis by Marital Status
+
+SELECT
+    "Married",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Married"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 14. Churn Analysis by Number of Dependents
+
+SELECT
+    "Number of Dependents",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Number of Dependents"
+ORDER BY "Number of Dependents";
+
+
+-- 15. Churn Analysis by Referral Activity
+
+SELECT
+    CASE
+        WHEN "Number of Referrals" = 0 THEN 'No Referrals'
+        WHEN "Number of Referrals" BETWEEN 1 AND 3 THEN '1-3 Referrals'
+        WHEN "Number of Referrals" BETWEEN 4 AND 7 THEN '4-7 Referrals'
+        ELSE '8+ Referrals'
+    END AS referral_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY referral_group
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 16. Average Age: Churned vs Stayed Customers
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Age"), 2) AS average_age
+FROM telecom_customer_churn
+WHERE "Customer Status" IN ('Stayed', 'Churned')
+GROUP BY "Customer Status"
+ORDER BY average_age DESC;
+
+
+-- 17. Average Dependents: Churned vs Stayed Customers
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Number of Dependents"), 2) AS average_dependents
+FROM telecom_customer_churn
+WHERE "Customer Status" IN ('Stayed', 'Churned')
+GROUP BY "Customer Status"
+ORDER BY average_dependents DESC;
+
+
+-- 18. Average Referrals: Churned vs Stayed Customers
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Number of Referrals"), 2) AS average_referrals
+FROM telecom_customer_churn
+WHERE "Customer Status" IN ('Stayed', 'Churned')
+GROUP BY "Customer Status"
+ORDER BY average_referrals DESC;
+
+
+-- 19. Top 10 Cities by Number of Churned Customers
+
+SELECT
+    "City",
+    COUNT(*) AS churned_customers
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+GROUP BY "City"
+ORDER BY churned_customers DESC
+LIMIT 10;
+
+
+-- 20. Churn Rate for Top 10 Largest Customer Cities
+
+WITH city_stats AS (
+    SELECT
+        "City",
+        COUNT(*) AS total_customers,
+        SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) AS churned_customers
+    FROM telecom_customer_churn
+    GROUP BY "City"
+),
+top_cities AS (
+    SELECT *
+    FROM city_stats
+    ORDER BY total_customers DESC
+    LIMIT 10
+)
+SELECT
+    "City",
+    total_customers,
+    churned_customers,
+    ROUND(
+        100.0 * churned_customers / total_customers,
+        2
+    ) AS churn_rate_percentage
+FROM top_cities
+ORDER BY churn_rate_percentage DESC;

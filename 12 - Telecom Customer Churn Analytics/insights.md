@@ -98,3 +98,82 @@
 ### Key Takeaway
 
 Customer churn is more strongly associated with age, marital status, dependents, referral activity, and location than with gender. Older customers, customers without dependents, customers with limited referral engagement, and customers in specific geographic markets such as San Diego represent important segments for deeper churn analysis and targeted retention strategies.
+
+
+## Service Usage & Churn Analysis
+
+### Internet Service
+
+* Customers with internet service have a churn rate of 31.83%, compared with only 7.40% among customers without internet service.
+* This suggests that churn risk is concentrated heavily among customers using internet products.
+
+### Internet Type
+
+* Fiber Optic customers have the highest churn rate at 40.72%.
+* Cable customers have a churn rate of 25.66%.
+* DSL customers have a lower churn rate of 18.58%.
+* Customers without internet service have the lowest churn rate at 7.40%.
+* Fiber Optic customers represent an important segment for further investigation because they combine a large customer base with a substantially higher churn rate.
+
+### Online Security
+
+* Internet customers without Online Security have a churn rate of 41.77%.
+* Customers with Online Security have a significantly lower churn rate of 14.61%.
+* Online Security adoption is therefore strongly associated with higher customer retention.
+
+### Premium Tech Support
+
+* Customers without Premium Tech Support have a churn rate of 41.64%.
+* Customers with Premium Tech Support have a much lower churn rate of 15.17%.
+* Access to premium support appears to be strongly associated with customer retention.
+
+### Online Backup
+
+* Customers without Online Backup have a churn rate of 39.93%.
+* Customers using Online Backup have a churn rate of 21.53%.
+* Customers using this additional service show considerably lower churn.
+
+### Device Protection
+
+* Customers without a Device Protection Plan have a churn rate of 39.13%.
+* Customers with Device Protection have a churn rate of 22.50%.
+* Device Protection adoption is associated with lower customer churn.
+
+### Unlimited Data
+
+* Customers without Unlimited Data have a churn rate of 32.90%.
+* Customers with Unlimited Data have a similar churn rate of 31.65%.
+* The relatively small difference suggests that Unlimited Data alone is not a strong churn differentiator.
+
+### Phone & Multiple-Line Services
+
+* Customers with Phone Service have a churn rate of 26.71%, compared with 24.93% among customers without Phone Service.
+* Multiple-Line customers have a churn rate of 28.61%, compared with 25.04% among customers with a single line.
+* These relatively small differences suggest that phone-service configuration is less strongly associated with churn than internet add-on services.
+
+### Streaming Services
+
+* Churn varies considerably across different combinations of Streaming TV, Movies, and Music.
+* Some smaller streaming combinations show very high churn rates, but their limited customer counts mean these results should be interpreted cautiously.
+* Customers using all three streaming services represent a large segment of 1,670 customers and have a churn rate of 26.95%.
+* Streaming adoption does not show the same consistent retention pattern observed with security and support services.
+
+### Internet Usage
+
+* Customers who stayed download an average of 27.55 GB per month.
+* Newly joined customers average 25.50 GB.
+* Churned customers average 23.60 GB.
+* Churned customers therefore show somewhat lower average data usage than retained customers.
+
+### Add-On Service Adoption
+
+* Internet customers with zero add-on services have the highest churn rate at 56.67%.
+* Customers with one add-on service have a churn rate of 38.85%.
+* Churn falls to 23.76% among customers with two add-on services.
+* Customers with three add-on services have a churn rate of only 12.43%.
+* Customers using all four analyzed add-on services have the lowest churn rate at 5.32%.
+* This shows a strong and consistent relationship between deeper service adoption and customer retention.
+
+### Key Takeaway
+
+Internet-service customers represent the primary churn-risk population, particularly Fiber Optic customers. Online Security, Premium Tech Support, Online Backup, and Device Protection are each associated with substantially lower churn. Most importantly, churn declines from 56.67% among internet customers with no add-on services to just 5.32% among customers using all four add-ons, making service adoption one of the strongest retention signals identified so far.

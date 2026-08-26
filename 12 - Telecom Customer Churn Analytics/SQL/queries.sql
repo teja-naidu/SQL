@@ -340,3 +340,311 @@ SELECT
     ) AS churn_rate_percentage
 FROM top_cities
 ORDER BY churn_rate_percentage DESC;
+
+-- ============================================================
+-- Day 3: Service Usage & Churn Analysis
+-- ============================================================
+
+
+-- 21. Churn Analysis by Internet Service
+
+SELECT
+    "Internet Service",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Internet Service"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 22. Churn Analysis by Internet Type
+
+SELECT
+    COALESCE("Internet Type", 'No Internet') AS internet_type,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY COALESCE("Internet Type", 'No Internet')
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 23. Churn Analysis by Online Security
+
+SELECT
+    "Online Security",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Online Security"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 24. Churn Analysis by Premium Tech Support
+
+SELECT
+    "Premium Tech Support",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Premium Tech Support"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 25. Churn Analysis by Online Backup
+
+SELECT
+    "Online Backup",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Online Backup"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 26. Churn Analysis by Device Protection Plan
+
+SELECT
+    "Device Protection Plan",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Device Protection Plan"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 27. Churn Analysis by Unlimited Data
+
+SELECT
+    "Unlimited Data",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Unlimited Data"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 28. Churn Analysis by Phone Service
+
+SELECT
+    "Phone Service",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Phone Service"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 29. Churn Analysis by Multiple Lines
+
+SELECT
+    "Multiple Lines",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Multiple Lines"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 30. Streaming Services and Churn
+
+SELECT
+    "Streaming TV",
+    "Streaming Movies",
+    "Streaming Music",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY
+    "Streaming TV",
+    "Streaming Movies",
+    "Streaming Music"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 31. Average Monthly Data Usage by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Avg Monthly GB Download"), 2) AS avg_monthly_gb_download
+FROM telecom_customer_churn
+WHERE "Internet Service" = true
+GROUP BY "Customer Status"
+ORDER BY avg_monthly_gb_download DESC;
+
+
+-- 32. Number of Internet Add-On Services vs Churn
+
+WITH service_usage AS (
+    SELECT
+        "Customer ID",
+        "Customer Status",
+        CAST(COALESCE("Online Security", false) AS INTEGER) +
+        CAST(COALESCE("Online Backup", false) AS INTEGER) +
+        CAST(COALESCE("Device Protection Plan", false) AS INTEGER) +
+        CAST(COALESCE("Premium Tech Support", false) AS INTEGER)
+            AS addon_services
+    FROM telecom_customer_churn
+    WHERE "Internet Service" = true
+)
+
+SELECT
+    addon_services,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM service_usage
+GROUP BY addon_services
+ORDER BY addon_services;

@@ -177,3 +177,74 @@ Customer churn is more strongly associated with age, marital status, dependents,
 ### Key Takeaway
 
 Internet-service customers represent the primary churn-risk population, particularly Fiber Optic customers. Online Security, Premium Tech Support, Online Backup, and Device Protection are each associated with substantially lower churn. Most importantly, churn declines from 56.67% among internet customers with no add-on services to just 5.32% among customers using all four add-ons, making service adoption one of the strongest retention signals identified so far.
+
+## Billing, Payment, Tenure & Revenue Churn Analysis
+
+### Tenure Analysis
+
+* Customers within their first 6 months have the highest churn rate at 53.33%.
+* Churn declines to 35.34% for customers with 7–12 months of tenure.
+* Customers with 13–24 months of tenure have a churn rate of 28.71%.
+* The rate falls further to 20.39% among customers with 25–48 months of tenure.
+* Customers with 49 or more months of tenure have the lowest churn rate at only 9.51%.
+* Customers who stayed have an average tenure of 41.04 months, compared with only 17.98 months among churned customers.
+* This shows a strong inverse relationship between customer tenure and churn.
+
+### Monthly Charge Analysis
+
+* Customers paying $70–$99.99 per month have the highest churn rate at 38.03%.
+* Customers paying $100 or more have a churn rate of 28.54%.
+* Customers paying $40–$69.99 have a churn rate of 23.60%.
+* Customers paying under $40 have the lowest churn rate at 12.31%.
+* Churned customers pay an average of $73.35 per month compared with $61.74 among customers who stayed.
+* Higher monthly charges are therefore associated with increased churn risk, although the relationship is not perfectly linear.
+
+### Payment Method Analysis
+
+* Mailed Check customers have the highest churn rate at 36.88%.
+* Bank Withdrawal customers have a similarly high churn rate of 34.00%.
+* Credit Card customers have a substantially lower churn rate of 14.48%.
+* Credit Card payment is associated with significantly stronger customer retention in this dataset.
+
+### Paperless Billing
+
+* Customers using Paperless Billing have a churn rate of 33.57%.
+* Customers without Paperless Billing have a churn rate of only 16.33%.
+* Paperless Billing customers therefore show approximately twice the churn rate of customers using traditional billing.
+
+### Revenue Analysis
+
+* Customers who stayed generated approximately $17.63 million in total revenue.
+* Churned customers generated approximately $3.68 million before leaving.
+* Newly joined customers generated approximately $54.28 thousand.
+* Average revenue per retained customer is $3,735.68 compared with $1,971.35 among churned customers.
+* The lower lifetime revenue among churned customers is consistent with their significantly shorter average tenure.
+
+### Churned Customer Value
+
+* The 1,869 churned customers generated approximately $3.68 million in historical revenue.
+* Average revenue per churned customer was $1,971.35.
+* Several high-value churned customers individually generated more than $10,000 in total revenue before leaving.
+* Competitor-related reasons and service/support attitude appear repeatedly among the highest-revenue churned customers.
+* This indicates that churn affects not only newer customers but can also result in the loss of established, high-value relationships.
+
+### Charges and Usage
+
+* Customers who stayed accumulated average total charges of $2,788.52 compared with $1,531.80 among churned customers.
+* Retained customers generated average long-distance charges of $942.29 compared with $433.92 among churned customers.
+* Average extra data charges are almost identical for stayed and churned customers at $7.17 and $7.16 respectively.
+* Extra data charges therefore do not appear to meaningfully differentiate churned and retained customers.
+
+### Contract and Payment Method Risk
+
+* Month-to-Month customers paying by Mailed Check have the highest churn rate at 55.56%.
+* Month-to-Month customers using Bank Withdrawal follow closely at 53.35%.
+* Month-to-Month customers paying by Credit Card have a lower, but still elevated, churn rate of 29.05%.
+* One-Year contract churn ranges from 7.75% for Credit Card customers to 14.63% for Mailed Check customers.
+* Two-Year customers using Credit Cards have a churn rate of only 1.70%.
+* No churn was recorded among the 69 Two-Year customers using Mailed Check, though the relatively small group size should be considered.
+* Contract duration remains a major retention factor even when payment method is taken into account.
+
+### Key Takeaway
+
+Customer churn is heavily concentrated during the early stages of the customer lifecycle. High monthly charges, Month-to-Month contracts, Mailed Check or Bank Withdrawal payments, and Paperless Billing are associated with elevated churn. The strongest retention patterns occur among long-tenure customers and customers committed to longer contracts, particularly those using Credit Card payments. Retention initiatives should therefore prioritize new and early-tenure customers before they become established churn risks.

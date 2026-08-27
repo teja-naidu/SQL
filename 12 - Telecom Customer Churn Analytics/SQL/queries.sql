@@ -648,3 +648,257 @@ SELECT
 FROM service_usage
 GROUP BY addon_services
 ORDER BY addon_services;
+
+-- ============================================================
+-- Day 4: Billing, Payment, Tenure & Revenue Churn Analysis
+-- ============================================================
+
+
+-- 33. Churn Analysis by Tenure Group
+
+SELECT
+    CASE
+        WHEN "Tenure in Months" <= 6 THEN '0-6 Months'
+        WHEN "Tenure in Months" <= 12 THEN '7-12 Months'
+        WHEN "Tenure in Months" <= 24 THEN '13-24 Months'
+        WHEN "Tenure in Months" <= 48 THEN '25-48 Months'
+        ELSE '49+ Months'
+    END AS tenure_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY tenure_group
+ORDER BY
+    CASE tenure_group
+        WHEN '0-6 Months' THEN 1
+        WHEN '7-12 Months' THEN 2
+        WHEN '13-24 Months' THEN 3
+        WHEN '25-48 Months' THEN 4
+        ELSE 5
+    END;
+
+
+-- 34. Average Tenure by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Tenure in Months"), 2) AS average_tenure_months
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY average_tenure_months DESC;
+
+
+-- 35. Churn Analysis by Monthly Charge Group
+
+SELECT
+    CASE
+        WHEN "Monthly Charge" < 40 THEN 'Under $40'
+        WHEN "Monthly Charge" < 70 THEN '$40-$69.99'
+        WHEN "Monthly Charge" < 100 THEN '$70-$99.99'
+        ELSE '$100+'
+    END AS monthly_charge_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY monthly_charge_group
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 36. Average Monthly Charge by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Monthly Charge"), 2) AS average_monthly_charge
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY average_monthly_charge DESC;
+
+
+-- 37. Churn Analysis by Payment Method
+
+SELECT
+    "Payment Method",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Payment Method"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 38. Churn Analysis by Paperless Billing
+
+SELECT
+    "Paperless Billing",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY "Paperless Billing"
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 39. Revenue by Customer Status
+
+SELECT
+    "Customer Status",
+    COUNT(*) AS total_customers,
+    ROUND(SUM("Total Revenue"), 2) AS total_revenue,
+    ROUND(AVG("Total Revenue"), 2) AS average_revenue_per_customer
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY total_revenue DESC;
+
+
+-- 40. Revenue Lost from Churned Customers
+
+SELECT
+    COUNT(*) AS churned_customers,
+    ROUND(SUM("Total Revenue"), 2) AS churned_customer_revenue,
+    ROUND(AVG("Total Revenue"), 2) AS avg_revenue_per_churned_customer
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned';
+
+
+-- 41. Average Total Charges by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(AVG("Total Charges"), 2) AS average_total_charges
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY average_total_charges DESC;
+
+
+-- 42. Refund Analysis by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(SUM("Total Refunds"), 2) AS total_refunds,
+    ROUND(AVG("Total Refunds"), 2) AS average_refund
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY total_refunds DESC;
+
+
+-- 43. Extra Data Charges by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(SUM("Total Extra Data Charges"), 2) AS total_extra_data_charges,
+    ROUND(AVG("Total Extra Data Charges"), 2) AS average_extra_data_charge
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY total_extra_data_charges DESC;
+
+
+-- 44. Long Distance Charges by Customer Status
+
+SELECT
+    "Customer Status",
+    ROUND(SUM("Total Long Distance Charges"), 2)
+        AS total_long_distance_charges,
+    ROUND(AVG("Total Long Distance Charges"), 2)
+        AS average_long_distance_charge
+FROM telecom_customer_churn
+GROUP BY "Customer Status"
+ORDER BY total_long_distance_charges DESC;
+
+
+-- 45. High-Value Churned Customers
+
+SELECT
+    "Customer ID",
+    "City",
+    "Tenure in Months",
+    "Contract",
+    "Monthly Charge",
+    ROUND("Total Revenue", 2) AS total_revenue,
+    "Churn Category",
+    "Churn Reason"
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+ORDER BY "Total Revenue" DESC
+LIMIT 10;
+
+
+-- 46. Churn Rate by Contract and Payment Method
+
+SELECT
+    "Contract",
+    "Payment Method",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY
+    "Contract",
+    "Payment Method"
+ORDER BY churn_rate_percentage DESC;

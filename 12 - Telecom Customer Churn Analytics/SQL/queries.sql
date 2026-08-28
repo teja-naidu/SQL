@@ -902,3 +902,356 @@ GROUP BY
     "Contract",
     "Payment Method"
 ORDER BY churn_rate_percentage DESC;
+
+-- ============================================================
+-- Day 5: Churn Reasons, Geographic Risk & Customer Segmentation
+-- ============================================================
+
+
+-- 47. Churn Category Distribution
+
+SELECT
+    "Churn Category",
+    COUNT(*) AS churned_customers,
+    ROUND(
+        100.0 * COUNT(*) /
+        SUM(COUNT(*)) OVER (),
+        2
+    ) AS percentage_of_churn
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+GROUP BY "Churn Category"
+ORDER BY churned_customers DESC;
+
+
+-- 48. Top Churn Reasons
+
+SELECT
+    "Churn Reason",
+    COUNT(*) AS churned_customers,
+    ROUND(
+        100.0 * COUNT(*) /
+        SUM(COUNT(*)) OVER (),
+        2
+    ) AS percentage_of_churn
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+GROUP BY "Churn Reason"
+ORDER BY churned_customers DESC
+LIMIT 10;
+
+
+-- 49. Churn Category and Average Customer Value
+
+SELECT
+    "Churn Category",
+    COUNT(*) AS churned_customers,
+    ROUND(AVG("Tenure in Months"), 2) AS average_tenure_months,
+    ROUND(AVG("Monthly Charge"), 2) AS average_monthly_charge,
+    ROUND(AVG("Total Revenue"), 2) AS average_total_revenue
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+GROUP BY "Churn Category"
+ORDER BY churned_customers DESC;
+
+
+-- 50. Revenue Associated with Each Churn Category
+
+SELECT
+    "Churn Category",
+    COUNT(*) AS churned_customers,
+    ROUND(SUM("Total Revenue"), 2) AS total_customer_revenue,
+    ROUND(
+        100.0 * SUM("Total Revenue") /
+        SUM(SUM("Total Revenue")) OVER (),
+        2
+    ) AS percentage_of_churned_revenue
+FROM telecom_customer_churn
+WHERE "Customer Status" = 'Churned'
+GROUP BY "Churn Category"
+ORDER BY total_customer_revenue DESC;
+
+
+-- 51. Join Customer Data with ZIP Code Population
+
+SELECT
+    COUNT(*) AS total_customers,
+    COUNT(z."Zip Code") AS customers_with_population_data,
+    COUNT(*) - COUNT(z."Zip Code") AS unmatched_customers
+FROM telecom_customer_churn c
+LEFT JOIN zipcode_population z
+    ON c."Zip Code" = z."Zip Code";
+
+
+-- 52. Churn Analysis by Population Group
+
+WITH customer_population AS (
+    SELECT
+        c."Customer ID",
+        c."Customer Status",
+        z."Population",
+        CASE
+            WHEN z."Population" < 10000 THEN 'Under 10K'
+            WHEN z."Population" < 25000 THEN '10K-24,999'
+            WHEN z."Population" < 50000 THEN '25K-49,999'
+            WHEN z."Population" < 100000 THEN '50K-99,999'
+            ELSE '100K+'
+        END AS population_group
+    FROM telecom_customer_churn c
+    INNER JOIN zipcode_population z
+        ON c."Zip Code" = z."Zip Code"
+)
+
+SELECT
+    population_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM customer_population
+GROUP BY population_group
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 53. Top ZIP Codes by Churned Customers
+
+SELECT
+    c."Zip Code",
+    z."Population",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN c."Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN c."Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn c
+LEFT JOIN zipcode_population z
+    ON c."Zip Code" = z."Zip Code"
+GROUP BY
+    c."Zip Code",
+    z."Population"
+HAVING SUM(
+    CASE
+        WHEN c."Customer Status" = 'Churned' THEN 1
+        ELSE 0
+    END
+) > 0
+ORDER BY churned_customers DESC, churn_rate_percentage DESC
+LIMIT 10;
+
+
+-- 54. Churn Rate by Offer
+
+SELECT
+    COALESCE("Offer", 'No Offer') AS offer_type,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY COALESCE("Offer", 'No Offer')
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 55. High-Risk Customer Segment
+
+SELECT
+    COUNT(*) AS high_risk_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+WHERE "Contract" = 'Month-to-Month'
+  AND "Tenure in Months" <= 12
+  AND "Internet Service" = true
+  AND COALESCE("Online Security", false) = false
+  AND COALESCE("Premium Tech Support", false) = false;
+
+
+-- 56. High-Risk Segment by Internet Type
+
+SELECT
+    COALESCE("Internet Type", 'No Internet') AS internet_type,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+WHERE "Contract" = 'Month-to-Month'
+  AND "Tenure in Months" <= 12
+  AND "Internet Service" = true
+  AND COALESCE("Online Security", false) = false
+  AND COALESCE("Premium Tech Support", false) = false
+GROUP BY COALESCE("Internet Type", 'No Internet')
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 57. High-Risk Segment by Monthly Charge
+
+WITH high_risk_customers AS (
+    SELECT *
+    FROM telecom_customer_churn
+    WHERE "Contract" = 'Month-to-Month'
+      AND "Tenure in Months" <= 12
+      AND "Internet Service" = true
+      AND COALESCE("Online Security", false) = false
+      AND COALESCE("Premium Tech Support", false) = false
+)
+
+SELECT
+    CASE
+        WHEN "Monthly Charge" < 70 THEN 'Under $70'
+        WHEN "Monthly Charge" < 100 THEN '$70-$99.99'
+        ELSE '$100+'
+    END AS monthly_charge_group,
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM high_risk_customers
+GROUP BY monthly_charge_group
+ORDER BY churn_rate_percentage DESC;
+
+
+-- 58. Final Churn Risk Profile
+
+SELECT
+    "Customer Status",
+    COUNT(*) AS total_customers,
+    ROUND(AVG("Age"), 2) AS average_age,
+    ROUND(AVG("Tenure in Months"), 2) AS average_tenure,
+    ROUND(AVG("Monthly Charge"), 2) AS average_monthly_charge,
+    ROUND(AVG("Number of Dependents"), 2) AS average_dependents,
+    ROUND(AVG("Number of Referrals"), 2) AS average_referrals,
+    ROUND(AVG("Total Revenue"), 2) AS average_total_revenue
+FROM telecom_customer_churn
+WHERE "Customer Status" IN ('Stayed', 'Churned')
+GROUP BY "Customer Status";
+
+
+-- 59. Top Retention Opportunity Segments
+
+SELECT
+    "Contract",
+    COALESCE("Internet Type", 'No Internet') AS internet_type,
+    "Payment Method",
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE
+            WHEN "Customer Status" = 'Churned' THEN 1
+            ELSE 0
+        END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN "Customer Status" = 'Churned' THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS churn_rate_percentage
+FROM telecom_customer_churn
+GROUP BY
+    "Contract",
+    COALESCE("Internet Type", 'No Internet'),
+    "Payment Method"
+HAVING COUNT(*) >= 50
+ORDER BY churned_customers DESC, churn_rate_percentage DESC
+LIMIT 10;
+
+
+-- 60. Overall Final Project Summary
+
+SELECT
+    COUNT(*) AS total_customers,
+    SUM(
+        CASE WHEN "Customer Status" = 'Churned'
+        THEN 1 ELSE 0 END
+    ) AS churned_customers,
+    ROUND(
+        100.0 * SUM(
+            CASE WHEN "Customer Status" = 'Churned'
+            THEN 1 ELSE 0 END
+        ) / COUNT(*),
+        2
+    ) AS overall_churn_rate,
+    ROUND(SUM("Total Revenue"), 2) AS total_revenue,
+    ROUND(
+        SUM(
+            CASE WHEN "Customer Status" = 'Churned'
+            THEN "Total Revenue" ELSE 0 END
+        ),
+        2
+    ) AS churned_customer_revenue
+FROM telecom_customer_churn;
